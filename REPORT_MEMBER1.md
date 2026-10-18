@@ -60,7 +60,7 @@ The University Research Network baseline architecture is designed as a centraliz
 
 ---
 
-## 2. VLAN Table (Section 4.2)
+## 2. VLAN Table
 All VLAN subnets use a standard `/24` prefix (Subnet Mask: `255.255.255.0`). VTP is configured in `transparent` mode on all three switches.
 
 | VLAN ID | VLAN Name | Subnet Network | Default Gateway (CORE-SW SVI) | Static IP Range | Dynamic DHCP Leased Range | Functional Role |
@@ -71,12 +71,12 @@ All VLAN subnets use a standard `/24` prefix (Subnet Mask: `255.255.255.0`). VTP
 | **40** | ADMIN | 192.168.40.0/24 | 192.168.40.1 | .2 – .99 | .100 – .254 | Campus administration, switch management, Policy Host |
 | **50** | SERVERS | 192.168.50.0/24 | 192.168.50.1 | .2 – .254 | None (All Static) | Core intranet infrastructure servers |
 | **60** | RESTRICTED | 192.168.60.0/24 | 192.168.60.1 | .2 – .99 | .100 – .254 | Remediation zone for non-compliant devices |
-| **70** | QUARANTINE | 192.168.70.0/24 | 192.168.70.1 | .2 – .99 | .100 – .254 | Isolated isolation zone for compromised devices |
+| **70** | QUARANTINE | 192.168.70.0/24 | 192.168.70.1 | .2 – .99 | .100 – .254 | Isolation zone for compromised devices |
 | **999** | BLACKHOLE | None | None | None | None | Native 802.1Q VLAN & unused disabled switchports |
 
 ---
 
-## 3. IP Addressing Table (Section 4.3)
+## 3. IP Addressing Table
 All hosts configure DNS Server `203.0.113.2`.
 
 | Device Name | Interface | IP Address | Subnet Mask | Default Gateway | Addressing Type |
@@ -110,7 +110,7 @@ All hosts configure DNS Server `203.0.113.2`.
 
 ---
 
-## 4. Cabling & Port Allocation Table (Sections 4.4 & 4.5)
+## 4. Cabling & Port Allocation Table
 
 | Source Device & Port | Destination Device & Port | Media / Cable Type | Port Mode | VLAN ID / Subnet | Operational State |
 |---|---|---|---|---|---|
@@ -145,36 +145,76 @@ ip routing
 !
 interface Vlan10
  ip address 192.168.10.1 255.255.255.0
+ no shutdown
 !
 interface Vlan20
  ip address 192.168.20.1 255.255.255.0
+ no shutdown
 !
 interface Vlan30
  ip address 192.168.30.1 255.255.255.0
+ no shutdown
 !
 interface Vlan40
  ip address 192.168.40.1 255.255.255.0
+ no shutdown
 !
 interface Vlan50
  ip address 192.168.50.1 255.255.255.0
+ no shutdown
+!
+interface Vlan60
+ ip address 192.168.60.1 255.255.255.0
+ no shutdown
+!
+interface Vlan70
+ ip address 192.168.70.1 255.255.255.0
+ no shutdown
 !
 interface FastEthernet0/24
  description ROUTED-TO-EDGE-R
  no switchport
  ip address 10.0.0.1 255.255.255.252
+ no shutdown
 !
 ip route 0.0.0.0 0.0.0.0 10.0.0.2
 !
 ip dhcp excluded-address 192.168.10.1 192.168.10.99
-...
+ip dhcp excluded-address 192.168.20.1 192.168.20.99
+ip dhcp excluded-address 192.168.30.1 192.168.30.99
+ip dhcp excluded-address 192.168.40.1 192.168.40.99
+ip dhcp excluded-address 192.168.60.1 192.168.60.99
+ip dhcp excluded-address 192.168.70.1 192.168.70.99
+!
 ip dhcp pool DHCP-STU
  network 192.168.10.0 255.255.255.0
  default-router 192.168.10.1
+ dns-server 203.0.113.2
+ip dhcp pool DHCP-FAC
+ network 192.168.20.0 255.255.255.0
+ default-router 192.168.20.1
+ dns-server 203.0.113.2
+ip dhcp pool DHCP-RES
+ network 192.168.30.0 255.255.255.0
+ default-router 192.168.30.1
+ dns-server 203.0.113.2
+ip dhcp pool DHCP-ADM
+ network 192.168.40.0 255.255.255.0
+ default-router 192.168.40.1
+ dns-server 203.0.113.2
+ip dhcp pool DHCP-RSTR
+ network 192.168.60.0 255.255.255.0
+ default-router 192.168.60.1
+ dns-server 203.0.113.2
+ip dhcp pool DHCP-QUAR
+ network 192.168.70.0 255.255.255.0
+ default-router 192.168.70.1
  dns-server 203.0.113.2
 ```
 
 ### B. Access Switches (`ACCESS-SW-A` & `B`) 802.1Q Trunks & Management
 ```text
+! ACCESS-SW-A: Vlan40 = 192.168.40.21 | ACCESS-SW-B: Vlan40 = 192.168.40.22
 interface GigabitEthernet0/1
  description TRUNK-TO-CORE-SW
  switchport mode trunk
@@ -182,7 +222,7 @@ interface GigabitEthernet0/1
  switchport trunk allowed vlan 10,20,30,40,50,60,70
 !
 interface Vlan40
- ip address 192.168.40.21 255.255.255.0  ! (.22 on ACCESS-SW-B)
+ ip address 192.168.40.21 255.255.255.0
 !
 ip default-gateway 192.168.40.1
 ip ssh version 2
@@ -251,4 +291,4 @@ The following visual artifacts have been captured as experimental evidence:
 ---
 
 ## 8. Why Restriction is Enforced by VLAN Placement Rather Than by ARP
-Restricting or quarantining an endpoint by reassigning its physical switchport to an isolated VLAN (such as VLAN 60 or VLAN 70) is fundamentally superior to attempting restriction by manipulating the Address Resolution Protocol (ARP). ARP is an unauthenticated Layer-2 resolution protocol that resides entirely within the operating system network stack of individual hosts; modifying ARP mappings or relying on ARP poisoning/cache alteration requires invasive host-level tampering, is easily circumvented or corrected by a sophisticated user, and fails to stop raw Layer-2 Ethernet frame transmission or broadcast flooding. In contrast, 802.1Q VLAN assignment enforces physical and logical isolation at the hardware switching ASIC level: the switch completely separates broadcast domains, preventing an endpoint in the quarantined VLAN from ever transmitting or receiving frames to/from unauthorized subnets at Layer 2. Any inter-subnet communication must then traverse the Core Layer-3 switch, where centralized Access Control Lists (ACLs) can deterministically inspect, log, restrict, or deny traffic regardless of host OS behavior, while allowing standard OS protocols like DHCP and standard ARP resolution to continue functioning normally.
+Restricting or quarantining an endpoint by reassigning its physical switchport to an isolated VLAN (such as VLAN 60 or VLAN 70) is fundamentally superior to attempting restriction by manipulating the Address Resolution Protocol (ARP). ARP is an unauthenticated Layer-2 resolution protocol that resides entirely within the operating system network stack of individual hosts; modifying ARP mappings or relying on ARP poisoning/cache alteration requires invasive host-level tampering, is easily circumvented or corrected by a sophisticated user, and fails to stop raw Layer-2 Ethernet frame transmission or broadcast flooding. In contrast, 802.1Q VLAN assignment enforces physical and logical isolation at the hardware switching ASIC level: the switch completely separates broadcast domains, preventing an endpoint in the quarantined VLAN from ever transmitting or receiving frames to/from unauthorized subnets at Layer 2. Any inter-subnet communication must then traverse the Core Layer-3 switch, where centralized Access Control Lists (ACLs) can deterministically inspect, log, restrict, or deny traffic regardless of host OS behavior, while allowing standard OS protocols like DHCP and standard ARP resolution to continue functioning normally. ARP itself is left completely untouched: it continues to run as normal operating-system behavior inside whichever broadcast domain the device is currently placed in, and the design never modifies or filters ARP; restriction comes solely from VLAN placement and, later, ACLs at the Core Layer-3 switch.
