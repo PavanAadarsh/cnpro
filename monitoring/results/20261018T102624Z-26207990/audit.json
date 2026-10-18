@@ -1,0 +1,38 @@
+{
+  "checked_at": "2026-10-18T10:26:24.647943+00:00",
+  "pkt_files": [],
+  "core_security_acl_applied": false,
+  "routing_enabled": true,
+  "tools_on_path": {
+    "python": "C:\\Python314\\python.EXE",
+    "tshark": null,
+    "tcpdump": null,
+    "PacketTracer": null
+  },
+  "source_sha256": {
+    "README.md": "00ef307db8288b93cf08a8511fd8dea00fd2f730d30cbebb90b47730a120c243",
+    "REPORT_MEMBER1.md": "740c55a8745d6748adfdfd693f57f7e788c43178e8cd23d89791ffd4477b300e",
+    "configs\\ACCESS-SW-A_phase3.cfg": "7ea291e513d3731b7faac6a3dcb009c580f381d9393af0fc437adfb83df883e6",
+    "configs\\ACCESS-SW-A_phase5.cfg": "41460fad7267628c64a644b076e2782ea5a72175cc4a3395de248bd7c10af4f4",
+    "configs\\ACCESS-SW-B_phase3.cfg": "9da91ba5b0c7a835f3e0c939020992eaa57d809898c16824bfb5ff8762b5713e",
+    "configs\\ACCESS-SW-B_phase5.cfg": "6ab12759053e10375ccd29cd4d1cde2e2913086bc4093e4f9da0a5d14265fd3b",
+    "configs\\CORE-SW_phase2.cfg": "1d1f0be1b2be85f4c041ed48b9d95cd174d846d6684480b63f36e1c89d96bbf9",
+    "configs\\CORE-SW_phase4.cfg": "a08edf27a0cd1a34c3f09b1d1e0db53ca0a09f6be5e8fdc309c248fbd221735d",
+    "configs\\EDGE-R_phase6.cfg": "243808f6939dcfb733435b02f2652072ceec737e31ee417f429cc96a3503cfc2",
+    "docs\\01_physical_topology.md": "d73137badff9e6f61434035f71b300d747754a171c780188e7474308f7141c67",
+    "docs\\07_end_devices_configuration.md": "c81a9bbebf4cf291cc225117686375f24153d17aa0919af8cf67da09eb3c8705",
+    "docs\\08_verification_matrix.md": "0a56c27dcdc5c0f67f7f10e12183e85f97559ab34c4a02942b855388ccae239b",
+    "handoff\\MEMBER2_HANDOFF.md": "a01b56ea1dcf07849fcda827eeadef490ccf17d0e90c5b3514edbecd8508c00a",
+    "handoff\\MEMBER3_HANDOFF.md": "a5965faa6ce5ffb26f713c2348ae5cceab9121341791001bf4f67a6531abbaec",
+    "handoff\\MEMBER4_HANDOFF.md": "983bd6a68423d560953bacdfab386cbc0049831bfa1927eb1c554d055bccf857",
+    "running-configs\\ACCESS-SW-A_running_config.txt": "ad0f1fa9d13aaa38a326d28f9978384779399b0fe39eccc1c718423682054b16",
+    "running-configs\\ACCESS-SW-B_running_config.txt": "113312a1c88f7df09b0b6d28313198cf18bb0cb2fe1f56164df85beb6db8a0ed",
+    "running-configs\\CORE-SW_running_config.txt": "841a22640c02ae588ac64fbd339002edba80bb38d96e792e317bb16969e2c9ed",
+    "running-configs\\EDGE-R_running_config.txt": "6c6a3b74045371334938c30b65899f81bf63d358ecf94531534e230ffe8b1730"
+  },
+  "limitations": [
+    "No adaptive engine or event API in inspected source branch.",
+    "No live probes run: Packet Tracer topology file is absent.",
+    "Baseline has no security ACL; VLAN change alone does not establish routed isolation."
+  ]
+}

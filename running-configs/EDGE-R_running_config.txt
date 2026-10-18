@@ -1,0 +1,43 @@
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname EDGE-R
+!
+no ip domain-lookup
+!
+interface GigabitEthernet0/0
+ description TO-CORE-SW
+ ip address 10.0.0.2 255.255.255.252
+ ip nat inside
+ no shutdown
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1
+ description TO-INTERNET-SRV
+ ip address 203.0.113.1 255.255.255.252
+ ip nat outside
+ no shutdown
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/2
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+ip route 192.168.0.0 255.255.0.0 10.0.0.1
+!
+access-list 1 permit 192.168.0.0 0.0.255.255
+!
+ip nat inside source list 1 interface GigabitEthernet0/1 overload
+!
+line con 0
+!
+line vty 0 4
+ login
+!
+end

@@ -1,0 +1,104 @@
+version 12.2
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname ACCESS-SW-B
+!
+no ip domain-lookup
+ip domain-name lab.local
+!
+username admin privilege 15 secret 5 <LAB_PASSWORD>
+enable secret 5 <LAB_PASSWORD>
+!
+vtp mode transparent
+!
+vlan 10
+ name STUDENTS
+!
+vlan 20
+ name FACULTY
+!
+vlan 30
+ name RESEARCH
+!
+vlan 40
+ name ADMIN
+!
+vlan 50
+ name SERVERS
+!
+vlan 60
+ name RESTRICTED
+!
+vlan 70
+ name QUARANTINE
+!
+vlan 999
+ name BLACKHOLE
+!
+interface FastEthernet0/1
+ switchport access vlan 30
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet0/2
+ switchport access vlan 30
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet0/3
+ switchport access vlan 50
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet0/4
+ switchport access vlan 50
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet0/5
+ switchport access vlan 50
+ switchport mode access
+ spanning-tree portfast
+!
+interface FastEthernet0/6
+ switchport access vlan 50
+ switchport mode access
+ spanning-tree portfast
+!
+interface range FastEthernet0/7-24
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface GigabitEthernet0/1
+ description TRUNK-TO-CORE-SW
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 10,20,30,40,50,60,70
+ switchport mode trunk
+ no shutdown
+!
+interface GigabitEthernet0/2
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan40
+ ip address 192.168.40.22 255.255.255.0
+ no shutdown
+!
+ip default-gateway 192.168.40.1
+ip ssh version 2
+!
+line con 0
+!
+line vty 0 15
+ login local
+ transport input ssh
+!
+end

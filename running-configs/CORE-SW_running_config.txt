@@ -1,0 +1,257 @@
+version 12.2
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname CORE-SW
+!
+no ip domain-lookup
+ip domain-name lab.local
+!
+username admin privilege 15 secret 5 <LAB_PASSWORD>
+enable secret 5 <LAB_PASSWORD>
+!
+vtp mode transparent
+!
+vlan 10
+ name STUDENTS
+!
+vlan 20
+ name FACULTY
+!
+vlan 30
+ name RESEARCH
+!
+vlan 40
+ name ADMIN
+!
+vlan 50
+ name SERVERS
+!
+vlan 60
+ name RESTRICTED
+!
+vlan 70
+ name QUARANTINE
+!
+vlan 999
+ name BLACKHOLE
+!
+ip routing
+!
+ip dhcp excluded-address 192.168.10.1 192.168.10.99
+ip dhcp excluded-address 192.168.20.1 192.168.20.99
+ip dhcp excluded-address 192.168.30.1 192.168.30.99
+ip dhcp excluded-address 192.168.40.1 192.168.40.99
+ip dhcp excluded-address 192.168.60.1 192.168.60.99
+ip dhcp excluded-address 192.168.70.1 192.168.70.99
+!
+ip dhcp pool DHCP-STU
+ network 192.168.10.0 255.255.255.0
+ default-router 192.168.10.1
+ dns-server 203.0.113.2
+!
+ip dhcp pool DHCP-FAC
+ network 192.168.20.0 255.255.255.0
+ default-router 192.168.20.1
+ dns-server 203.0.113.2
+!
+ip dhcp pool DHCP-RES
+ network 192.168.30.0 255.255.255.0
+ default-router 192.168.30.1
+ dns-server 203.0.113.2
+!
+ip dhcp pool DHCP-ADM
+ network 192.168.40.0 255.255.255.0
+ default-router 192.168.40.1
+ dns-server 203.0.113.2
+!
+ip dhcp pool DHCP-RSTR
+ network 192.168.60.0 255.255.255.0
+ default-router 192.168.60.1
+ dns-server 203.0.113.2
+!
+ip dhcp pool DHCP-QUAR
+ network 192.168.70.0 255.255.255.0
+ default-router 192.168.70.1
+ dns-server 203.0.113.2
+!
+interface FastEthernet0/1
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/2
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/3
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/4
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/5
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/6
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/7
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/8
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/9
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/10
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/11
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/12
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/13
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/14
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/15
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/16
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/17
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/18
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/19
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/20
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/21
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/22
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/23
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/24
+ description ROUTED-TO-EDGE-R
+ no switchport
+ ip address 10.0.0.1 255.255.255.252
+ no shutdown
+!
+interface GigabitEthernet0/1
+ description TRUNK-TO-ACCESS-SW-A
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 10,20,30,40,50,60,70
+ switchport mode trunk
+ no shutdown
+!
+interface GigabitEthernet0/2
+ description TRUNK-TO-ACCESS-SW-B
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 10,20,30,40,50,60,70
+ switchport mode trunk
+ no shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan10
+ ip address 192.168.10.1 255.255.255.0
+ no shutdown
+!
+interface Vlan20
+ ip address 192.168.20.1 255.255.255.0
+ no shutdown
+!
+interface Vlan30
+ ip address 192.168.30.1 255.255.255.0
+ no shutdown
+!
+interface Vlan40
+ ip address 192.168.40.1 255.255.255.0
+ no shutdown
+!
+interface Vlan50
+ ip address 192.168.50.1 255.255.255.0
+ no shutdown
+!
+interface Vlan60
+ ip address 192.168.60.1 255.255.255.0
+ no shutdown
+!
+interface Vlan70
+ ip address 192.168.70.1 255.255.255.0
+ no shutdown
+!
+ip route 0.0.0.0 0.0.0.0 10.0.0.2
+ip ssh version 2
+!
+line con 0
+!
+line vty 0 15
+ login local
+ transport input ssh
+!
+end

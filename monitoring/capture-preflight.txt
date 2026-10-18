@@ -1,0 +1,5 @@
+usage: capture.py [-h] --interface INTERFACE --project-only
+                  --configuration {architecture_baseline,static,adaptive}
+                  --scenario SCENARIO [--seconds SECONDS] [--output OUTPUT]
+                  [--tagged]
+capture.py: error: tshark unavailable; no capture performed

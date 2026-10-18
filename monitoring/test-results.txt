@@ -1,0 +1,13 @@
+test_chart_and_failed_exclusion (test_evaluate.EvaluationTests.test_chart_and_failed_exclusion) ... ok
+test_import_and_evidence (test_evaluate.EvaluationTests.test_import_and_evidence) ... ok
+test_invalid (test_evaluate.EvaluationTests.test_invalid) ... ok
+test_metrics (test_evaluate.EvaluationTests.test_metrics) ... ok
+test_missing_and_failed_probes (test_evaluate.EvaluationTests.test_missing_and_failed_probes) ... ok
+test_recovery (test_evaluate.EvaluationTests.test_recovery) ... ok
+test_repository_audit (test_evaluate.EvaluationTests.test_repository_audit) ... ok
+test_unique_output (test_evaluate.EvaluationTests.test_unique_output) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.290s
+
+OK

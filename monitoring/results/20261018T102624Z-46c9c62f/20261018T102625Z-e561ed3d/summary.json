@@ -1,0 +1,1622 @@
+[
+  {
+    "scenario": "authorized",
+    "configuration": "adaptive",
+    "metric": "detection_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "authorized",
+    "configuration": "adaptive",
+    "metric": "response_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "authorized",
+    "configuration": "adaptive",
+    "metric": "recovery_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "authorized",
+    "configuration": "adaptive",
+    "metric": "latency_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "authorized",
+    "configuration": "adaptive",
+    "metric": "packet_loss_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "authorized",
+    "configuration": "adaptive",
+    "metric": "throughput_mbps",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "authorized",
+    "configuration": "adaptive",
+    "metric": "disruption_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "authorized",
+    "configuration": "adaptive",
+    "metric": "success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "authorized",
+    "configuration": "adaptive",
+    "metric": "unauthorized_success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "authorized",
+    "configuration": "architecture_baseline",
+    "metric": "detection_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "authorized",
+    "configuration": "architecture_baseline",
+    "metric": "response_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "authorized",
+    "configuration": "architecture_baseline",
+    "metric": "recovery_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "authorized",
+    "configuration": "architecture_baseline",
+    "metric": "latency_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "authorized",
+    "configuration": "architecture_baseline",
+    "metric": "packet_loss_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "authorized",
+    "configuration": "architecture_baseline",
+    "metric": "throughput_mbps",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "authorized",
+    "configuration": "architecture_baseline",
+    "metric": "disruption_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "authorized",
+    "configuration": "architecture_baseline",
+    "metric": "success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "authorized",
+    "configuration": "architecture_baseline",
+    "metric": "unauthorized_success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "authorized",
+    "configuration": "static",
+    "metric": "detection_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "authorized",
+    "configuration": "static",
+    "metric": "response_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "authorized",
+    "configuration": "static",
+    "metric": "recovery_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "authorized",
+    "configuration": "static",
+    "metric": "latency_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "authorized",
+    "configuration": "static",
+    "metric": "packet_loss_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "authorized",
+    "configuration": "static",
+    "metric": "throughput_mbps",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "authorized",
+    "configuration": "static",
+    "metric": "disruption_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "authorized",
+    "configuration": "static",
+    "metric": "success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "authorized",
+    "configuration": "static",
+    "metric": "unauthorized_success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "legitimate_transition",
+    "configuration": "adaptive",
+    "metric": "detection_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "legitimate_transition",
+    "configuration": "adaptive",
+    "metric": "response_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "legitimate_transition",
+    "configuration": "adaptive",
+    "metric": "recovery_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "legitimate_transition",
+    "configuration": "adaptive",
+    "metric": "latency_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "legitimate_transition",
+    "configuration": "adaptive",
+    "metric": "packet_loss_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "legitimate_transition",
+    "configuration": "adaptive",
+    "metric": "throughput_mbps",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "legitimate_transition",
+    "configuration": "adaptive",
+    "metric": "disruption_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "legitimate_transition",
+    "configuration": "adaptive",
+    "metric": "success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "legitimate_transition",
+    "configuration": "adaptive",
+    "metric": "unauthorized_success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "legitimate_transition",
+    "configuration": "architecture_baseline",
+    "metric": "detection_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "legitimate_transition",
+    "configuration": "architecture_baseline",
+    "metric": "response_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "legitimate_transition",
+    "configuration": "architecture_baseline",
+    "metric": "recovery_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "legitimate_transition",
+    "configuration": "architecture_baseline",
+    "metric": "latency_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "legitimate_transition",
+    "configuration": "architecture_baseline",
+    "metric": "packet_loss_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "legitimate_transition",
+    "configuration": "architecture_baseline",
+    "metric": "throughput_mbps",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "legitimate_transition",
+    "configuration": "architecture_baseline",
+    "metric": "disruption_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "legitimate_transition",
+    "configuration": "architecture_baseline",
+    "metric": "success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "legitimate_transition",
+    "configuration": "architecture_baseline",
+    "metric": "unauthorized_success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "legitimate_transition",
+    "configuration": "static",
+    "metric": "detection_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "legitimate_transition",
+    "configuration": "static",
+    "metric": "response_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "legitimate_transition",
+    "configuration": "static",
+    "metric": "recovery_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "legitimate_transition",
+    "configuration": "static",
+    "metric": "latency_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "legitimate_transition",
+    "configuration": "static",
+    "metric": "packet_loss_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "legitimate_transition",
+    "configuration": "static",
+    "metric": "throughput_mbps",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "legitimate_transition",
+    "configuration": "static",
+    "metric": "disruption_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "legitimate_transition",
+    "configuration": "static",
+    "metric": "success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "legitimate_transition",
+    "configuration": "static",
+    "metric": "unauthorized_success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "performance",
+    "configuration": "adaptive",
+    "metric": "detection_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "performance",
+    "configuration": "adaptive",
+    "metric": "response_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "performance",
+    "configuration": "adaptive",
+    "metric": "recovery_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "performance",
+    "configuration": "adaptive",
+    "metric": "latency_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "performance",
+    "configuration": "adaptive",
+    "metric": "packet_loss_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "performance",
+    "configuration": "adaptive",
+    "metric": "throughput_mbps",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "performance",
+    "configuration": "adaptive",
+    "metric": "disruption_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "performance",
+    "configuration": "adaptive",
+    "metric": "success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "performance",
+    "configuration": "adaptive",
+    "metric": "unauthorized_success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "performance",
+    "configuration": "architecture_baseline",
+    "metric": "detection_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "performance",
+    "configuration": "architecture_baseline",
+    "metric": "response_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "performance",
+    "configuration": "architecture_baseline",
+    "metric": "recovery_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "performance",
+    "configuration": "architecture_baseline",
+    "metric": "latency_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "performance",
+    "configuration": "architecture_baseline",
+    "metric": "packet_loss_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "performance",
+    "configuration": "architecture_baseline",
+    "metric": "throughput_mbps",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "performance",
+    "configuration": "architecture_baseline",
+    "metric": "disruption_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "performance",
+    "configuration": "architecture_baseline",
+    "metric": "success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "performance",
+    "configuration": "architecture_baseline",
+    "metric": "unauthorized_success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "performance",
+    "configuration": "static",
+    "metric": "detection_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "performance",
+    "configuration": "static",
+    "metric": "response_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "performance",
+    "configuration": "static",
+    "metric": "recovery_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "performance",
+    "configuration": "static",
+    "metric": "latency_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "performance",
+    "configuration": "static",
+    "metric": "packet_loss_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "performance",
+    "configuration": "static",
+    "metric": "throughput_mbps",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "performance",
+    "configuration": "static",
+    "metric": "disruption_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "performance",
+    "configuration": "static",
+    "metric": "success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "performance",
+    "configuration": "static",
+    "metric": "unauthorized_success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "protected_access",
+    "configuration": "adaptive",
+    "metric": "detection_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "protected_access",
+    "configuration": "adaptive",
+    "metric": "response_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "protected_access",
+    "configuration": "adaptive",
+    "metric": "recovery_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "protected_access",
+    "configuration": "adaptive",
+    "metric": "latency_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "protected_access",
+    "configuration": "adaptive",
+    "metric": "packet_loss_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "protected_access",
+    "configuration": "adaptive",
+    "metric": "throughput_mbps",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "protected_access",
+    "configuration": "adaptive",
+    "metric": "disruption_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "protected_access",
+    "configuration": "adaptive",
+    "metric": "success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "protected_access",
+    "configuration": "adaptive",
+    "metric": "unauthorized_success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "protected_access",
+    "configuration": "architecture_baseline",
+    "metric": "detection_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "protected_access",
+    "configuration": "architecture_baseline",
+    "metric": "response_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "protected_access",
+    "configuration": "architecture_baseline",
+    "metric": "recovery_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "protected_access",
+    "configuration": "architecture_baseline",
+    "metric": "latency_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "protected_access",
+    "configuration": "architecture_baseline",
+    "metric": "packet_loss_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "protected_access",
+    "configuration": "architecture_baseline",
+    "metric": "throughput_mbps",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "protected_access",
+    "configuration": "architecture_baseline",
+    "metric": "disruption_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "protected_access",
+    "configuration": "architecture_baseline",
+    "metric": "success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "protected_access",
+    "configuration": "architecture_baseline",
+    "metric": "unauthorized_success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "protected_access",
+    "configuration": "static",
+    "metric": "detection_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "protected_access",
+    "configuration": "static",
+    "metric": "response_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "protected_access",
+    "configuration": "static",
+    "metric": "recovery_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "protected_access",
+    "configuration": "static",
+    "metric": "latency_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "protected_access",
+    "configuration": "static",
+    "metric": "packet_loss_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "protected_access",
+    "configuration": "static",
+    "metric": "throughput_mbps",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "protected_access",
+    "configuration": "static",
+    "metric": "disruption_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "protected_access",
+    "configuration": "static",
+    "metric": "success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "protected_access",
+    "configuration": "static",
+    "metric": "unauthorized_success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "recovery",
+    "configuration": "adaptive",
+    "metric": "detection_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "recovery",
+    "configuration": "adaptive",
+    "metric": "response_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "recovery",
+    "configuration": "adaptive",
+    "metric": "recovery_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "recovery",
+    "configuration": "adaptive",
+    "metric": "latency_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "recovery",
+    "configuration": "adaptive",
+    "metric": "packet_loss_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "recovery",
+    "configuration": "adaptive",
+    "metric": "throughput_mbps",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "recovery",
+    "configuration": "adaptive",
+    "metric": "disruption_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "recovery",
+    "configuration": "adaptive",
+    "metric": "success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "recovery",
+    "configuration": "adaptive",
+    "metric": "unauthorized_success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "recovery",
+    "configuration": "architecture_baseline",
+    "metric": "detection_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "recovery",
+    "configuration": "architecture_baseline",
+    "metric": "response_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "recovery",
+    "configuration": "architecture_baseline",
+    "metric": "recovery_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "recovery",
+    "configuration": "architecture_baseline",
+    "metric": "latency_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "recovery",
+    "configuration": "architecture_baseline",
+    "metric": "packet_loss_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "recovery",
+    "configuration": "architecture_baseline",
+    "metric": "throughput_mbps",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "recovery",
+    "configuration": "architecture_baseline",
+    "metric": "disruption_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "recovery",
+    "configuration": "architecture_baseline",
+    "metric": "success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "recovery",
+    "configuration": "architecture_baseline",
+    "metric": "unauthorized_success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "recovery",
+    "configuration": "static",
+    "metric": "detection_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "recovery",
+    "configuration": "static",
+    "metric": "response_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "recovery",
+    "configuration": "static",
+    "metric": "recovery_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "recovery",
+    "configuration": "static",
+    "metric": "latency_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "recovery",
+    "configuration": "static",
+    "metric": "packet_loss_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "recovery",
+    "configuration": "static",
+    "metric": "throughput_mbps",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "recovery",
+    "configuration": "static",
+    "metric": "disruption_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "recovery",
+    "configuration": "static",
+    "metric": "success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "recovery",
+    "configuration": "static",
+    "metric": "unauthorized_success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "violations",
+    "configuration": "adaptive",
+    "metric": "detection_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "violations",
+    "configuration": "adaptive",
+    "metric": "response_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "violations",
+    "configuration": "adaptive",
+    "metric": "recovery_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "violations",
+    "configuration": "adaptive",
+    "metric": "latency_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "violations",
+    "configuration": "adaptive",
+    "metric": "packet_loss_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "violations",
+    "configuration": "adaptive",
+    "metric": "throughput_mbps",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "violations",
+    "configuration": "adaptive",
+    "metric": "disruption_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "violations",
+    "configuration": "adaptive",
+    "metric": "success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "violations",
+    "configuration": "adaptive",
+    "metric": "unauthorized_success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "violations",
+    "configuration": "architecture_baseline",
+    "metric": "detection_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "violations",
+    "configuration": "architecture_baseline",
+    "metric": "response_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "violations",
+    "configuration": "architecture_baseline",
+    "metric": "recovery_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "violations",
+    "configuration": "architecture_baseline",
+    "metric": "latency_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "violations",
+    "configuration": "architecture_baseline",
+    "metric": "packet_loss_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "violations",
+    "configuration": "architecture_baseline",
+    "metric": "throughput_mbps",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "violations",
+    "configuration": "architecture_baseline",
+    "metric": "disruption_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "violations",
+    "configuration": "architecture_baseline",
+    "metric": "success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "violations",
+    "configuration": "architecture_baseline",
+    "metric": "unauthorized_success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "violations",
+    "configuration": "static",
+    "metric": "detection_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "violations",
+    "configuration": "static",
+    "metric": "response_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "violations",
+    "configuration": "static",
+    "metric": "recovery_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "violations",
+    "configuration": "static",
+    "metric": "latency_ms",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "violations",
+    "configuration": "static",
+    "metric": "packet_loss_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "violations",
+    "configuration": "static",
+    "metric": "throughput_mbps",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "violations",
+    "configuration": "static",
+    "metric": "disruption_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "violations",
+    "configuration": "static",
+    "metric": "success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  },
+  {
+    "scenario": "violations",
+    "configuration": "static",
+    "metric": "unauthorized_success_pct",
+    "n": 0,
+    "mean": null,
+    "median": null,
+    "minimum": null,
+    "maximum": null
+  }
+]
