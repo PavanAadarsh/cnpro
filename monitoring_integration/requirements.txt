@@ -1,0 +1,5 @@
+# Evaluator/audit/replay/tests/importer/HTTP collector: Python 3.11+, standard library.
+# Verified interpreter: Python 3.14.6. No pip installation needed for executed work.
+# Optional source engine SSH: upstream/member3/requirements.txt (paramiko>=3.0.0).
+# Optional real project captures: Wireshark/tshark + capture driver and project-only interface.
+# Packet Tracer observations require the missing .pkt and a compatible local application.

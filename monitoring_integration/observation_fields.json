@@ -1,0 +1,38 @@
+{
+  "purpose": "Field reference, not an observation dataset. The importer expects an array of real observation rows.",
+  "required_fields": {
+    "scenario": "Nonempty scenario identifier; split separate hosts, destinations and transition steps into separate rows.",
+    "configuration": ["architecture_baseline", "static", "adaptive"],
+    "trial": "Positive integer, unique within scenario/configuration.",
+    "start_at": "Timezone-aware ISO8601 timestamp.",
+    "end_at": "Timezone-aware ISO8601 timestamp not earlier than start.",
+    "status": ["measured", "failed"],
+    "notes": "Nonempty description of expected/observed behavior, clock precision, probe schedule, sample sizes, errors and limitations.",
+    "evidence_level": ["physical_network", "packet_tracer_simulation"],
+    "clock_domain": ["wall_utc", "packet_tracer_simulation"],
+    "source_device": "Registered Member 3 device name, e.g. PC-STU2; inspect actual port/lease.",
+    "source_ip": "Actual current source address in recorded VLAN.",
+    "source_vlan": [10, 20, 30, 40, 60, 70],
+    "destination_ip": "One of documented test servers or the local VLAN gateway.",
+    "protocol": ["tcp", "udp", "icmp"],
+    "destination_port": "Integer 1..65535 for TCP/UDP; omit for ICMP.",
+    "expected_action": ["permit", "deny"],
+    "evidence": "List of real evidence file paths within the observation JSON folder.",
+    "configuration_snapshot": "Path also listed in evidence; actual active configuration, not merely the supplied reference.",
+    "probe_evidence": "Path also listed in evidence; original probe transcript/PDU trace/request log."
+  },
+  "optional_measurements": {
+    "condition_at": "Timestamp of explicitly defined condition; not an assumed ACL-drop detector event.",
+    "detected_at": "Actual detection timestamp; requires condition_at and engine_evidence.",
+    "effective_denial_at": "First protected-service denial attributable to restriction; requires detected_at, enforcement_evidence, control_evidence and denial_evidence.",
+    "recovery_condition_at": "Timestamp of actual admin clear, elapsed hold/quiet condition, or defined recovery event.",
+    "restored_at": "First restored permitted connectivity; requires recovery_condition_at, enforcement_evidence and restoration_evidence.",
+    "probes_sent / probes_received": "Nonnegative integer pair; ICMP request/reply counts.",
+    "rtt_ms": "Finite nonnegative successful ICMP samples; omit or [] when unavailable. Never map HTTP duration to this field.",
+    "legitimate_attempted / legitimate_succeeded": "Nonnegative integer pair; define flow and window in notes.",
+    "unauthorized_attempted / unauthorized_succeeded": "Nonnegative integer pair; attempts denied by the applicable policy matrix.",
+    "transition_attempted / transition_succeeded": "Authorized unaffected requests in explicit transition window; distinguish intended offender restrictions.",
+    "transferred_bytes / transfer_seconds": "Receiver-verified delivered payload bytes and positive elapsed seconds; omit when unsupported."
+  },
+  "evidence_rules": "All event times must lie in the trial and share one declared clock domain. The importer checks presence and arithmetic, not truth or causality. Replay traces and ACL audits cannot be imported as network measurements."
+}
