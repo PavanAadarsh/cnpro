@@ -37,10 +37,13 @@ Member 3 is responsible for the **Adaptive Policy Engine** — the component tha
 
 **Key Responsibilities:**
 - Define device states (NORMAL, RESTRICTED, QUARANTINE) and the thresholds that trigger each transition
+- Implement the Python Adaptive Policy Engine (`policy_engine/`) and runtime interface (`simulate_event.py`)
 - Design and document the switchport VLAN reassignment mechanism executed via SSH from POLICY-HOST
+- Specify event ingestion, clock/timestamping contracts, and manual injection mechanisms
 - Produce all containment command sets (restrict, quarantine, restore) for every client device in the network
-- Establish a recovery / hold-timer mechanism to return devices to their home VLAN
-- Verify correct behaviour via a structured test plan
+- Establish reconciled recovery / hold-timer mechanisms to return devices to their home VLAN
+- Document runtime launch, reset, and verification procedures for Member 4 integration (see [`docs/ENGINE_RUNTIME_AND_RECONCILIATION.md`](docs/ENGINE_RUNTIME_AND_RECONCILIATION.md))
+- Verify correct behaviour via an automated 49-case test suite and structured test matrix
 
 ### 1.3 Design Constraints
 

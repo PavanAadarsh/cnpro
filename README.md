@@ -28,11 +28,16 @@ Member 3 is responsible for the **Adaptive Policy Engine** of the university res
 cnpro-member3-adaptive-policy/
 ├── README.md                          ← This file
 ├── REPORT_MEMBER3.md                  ← Full technical report
+├── simulate_event.py                  ← CLI engine controller & injection tool
+├── policy_engine/                     ← Python controller package (state, thresholds, SSH, recovery)
+├── docs/
+│   └── ENGINE_RUNTIME_AND_RECONCILIATION.md ← Runtime launch, event logging contract & reconciled thresholds
 ├── configs/
 │   ├── policy_engine_design.md        ← States, thresholds, ACL details, command table
 │   ├── POLICY-HOST_configuration.md   ← Static IP setup, SSH connection guide
 │   └── containment_commands.md        ← Copy-paste IOS commands for each device
 └── tests/
+    ├── test_policy_engine.py          ← 49 automated unit/integration tests
     └── state_transition_test_plan.md  ← 48 structured test cases
 ```
 

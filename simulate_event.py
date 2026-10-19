@@ -104,7 +104,7 @@ def cmd_status(engine: PolicyEngine) -> None:
     header = (
         f"{'Device':<12} {'State':<12} {'VLAN':<6} {'Switch':<14} {'Port':<18} {'Viols':>5}  Since"
     )
-    sep = "─" * len(header)
+    sep = "-" * len(header)
     print("\n" + cyan(sep))
     print(bold(header))
     print(cyan(sep))
