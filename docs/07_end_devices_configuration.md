@@ -6,11 +6,12 @@ DNS Server for all: `203.0.113.2`
 
 | Device | IP Address | Subnet Mask | Default Gateway | DNS Server | Services to Enable |
 |---|---|---|---|---|---|
+| INTERNET-SRV | 203.0.113.2 | 255.255.255.252 | 203.0.113.1 | 203.0.113.2 | HTTP: ON, DNS: ON (A record: `www.example.com` -> `203.0.113.2`) |
 | SRV-RESEARCH | 192.168.50.10 | 255.255.255.0 | 192.168.50.1 | 203.0.113.2 | HTTP: ON, HTTPS: ON |
-| SRV-DB | 192.168.50.11 | 255.255.255.0 | 192.168.50.1 | 203.0.113.2 | FTP: ON |
+| SRV-DB | 192.168.50.11 | 255.255.255.0 | 192.168.50.1 | 203.0.113.2 | FTP: ON (Port 21 stand-in for MySQL 3306) |
 | SRV-ADMIN | 192.168.50.12 | 255.255.255.0 | 192.168.50.1 | 203.0.113.2 | HTTP: ON, HTTPS: ON |
 | SRV-REMEDIATE | 192.168.50.13 | 255.255.255.0 | 192.168.50.1 | 203.0.113.2 | HTTP: ON, DNS: ON |
-| POLICY-HOST | 192.168.40.50 | 255.255.255.0 | 192.168.40.1 | 203.0.113.2 | None (Client PC) |
+| POLICY-HOST | 192.168.40.50 | 255.255.255.0 | 192.168.40.1 | 203.0.113.2 | None (Member 3 Policy/SSH Enforcement Workstation) |
 
 ## 2. DHCP Client PCs
 All set to **DHCP** under Desktop -> IP Configuration:
