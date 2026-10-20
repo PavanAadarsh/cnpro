@@ -20,6 +20,7 @@ import argparse
 import logging
 import os
 import sys
+import time
 
 # ---------------------------------------------------------------------------
 # ANSI colour helpers
@@ -148,6 +149,23 @@ def cmd_clear(engine: PolicyEngine, device: str) -> None:
     print(f"\nDevice {bold(device)} manually {result}\n")
 
 
+def cmd_listen(engine: PolicyEngine, port: int, interval: int) -> None:
+    """Run live Syslog/NetFlow listener daemon with automated background recovery."""
+    from policy_engine.event_listener import AutoEventListener
+    listener = AutoEventListener(engine, syslog_port=port, recovery_interval_sec=interval)
+    print(cyan(f"\n[+] Starting Live Syslog/NetFlow Collector on UDP port {port}..."))
+    print(cyan(f"[+] Autonomous background recovery worker active (interval: {interval}s)."))
+    print(bold("Press Ctrl+C to terminate daemon.\n"))
+    listener.start()
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print(yellow("\n[!] Stopping listener daemon..."))
+        listener.stop()
+        print(green("[+] Daemon shutdown complete.\n"))
+
+
 # ---------------------------------------------------------------------------
 # Argument parser
 # ---------------------------------------------------------------------------
@@ -185,6 +203,11 @@ def build_parser() -> argparse.ArgumentParser:
     p_clear = sub.add_parser("clear", help="Immediately clear a device to NORMAL (REC-01)")
     p_clear.add_argument("device", help="Device name, e.g. PC-STU1")
 
+    # listen (Automated syslog daemon)
+    p_listen = sub.add_parser("listen", help="Run live Syslog/NetFlow event listener daemon")
+    p_listen.add_argument("--port", type=int, default=514, help="UDP port for syslog (default: 514)")
+    p_listen.add_argument("--interval", type=int, default=30, help="Recovery sweep interval in seconds (default: 30)")
+
     return parser
 
 
@@ -208,6 +231,8 @@ def main() -> None:
         cmd_recover(engine)
     elif args.command == "clear":
         cmd_clear(engine, args.device)
+    elif args.command == "listen":
+        cmd_listen(engine, args.port, args.interval)
     else:
         parser.print_help()
 

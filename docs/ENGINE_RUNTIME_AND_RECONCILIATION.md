@@ -157,7 +157,7 @@ Recovery always restores the device directly to its designated **Home VLAN**:
 | **REC-01** | RESTRICTED or QUARANTINE | **NORMAL** | Immediate (0 s) | Administrative command / operator clear | `simulate_event.py clear <DEV>` |
 | **REC-02** | RESTRICTED | **NORMAL** | **30 minutes** (1,800 s) | Hold timer elapsed **AND** zero violations in last 10 minutes | Automatic via `simulate_event.py recover` |
 | **REC-03** | QUARANTINE | **NORMAL** | **120 minutes** (7,200 s) | Hold timer elapsed **AND** zero violations in last 10 minutes | Automatic via `simulate_event.py recover` |
-| **REC-04** | QUARANTINE | **NORMAL** | Immediate upon Remediation | Endpoint completes remediation with `SRV-REMEDIATE` (`remediated=True`) | Automatic via `simulate_event.py recover` |
+| **REC-04** | QUARANTINE | **NORMAL** | **120 minutes** (Hold timer required) | Hold timer elapsed **AND** Endpoint completes remediation (`remediated=True`, waiving 10m quiet period) | Automatic via `simulate_event.py recover` / background worker |
 
 ### 3.3 Reconciled Quarantine & Restricted Permissions Matrix
 

@@ -23,6 +23,7 @@ from .state_manager import StateManager
 from .threshold_tracker import ThresholdTracker
 from .ssh_enforcer import SSHEnforcer
 from .recovery_handler import RecoveryHandler
+from .event_listener import AutoEventListener
 
 __all__ = [
     "PolicyEngine",
@@ -30,4 +31,5 @@ __all__ = [
     "ThresholdTracker",
     "SSHEnforcer",
     "RecoveryHandler",
+    "AutoEventListener",
 ]

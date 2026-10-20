@@ -52,11 +52,17 @@ def _tmp_tracker() -> tuple:
     return tt, tmp
 
 
-def _mock_ssh(push_return=True, verify_return=10):
+def _mock_ssh(push_return=True, verify_return=None):
     """Return a MagicMock SSHEnforcer with configurable push/verify returns."""
     mock = MagicMock(spec=SSHEnforcer)
     mock.push_vlan.return_value = push_return
-    mock.verify_vlan.return_value = verify_return
+    def _verify_vlan(switch_ip, port):
+        if verify_return is not None:
+            return verify_return
+        if mock.push_vlan.call_args:
+            return mock.push_vlan.call_args[0][2]
+        return 10
+    mock.verify_vlan.side_effect = _verify_vlan
     mock.test_connectivity.return_value = True
     return mock
 
@@ -353,6 +359,28 @@ class TestRecoveryHandler(unittest.TestCase):
         self.assertTrue(ok)
         rec = self.sm.get_state("PC-FAC1")
         self.assertEqual(rec["state"], "NORMAL")
+
+    def test_manual_clear_ssh_failure_does_not_mark_normal(self):
+        """If SSH push fails during manual_clear, the device must remain in QUARANTINE."""
+        self.sm.set_state("PC-FAC1", "QUARANTINE")
+        self.mock_ssh.push_vlan.return_value = False
+        ok = self.rh.manual_clear("PC-FAC1", self.sm, self.mock_ssh)
+        self.assertFalse(ok)
+        rec = self.sm.get_state("PC-FAC1")
+        self.assertEqual(rec["state"], "QUARANTINE")
+        self.assertTrue(rec["enforcement_failed"])
+
+    def test_recovery_verification_failure_does_not_mark_normal(self):
+        """If VLAN verification fails (mismatch), device must remain in RESTRICTED."""
+        self._set_state_in_past("PC-STU1", "RESTRICTED", minutes_ago=31)
+        # Simulate switch reporting wrong VLAN
+        self.mock_ssh.verify_vlan.side_effect = None
+        self.mock_ssh.verify_vlan.return_value = 60  # Still in restricted VLAN on switch
+        ok = self.rh.check_and_recover("PC-STU1", self.sm, self.mock_ssh)
+        self.assertFalse(ok)
+        rec = self.sm.get_state("PC-STU1")
+        self.assertEqual(rec["state"], "RESTRICTED")
+        self.assertTrue(rec["enforcement_failed"])
 
     # --- hold timer (REC-02 / REC-03) ---
 

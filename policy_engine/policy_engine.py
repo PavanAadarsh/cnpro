@@ -127,9 +127,10 @@ class PolicyEngine:
         print(f"[{ts}] EVAL   device={device_name}  action={action}")
         logger.info("[%s] EVAL   device=%s  action=%s", ts, device_name, action)
 
-        # TH-04: already QUARANTINE with new violation — log only, no escalation
+        # TH-04: already QUARANTINE with new violation — log, restart hold timer, no escalation
         if action == "QUARANTINE" and current_state == "QUARANTINE":
-            msg = f"[{ts}] TH-04  device={device_name}  stays QUARANTINE (new violation logged)"
+            self.state_manager.restart_quarantine_timer(device_name)
+            msg = f"[{ts}] TH-04  device={device_name}  stays QUARANTINE (new violation logged, quarantine hold timer restarted)"
             print(msg)
             logger.warning(msg)
             return "LOGGED_QUARANTINE"

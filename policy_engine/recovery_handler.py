@@ -6,8 +6,9 @@ Recovery rules from the BACSE203 CN Lab specification:
 REC-01  Manual admin clear → immediate restore to NORMAL (any state).
 REC-02  RESTRICTED → NORMAL after 30-minute hold with no new violations.
 REC-03  QUARANTINE → NORMAL after 2-hour hold with no new violations.
-REC-04  SRV-REMEDIATE acknowledges clearance (sets remediated flag); the next
-        sweep restores NORMAL regardless of whether violations occurred.
+REC-04  SRV-REMEDIATE acknowledges clearance (sets remediated flag); once the
+        hold timer has fully elapsed, the device is restored even if earlier
+        violations had occurred. (Remediation does NOT bypass the hold period).
 
 A device must satisfy BOTH conditions to recover automatically:
 1. Hold timer has elapsed since entering the restricted/quarantined state.
@@ -131,6 +132,8 @@ class RecoveryHandler:
             device_name, state, hold_ok, no_viols, remediated,
         )
 
+        # Reconciled Requirement: Remediation must NOT bypass the hold period!
+        # Both hold timer must have elapsed AND (no recent violations OR remediated=True).
         if hold_ok and (no_viols or remediated):
             return self._do_recover(device_name, record, state_manager, ssh_enforcer, reason="AUTO")
         return False
@@ -200,29 +203,59 @@ class RecoveryHandler:
         reason: str,
     ) -> bool:
         """
-        Push home VLAN, update state to NORMAL, clear events.
+        Push home VLAN, verify switchport VLAN, update state to NORMAL, clear events.
 
-        Returns True if SSH enforcement succeeded.
+        Returns True if SSH enforcement and verification succeeded.
+        If enforcement or verification fails, the device remains in its current state.
         """
         home_vlan = record.get("home_vlan", 0)
         switch_ip = record.get("switch_ip", "")
         port = record.get("port", "")
+        current_state = record.get("state", "RESTRICTED")
 
         logger.info(
-            "RecoveryHandler: recovering %s → NORMAL (vlan=%d, switch=%s, port=%s, reason=%s)",
-            device_name, home_vlan, switch_ip, port, reason,
+            "RecoveryHandler: recovering %s (%s) → NORMAL (vlan=%d, switch=%s, port=%s, reason=%s)",
+            device_name, current_state, home_vlan, switch_ip, port, reason,
         )
 
         ssh_ok = ssh_enforcer.push_vlan(switch_ip, port, home_vlan)
-        state_manager.set_state(device_name, "NORMAL", enforcement_failed=not ssh_ok)
+        if not ssh_ok:
+            logger.error(
+                "RecoveryHandler: SSH enforcement failed for %s during recovery; "
+                "device remains in %s.",
+                device_name,
+                current_state,
+            )
+            state_manager.set_state(device_name, current_state, enforcement_failed=True)
+            return False
+
+        # Verification step: ensure switch actually placed port into home_vlan
+        verified = True
+        if hasattr(ssh_enforcer, "verify_vlan"):
+            try:
+                vlan_read = ssh_enforcer.verify_vlan(switch_ip, port)
+                if isinstance(vlan_read, int) and vlan_read != home_vlan:
+                    verified = False
+                    logger.error(
+                        "RecoveryHandler: VLAN verification failed for %s (expected %d, switch reported %d); "
+                        "device remains in %s.",
+                        device_name,
+                        home_vlan,
+                        vlan_read,
+                        current_state,
+                    )
+            except Exception as exc:
+                logger.warning("RecoveryHandler: verify_vlan query error for %s: %s", device_name, exc)
+
+        if not verified:
+            state_manager.set_state(device_name, current_state, enforcement_failed=True)
+            return False
+
+        # Transition to NORMAL only after successful push and verification
+        state_manager.set_state(device_name, "NORMAL", enforcement_failed=False)
 
         if self._tracker is not None:
             self._tracker.clear_events(device_name)
 
-        if not ssh_ok:
-            logger.error(
-                "RecoveryHandler: SSH enforcement failed for %s during recovery; "
-                "state set to NORMAL but switch port may still be on restricted VLAN.",
-                device_name,
-            )
-        return ssh_ok
+        logger.info("RecoveryHandler: %s successfully verified and restored to NORMAL", device_name)
+        return True

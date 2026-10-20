@@ -31,7 +31,10 @@ cnpro-member3-adaptive-policy/
 ├── simulate_event.py                  ← CLI engine controller & injection tool
 ├── policy_engine/                     ← Python controller package (state, thresholds, SSH, recovery)
 ├── docs/
-│   └── ENGINE_RUNTIME_AND_RECONCILIATION.md ← Runtime launch, event logging contract & reconciled thresholds
+│   ├── ENGINE_RUNTIME_AND_RECONCILIATION.md ← Runtime launch, event logging contract & reconciled thresholds
+│   ├── MEMBER4_RECONCILIATION_RESPONSE.md   ← Direct response to Member 4 questions & reconciliation audit
+│   ├── MEMBER4_AUDIT_RESOLUTION.md          ← Point-by-point audit compliance resolution
+│   └── LIVE_NETWORK_ENFORCEMENT_EVIDENCE.md  ← Live CLI outputs, switchport verification & DHCP renew evidence
 ├── configs/
 │   ├── policy_engine_design.md        ← States, thresholds, ACL details, command table
 │   ├── POLICY-HOST_configuration.md   ← Static IP setup, SSH connection guide

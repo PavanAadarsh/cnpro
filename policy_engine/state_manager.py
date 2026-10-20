@@ -203,8 +203,9 @@ class StateManager:
         """
         Set the ``remediated`` flag for *device_name* (REC-04).
 
-        The RecoveryHandler uses this flag to bypass the hold timer and
-        immediately restore the device to NORMAL at the next sweep.
+        The RecoveryHandler uses this flag to waive the recent violation check
+        once the mandatory hold timer has elapsed. (Remediation does not bypass
+        the hold period).
 
         Returns True on success, False if device is unknown.
         """
@@ -217,6 +218,21 @@ class StateManager:
             self._save()
 
         logger.info("StateManager: %s marked as remediated", device_name)
+        return True
+
+    def restart_quarantine_timer(self, device_name: str) -> bool:
+        """
+        Restart the quarantine hold timer for *device_name* (TH-04).
+
+        Updates ``quarantined_since`` to now and persists.
+        """
+        with self._lock:
+            if device_name not in self._db:
+                return False
+            self._db[device_name]["quarantined_since"] = _utcnow_iso()
+            self._db[device_name]["last_updated"] = _utcnow_iso()
+            self._save()
+        logger.info("StateManager: restarted quarantine hold timer for %s", device_name)
         return True
 
     def get_all_devices(self) -> List[dict]:
