@@ -1,3 +1,3 @@
-# Python >=3.10, standard library only; no pip dependencies.
+# Python >=3.11, standard library only; no pip dependencies.
 # Optional: Cisco Packet Tracer with the actual project .pkt.
 # Optional real-interface packet capture: Wireshark/tshark + capture driver.

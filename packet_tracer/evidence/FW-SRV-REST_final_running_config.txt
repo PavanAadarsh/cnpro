@@ -1,0 +1,179 @@
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname FW-SRV-REST
+!
+!
+!
+!
+ip dhcp excluded-address 192.168.60.1 192.168.60.99
+!
+ip dhcp pool PT-VLAN60
+ network 192.168.60.0 255.255.255.0
+ default-router 192.168.60.1
+ dns-server 192.168.50.13
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+!
+!
+!
+license udi pid CISCO2911/K9 sn FTX1524O32Q-
+license boot module c2900 technology-package securityk9
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain-lookup
+!
+!
+spanning-tree mode pvst
+!
+class-map type inspect match-all RESTRICTED-REMEDIATE
+ match access-group name RESTRICTED-REMEDIATE-MATCH
+class-map type inspect match-all NORMAL-SERVER
+ match access-group name NORMAL-SERVER-MATCH
+class-map type inspect match-all SERVER-FTP
+ match access-group name SERVER-FTP-MATCH
+ match protocol ftp
+class-map type inspect match-all FTP-ACTIVE-DATA
+ match access-group name FTP-ACTIVE-DATA
+ match protocol tcp
+!
+policy-map type inspect POL-RESTRICTED-REMEDIATE
+ class type inspect RESTRICTED-REMEDIATE
+  inspect
+ class type inspect class-default
+  drop
+!
+policy-map type inspect POL-TRANSIT-SERVERS
+ class type inspect SERVER-FTP
+  inspect
+ class type inspect NORMAL-SERVER
+  inspect
+ class type inspect class-default
+  drop
+!
+policy-map type inspect POL-FTP-ACTIVE-DATA
+ class type inspect FTP-ACTIVE-DATA
+  inspect
+ class type inspect class-default
+  drop
+!
+!
+!
+zone security SERVERS
+zone security RESTRICTED
+zone security TRANSIT
+zone-pair security ZP-RESTRICTED-SERVERS source RESTRICTED destination SERVERS
+ service-policy type inspect POL-RESTRICTED-REMEDIATE
+zone-pair security ZP-TRANSIT-SERVERS source TRANSIT destination SERVERS
+ service-policy type inspect POL-TRANSIT-SERVERS
+zone-pair security ZP-FTP-DATA-OUT source SERVERS destination TRANSIT
+ service-policy type inspect POL-FTP-ACTIVE-DATA
+!
+!
+interface GigabitEthernet0/0
+ description SERVER-GATEWAY
+ ip address 192.168.50.1 255.255.255.0
+ zone-member security SERVERS
+ ip access-group SERVER-SOURCE in
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1
+ description RESTRICTED-GATEWAY
+ ip address 192.168.60.1 255.255.255.0
+ zone-member security RESTRICTED
+ ip access-group RESTRICTED-SOURCE in
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/2
+ description FIREWALL-TRANSIT
+ ip address 10.255.0.4 255.255.255.248
+ zone-member security TRANSIT
+ duplex auto
+ speed auto
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip classless
+ip route 192.168.10.0 255.255.255.0 10.255.0.2 
+ip route 192.168.20.0 255.255.255.0 10.255.0.2 
+ip route 192.168.30.0 255.255.255.0 10.255.0.3 
+ip route 192.168.40.0 255.255.255.0 10.255.0.3 
+ip route 192.168.70.0 255.255.255.0 10.255.0.1 
+ip route 0.0.0.0 0.0.0.0 10.255.0.1 
+!
+ip flow-export version 9
+!
+!
+ip access-list extended RESTRICTED-REMEDIATE-MATCH
+ permit tcp 192.168.60.0 0.0.0.255 host 192.168.50.13 eq www
+ permit tcp 192.168.60.0 0.0.0.255 host 192.168.50.13 eq domain
+ permit udp 192.168.60.0 0.0.0.255 host 192.168.50.13 eq domain
+ip access-list extended NORMAL-SERVER-MATCH
+ permit tcp 192.168.10.0 0.0.0.255 host 192.168.50.10 eq www
+ permit tcp 192.168.10.0 0.0.0.255 host 192.168.50.13 eq www
+ permit tcp 192.168.10.0 0.0.0.255 host 192.168.50.13 eq domain
+ permit udp 192.168.10.0 0.0.0.255 host 192.168.50.13 eq domain
+ permit tcp 192.168.20.0 0.0.0.255 host 192.168.50.10 eq www
+ permit tcp 192.168.20.0 0.0.0.255 host 192.168.50.10 eq 443
+ permit tcp 192.168.20.0 0.0.0.255 host 192.168.50.13 eq www
+ permit tcp 192.168.20.0 0.0.0.255 host 192.168.50.13 eq domain
+ permit udp 192.168.20.0 0.0.0.255 host 192.168.50.13 eq domain
+ permit tcp 192.168.30.0 0.0.0.255 host 192.168.50.10 eq www
+ permit tcp 192.168.30.0 0.0.0.255 host 192.168.50.10 eq 443
+ permit icmp 192.168.30.0 0.0.0.255 host 192.168.50.10 echo
+ permit tcp 192.168.30.0 0.0.0.255 host 192.168.50.13 eq www
+ permit tcp 192.168.30.0 0.0.0.255 host 192.168.50.13 eq domain
+ permit udp 192.168.30.0 0.0.0.255 host 192.168.50.13 eq domain
+ permit tcp 192.168.40.0 0.0.0.255 192.168.50.0 0.0.0.255
+ permit udp 192.168.40.0 0.0.0.255 192.168.50.0 0.0.0.255
+ permit icmp 192.168.40.0 0.0.0.255 192.168.50.0 0.0.0.255
+ip access-list extended SERVER-FTP-MATCH
+ permit tcp 192.168.30.0 0.0.0.255 host 192.168.50.11 eq ftp
+ permit tcp 192.168.40.0 0.0.0.255 host 192.168.50.11 eq ftp
+ip access-list extended SERVER-SOURCE
+ permit ip 192.168.50.0 0.0.0.255 any
+ deny ip any any
+ip access-list extended RESTRICTED-SOURCE
+ permit udp any eq bootpc any eq bootps
+ permit ip 192.168.60.0 0.0.0.255 any
+ deny ip any any
+ip access-list extended FTP-ACTIVE-DATA
+ permit tcp host 192.168.50.11 eq 20 192.168.30.0 0.0.0.255 gt 1023
+ permit tcp host 192.168.50.11 eq 20 192.168.40.0 0.0.0.255 gt 1023
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+ transport input none
+!
+!
+!
+end
+

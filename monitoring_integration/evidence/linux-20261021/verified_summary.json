@@ -1,0 +1,36 @@
+{
+  "capture": {
+    "frames": 24328,
+    "ipv4": 23922,
+    "arp": 406,
+    "tcp": 20542,
+    "udp": 1605,
+    "icmp": 1774,
+    "dhcp": 564,
+    "first_ns": 1792577559302228000,
+    "last_ns": 1792577748566337000,
+    "bytes": 42296189,
+    "sha256": "1762f710d7e11aa4ebeb0b535dc4bdf15d47e4a3cc1060c8258213f523b0c3d3",
+    "note": "Frames on any include multiple observations of a routed packet; not unique packet or loss counts."
+  },
+  "live_access_checks": 74,
+  "live_access_passed": 74,
+  "imported_observations": 9,
+  "analysis_directory": "/project/monitoring_integration/results/live-20261021T101238Z-a2e776/analysis/20261021T101559Z-b01224c3",
+  "modes": {
+    "static": {
+      "latency_ms": 0.08766666666666667,
+      "packet_loss_pct": 0.0,
+      "throughput_mbps": 867.8934688424553,
+      "disruption_pct": 0.0
+    },
+    "adaptive": {
+      "latency_ms": 0.11566666666666667,
+      "packet_loss_pct": 0.0,
+      "throughput_mbps": 791.8551676283088,
+      "disruption_pct": 0.0
+    }
+  },
+  "analyzer_sha256": "a85d06c91101cad2bf8e7630e9d731a85149bc0682584ad029e9fc19bf256d7b",
+  "capture_log": "tcpdump: WARNING: any: That device doesn't support promiscuous mode\n(Promiscuous mode not supported on the \"any\" device)\ntcpdump: listening on any, link-type LINUX_SLL2 (Linux cooked v2), snapshot length 262144 bytes\n24328 packets captured\n24490 packets received by filter\n0 packets dropped by kernel\n"
+}

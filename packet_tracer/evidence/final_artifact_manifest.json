@@ -1,0 +1,132 @@
+[
+  {
+    "Path": "University_Research_Network_Final.pkt",
+    "Bytes": 158923,
+    "SHA256": "B4CA4EF954FB98DD773797A40CC7448E6003F3211D52702016F4D727AAD6BCB6"
+  },
+  {
+    "Path": "README.md",
+    "Bytes": 6607,
+    "SHA256": "1D7276D4636C84AD32507DE335081FBF62FFC473CEFC47808672A31E37729952"
+  },
+  {
+    "Path": "evidence/PT_VERIFICATION_REPORT.md",
+    "Bytes": 5479,
+    "SHA256": "4CC7F6D180CF28D05C9ED1FC63A5D83F1F233D0E48FB0DEA6E4931804A0E4060"
+  },
+  {
+    "Path": "evidence/observed_test_results.csv",
+    "Bytes": 5586,
+    "SHA256": "3DA94C77CEFECB31B4F6ADC18A48F2C4ED56796E044403005B8614560D3E41DF"
+  },
+  {
+    "Path": "evidence/ACCESS-SW-A_final_running_config.txt",
+    "Bytes": 3446,
+    "SHA256": "2E9A65C656CCC0784AC5C621073BF0BCB113571A22A2BB44C812CFA9D3EE91FF"
+  },
+  {
+    "Path": "evidence/ACCESS-SW-B_final_running_config.txt",
+    "Bytes": 3433,
+    "SHA256": "2E62DB776347B6307EC3A30D20863D53FDDAD901E04C437E42BA6EB03157E5C7"
+  },
+  {
+    "Path": "evidence/CORE-SW_final_running_config.txt",
+    "Bytes": 3974,
+    "SHA256": "8508C89ACF7F4738DA212864A9895D0FA817AB47B136D4C92E2463190567BA1D"
+  },
+  {
+    "Path": "evidence/EDGE-R_final_running_config.txt",
+    "Bytes": 5555,
+    "SHA256": "95B0D13C055A28703305221600BEE7B781F71AEBE994B87FD11C140F421B0A85"
+  },
+  {
+    "Path": "evidence/FW-RES-ADM_final_running_config.txt",
+    "Bytes": 5975,
+    "SHA256": "AB79749A9899E9FA55D3DB10D2065FC1756510F5FE6203373CBCB21B4C17D328"
+  },
+  {
+    "Path": "evidence/FW-SRV-REST_final_running_config.txt",
+    "Bytes": 4980,
+    "SHA256": "BC4C5AD3BA1956D37EDDD2239FF8C1B5D2F5EC4D8D1EEED211BD1F9B1EC033DD"
+  },
+  {
+    "Path": "evidence/FW-STU-FAC_final_running_config.txt",
+    "Bytes": 4827,
+    "SHA256": "9989259600DD3333E037AFFB6CFB8158AD5D6D696C578E28509A84DC93BFB2B3"
+  },
+  {
+    "Path": "evidence/screenshots/admin_active_ftp.png",
+    "Bytes": 88301,
+    "SHA256": "43B693C38670680557496B9683941BB0CE23C5B73F3105BC04C08B8DF8A84EEB"
+  },
+  {
+    "Path": "evidence/screenshots/admin_diagnostics.png",
+    "Bytes": 62814,
+    "SHA256": "27AA777200EA78B8BE730380FBBEAB1F8D571A6EA30769EC3CF835E4C5899504"
+  },
+  {
+    "Path": "evidence/screenshots/admin_portal.png",
+    "Bytes": 25857,
+    "SHA256": "191266673C6AC5B49E4C8BFD13E3889E936EA8B1BA8C99F22F4D258B2BF8960A"
+  },
+  {
+    "Path": "evidence/screenshots/faculty_research_https.png",
+    "Bytes": 30351,
+    "SHA256": "DD15C77BD9A6F18EC434ABE667864C8EBABDB1270789DBEB898EAA62627A3F7A"
+  },
+  {
+    "Path": "evidence/screenshots/policy_host_static.png",
+    "Bytes": 96794,
+    "SHA256": "B2C5537A835F344ED1972BD61F38E3D0486630C6183E267B3896C86801A6E692"
+  },
+  {
+    "Path": "evidence/screenshots/quarantine_dhcp.png",
+    "Bytes": 47653,
+    "SHA256": "6384163A706EAEFDF9700A9EBCF75F25A760DBB109C54347AB7DB5B06105C8FD"
+  },
+  {
+    "Path": "evidence/screenshots/recovery_dhcp.png",
+    "Bytes": 39142,
+    "SHA256": "DB778D022C2D63D7CB356FA01ADDF75C5F91722836C01585ABAFDD85C77D1875"
+  },
+  {
+    "Path": "evidence/screenshots/recovery_research_http.png",
+    "Bytes": 25750,
+    "SHA256": "91A78302306BFA0C768DB3F15B82ACD0BBF0217089408B7842493B70A7F60240"
+  },
+  {
+    "Path": "evidence/screenshots/research_active_ftp.png",
+    "Bytes": 92762,
+    "SHA256": "1AF6A2F66E50EF0BEFABB38578C829AA0C14E3CA8ACF2C065684B80C008846EA"
+  },
+  {
+    "Path": "evidence/screenshots/restricted_remediation_allowed.png",
+    "Bytes": 30050,
+    "SHA256": "3182BC861C8655D880C59A5479C07D729474927299B9921B7EC9E1542169C548"
+  },
+  {
+    "Path": "evidence/screenshots/restricted_research_denied.png",
+    "Bytes": 21381,
+    "SHA256": "B69819A2034B44D11BDA3B3571F63114240854225363AD0292F730CD6AE58554"
+  },
+  {
+    "Path": "evidence/screenshots/student_dhcp.png",
+    "Bytes": 34230,
+    "SHA256": "C287EA5D6C5ACE1B61129C6EF1B9AFA2B7E508B9039F30E4CACE47B2C25439EA"
+  },
+  {
+    "Path": "evidence/screenshots/student_external_hostname.png",
+    "Bytes": 26685,
+    "SHA256": "298C82C17F5FD467AA6E6AD9A6CCFC28C79DF465880E28D2143560B1AD902EE8"
+  },
+  {
+    "Path": "evidence/screenshots/student_pat_translation.png",
+    "Bytes": 67293,
+    "SHA256": "BC8A74409F1E78F0547727DD29DA683F8119C3DCA07DC70166A2331E05E4A469"
+  },
+  {
+    "Path": "evidence/screenshots/student_research_http.png",
+    "Bytes": 25041,
+    "SHA256": "01C737B441784FBDD253AB37C1BA54B6CEF6C4108483BF653E4CE1149993524E"
+  }
+]

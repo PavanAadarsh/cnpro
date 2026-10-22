@@ -1,5 +1,11 @@
 # University Research Network — Handover and Technical Walkthrough
 
+> Historical technical walkthrough of the 18 October version. For the refreshed
+> local code and 20 October branch inspection, use
+> [the current integration guide](monitoring_integration/README.md) and
+> [current status](monitoring_integration/COMPLETION_REPORT.md). Functionality,
+> source pins and pending items below are a dated record, not the latest status.
+
 **Course:** BACSE203 P Computer Networks Lab  
 **Project:** University Research Network with Adaptive Access Control and Dynamic Segmentation  
 **Local folder:** `C:\Users\samya\Desktop\CN proj\cnpro-member4`  

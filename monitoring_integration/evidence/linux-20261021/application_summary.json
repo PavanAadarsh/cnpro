@@ -1,0 +1,6 @@
+{
+  "checks": 67,
+  "passed": 67,
+  "evidence": "application_checks.json",
+  "scope": "real Linux namespaces, DHCP, nftables, TLS and FTP"
+}

@@ -1,0 +1,208 @@
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname FW-RES-ADM
+!
+!
+!
+!
+ip dhcp excluded-address 192.168.30.1 192.168.30.99
+ip dhcp excluded-address 192.168.40.1 192.168.40.99
+!
+ip dhcp pool PT-VLAN30
+ network 192.168.30.0 255.255.255.0
+ default-router 192.168.30.1
+ dns-server 203.0.113.2
+ip dhcp pool PT-VLAN40
+ network 192.168.40.0 255.255.255.0
+ default-router 192.168.40.1
+ dns-server 203.0.113.2
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+!
+!
+!
+license udi pid CISCO2911/K9 sn FTX15246YG5-
+license boot module c2900 technology-package securityk9
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain-lookup
+!
+!
+spanning-tree mode pvst
+!
+class-map type inspect match-all RESEARCH-OUT
+ match access-group name RESEARCH-OUT-MATCH
+class-map type inspect match-all RESEARCH-FTP
+ match access-group name RESEARCH-FTP-MATCH
+ match protocol ftp
+class-map type inspect match-all ADMIN-OUT
+ match access-group name ADMIN-OUT-MATCH
+class-map type inspect match-all ADMIN-FTP
+ match access-group name ADMIN-FTP-MATCH
+ match protocol ftp
+class-map type inspect match-all ADMIN-RESEARCH
+ match access-group name ADMIN-RESEARCH-MATCH
+class-map type inspect match-all FTP-ACTIVE-DATA
+ match access-group name FTP-ACTIVE-DATA
+ match protocol tcp
+!
+policy-map type inspect POL-RESEARCH-OUT
+ class type inspect RESEARCH-FTP
+  inspect
+ class type inspect RESEARCH-OUT
+  inspect
+ class type inspect class-default
+  drop
+!
+policy-map type inspect POL-ADMIN-OUT
+ class type inspect ADMIN-FTP
+  inspect
+ class type inspect ADMIN-OUT
+  inspect
+ class type inspect class-default
+  drop
+!
+policy-map type inspect POL-ADMIN-RESEARCH
+ class type inspect ADMIN-RESEARCH
+  inspect
+ class type inspect class-default
+  drop
+!
+policy-map type inspect POL-FTP-ACTIVE-DATA
+ class type inspect FTP-ACTIVE-DATA
+  inspect
+ class type inspect class-default
+  drop
+!
+!
+!
+zone security RESEARCH
+zone security ADMIN
+zone security TRANSIT
+zone-pair security ZP-RESEARCH-OUT source RESEARCH destination TRANSIT
+ service-policy type inspect POL-RESEARCH-OUT
+zone-pair security ZP-ADMIN-OUT source ADMIN destination TRANSIT
+ service-policy type inspect POL-ADMIN-OUT
+zone-pair security ZP-ADMIN-RESEARCH source ADMIN destination RESEARCH
+ service-policy type inspect POL-ADMIN-RESEARCH
+zone-pair security ZP-FTP-DATA-IN source TRANSIT destination RESEARCH
+ service-policy type inspect POL-FTP-ACTIVE-DATA
+zone-pair security ZP-FTP-DATA-ADMIN source TRANSIT destination ADMIN
+ service-policy type inspect POL-FTP-ACTIVE-DATA
+!
+!
+interface GigabitEthernet0/0
+ description RESEARCH-GATEWAY
+ ip address 192.168.30.1 255.255.255.0
+ zone-member security RESEARCH
+ ip access-group RESEARCH-SOURCE in
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1
+ description ADMIN-GATEWAY
+ ip address 192.168.40.1 255.255.255.0
+ zone-member security ADMIN
+ ip access-group ADMIN-SOURCE in
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/2
+ description FIREWALL-TRANSIT
+ ip address 10.255.0.3 255.255.255.248
+ zone-member security TRANSIT
+ duplex auto
+ speed auto
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip classless
+ip route 192.168.10.0 255.255.255.0 10.255.0.2 
+ip route 192.168.20.0 255.255.255.0 10.255.0.2 
+ip route 192.168.50.0 255.255.255.0 10.255.0.4 
+ip route 192.168.60.0 255.255.255.0 10.255.0.4 
+ip route 192.168.70.0 255.255.255.0 10.255.0.1 
+ip route 0.0.0.0 0.0.0.0 10.255.0.1 
+!
+ip flow-export version 9
+!
+!
+ip access-list extended RESEARCH-OUT-MATCH
+ permit tcp 192.168.30.0 0.0.0.255 host 192.168.50.10 eq www
+ permit tcp 192.168.30.0 0.0.0.255 host 192.168.50.10 eq 443
+ permit icmp 192.168.30.0 0.0.0.255 host 192.168.50.10 echo
+ permit tcp 192.168.30.0 0.0.0.255 host 192.168.50.13 eq www
+ permit tcp 192.168.30.0 0.0.0.255 host 192.168.50.13 eq domain
+ permit udp 192.168.30.0 0.0.0.255 host 192.168.50.13 eq domain
+ permit tcp 192.168.30.0 0.0.0.255 host 203.0.113.2 eq www
+ permit tcp 192.168.30.0 0.0.0.255 host 203.0.113.2 eq 443
+ permit tcp 192.168.30.0 0.0.0.255 host 203.0.113.2 eq domain
+ permit udp 192.168.30.0 0.0.0.255 host 203.0.113.2 eq domain
+ip access-list extended RESEARCH-FTP-MATCH
+ permit tcp 192.168.30.0 0.0.0.255 host 192.168.50.11 eq ftp
+ip access-list extended ADMIN-OUT-MATCH
+ permit tcp 192.168.40.0 0.0.0.255 192.168.50.0 0.0.0.255
+ permit udp 192.168.40.0 0.0.0.255 192.168.50.0 0.0.0.255
+ permit icmp 192.168.40.0 0.0.0.255 192.168.50.0 0.0.0.255
+ permit tcp 192.168.40.0 0.0.0.255 192.168.10.0 0.0.0.255
+ permit udp 192.168.40.0 0.0.0.255 192.168.10.0 0.0.0.255
+ permit icmp 192.168.40.0 0.0.0.255 192.168.10.0 0.0.0.255
+ permit tcp 192.168.40.0 0.0.0.255 192.168.20.0 0.0.0.255
+ permit udp 192.168.40.0 0.0.0.255 192.168.20.0 0.0.0.255
+ permit icmp 192.168.40.0 0.0.0.255 192.168.20.0 0.0.0.255
+ permit tcp 192.168.40.0 0.0.0.255 host 203.0.113.2
+ permit udp 192.168.40.0 0.0.0.255 host 203.0.113.2
+ permit icmp 192.168.40.0 0.0.0.255 host 203.0.113.2
+ip access-list extended ADMIN-FTP-MATCH
+ permit tcp 192.168.40.0 0.0.0.255 host 192.168.50.11 eq ftp
+ip access-list extended ADMIN-RESEARCH-MATCH
+ permit tcp 192.168.40.0 0.0.0.255 192.168.30.0 0.0.0.255
+ permit udp 192.168.40.0 0.0.0.255 192.168.30.0 0.0.0.255
+ permit icmp 192.168.40.0 0.0.0.255 192.168.30.0 0.0.0.255
+ip access-list extended RESEARCH-SOURCE
+ permit udp any eq bootpc any eq bootps
+ permit ip 192.168.30.0 0.0.0.255 any
+ deny ip any any
+ip access-list extended ADMIN-SOURCE
+ permit udp any eq bootpc any eq bootps
+ permit ip 192.168.40.0 0.0.0.255 any
+ deny ip any any
+ip access-list extended FTP-ACTIVE-DATA
+ permit tcp host 192.168.50.11 eq 20 192.168.30.0 0.0.0.255 gt 1023
+ permit tcp host 192.168.50.11 eq 20 192.168.40.0 0.0.0.255 gt 1023
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+ transport input none
+!
+!
+!
+end
+

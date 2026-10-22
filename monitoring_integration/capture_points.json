@@ -1,0 +1,62 @@
+[
+  {
+    "id": "P1",
+    "device": "CORE-SW",
+    "interface": "GigabitEthernet0/1",
+    "peer": "ACCESS-SW-A GigabitEthernet0/1",
+    "link_type": "802.1Q trunk",
+    "normal_host_vlans": [10, 20, 40],
+    "containment_vlans": [60, 70],
+    "configured_allowed_vlans": [10, 20, 30, 40, 50, 60, 70],
+    "scenarios": ["protected_access", "violations", "legitimate_transition", "recovery"],
+    "purpose": "Observe student/faculty/admin requests and containment VLAN tags. Includes DHCP/ARP observation when supported by the selected capture filter.",
+    "evidence_status": "designated_only_not_captured",
+    "source": "Original MEMBER4_HANDOFF.md and confirmed switch configuration"
+  },
+  {
+    "id": "P2",
+    "device": "CORE-SW",
+    "interface": "GigabitEthernet0/2",
+    "peer": "ACCESS-SW-B GigabitEthernet0/1",
+    "link_type": "802.1Q trunk",
+    "normal_host_vlans": [30, 50],
+    "configured_allowed_vlans": [10, 20, 30, 40, 50, 60, 70],
+    "scenarios": ["authorized", "protected_access", "legitimate_transition", "recovery", "performance"],
+    "purpose": "Observe research/server flows and authorized health-control responses. A denied student request should not be assumed to reach this link.",
+    "evidence_status": "designated_only_not_captured",
+    "source": "Original MEMBER4_HANDOFF.md and confirmed switch configuration"
+  },
+  {
+    "id": "P3",
+    "device": "CORE-SW",
+    "interface": "FastEthernet0/24",
+    "peer": "EDGE-R GigabitEthernet0/0",
+    "link_type": "routed 10.0.0.0/30",
+    "scenarios": ["recovery"],
+    "purpose": "Observe inside traffic on the simulated-internet path before NAT; correlate matching flows with P4.",
+    "evidence_status": "designated_only_not_captured",
+    "source": "Original MEMBER4_HANDOFF.md and confirmed core/edge configuration"
+  },
+  {
+    "id": "P4",
+    "device": "EDGE-R",
+    "interface": "GigabitEthernet0/1",
+    "peer": "INTERNET-SRV Fa0",
+    "link_type": "routed 203.0.113.0/30",
+    "scenarios": ["recovery"],
+    "purpose": "Compare with P3 to verify actual PAT source rewriting to 203.0.113.1 for restored permitted internet traffic. Retain matching flow identity and NAT table evidence.",
+    "evidence_status": "designated_only_not_captured",
+    "source": "Member 1 clarification supplied by the user on 20 October 2026; endpoint and NAT config already in repository"
+  },
+  {
+    "id": "P5",
+    "device": "ACCESS-SW-A",
+    "interface": "FastEthernet0/2",
+    "peer": "PC-STU2 Fa0",
+    "link_type": "untagged access port",
+    "scenarios": ["protected_access", "violations", "legitimate_transition", "recovery"],
+    "purpose": "Correlate endpoint service outcomes and actual DHCP lease with independent switchport readback. Frames on this access link do not prove their VLAN from an 802.1Q tag; use P1 plus switch CLI evidence.",
+    "evidence_status": "designated_only_not_captured",
+    "source": "Member 1 clarification supplied by the user on 20 October 2026; device/port mapping already in repository"
+  }
+]

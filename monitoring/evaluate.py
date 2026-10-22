@@ -83,18 +83,32 @@ def calculate(row):
 
 
 def audit():
-    core = (ROOT / 'running-configs/CORE-SW_running_config.txt').read_text()
-    files = [p for p in ROOT.rglob('*') if p.is_file() and '.git' not in p.parts and 'monitoring' not in p.parts]
+    updated = ROOT / 'monitoring_integration/upstream/member2/cnpro/running-configs/CORE-SW_running_config.txt'
+    core_path = updated if updated.is_file() else ROOT / 'running-configs/CORE-SW_running_config.txt'
+    core = core_path.read_text()
+    excluded = {'.git', 'results', 'network_results', 'captures', '__pycache__'}
+    files = [p for p in ROOT.rglob('*') if p.is_file() and not excluded.intersection(p.relative_to(ROOT).parts)]
+    topology = [str(p.relative_to(ROOT)) for p in files if p.suffix.lower() in ('.pkt', '.pka')]
+    engine = ROOT / 'monitoring_integration/upstream/member3/policy_engine/policy_engine.py'
+    limitations = ['Static source inspection only; live policy enforcement and network metrics are unverified.']
+    if not engine.is_file():
+        limitations.append('Engine dependency is not prepared locally; use monitoring_integration/prepare_upstream.py.')
+    if not topology:
+        limitations.append('No local Packet Tracer topology; no network probe/capture executed by this audit.')
+    if 'ip access-group ' not in core:
+        limitations.append('Selected core configuration has no security ACL attachment.')
     return {
         'checked_at': datetime.now(timezone.utc).isoformat(),
-        'pkt_files': [str(p.relative_to(ROOT)) for p in files if p.suffix == '.pkt'],
+        'pkt_files': topology,
+        'core_configuration_source': core_path.relative_to(ROOT).as_posix(),
+        'configuration_only': True,
+        'live_security_acl_verified': None,
         'core_security_acl_applied': 'ip access-group ' in core,
+        'engine_source_present': engine.is_file(),
         'routing_enabled': '\nip routing\n' in core,
         'tools_on_path': {x: shutil.which(x) for x in ('python', 'tshark', 'tcpdump', 'PacketTracer')},
         'source_sha256': {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in files},
-        'limitations': ['No adaptive engine or event API in inspected source branch.',
-                         'No live probes run: Packet Tracer topology file is absent.',
-                         'Baseline has no security ACL; VLAN change alone does not establish routed isolation.']}
+        'limitations': limitations}
 
 
 def new_run(base):
@@ -202,7 +216,7 @@ def main():
         path = new_run(args.output)
         now = datetime.now(timezone.utc).isoformat()
         rows = [dict(scenario=s['id'], configuration=c, trial=1, start_at=now, end_at=now,
-                     status='blocked', notes='Not executed: missing .pkt topology, ACLs and adaptive engine. Times record availability check only.')
+                     status='blocked', notes='Not executed: no matching live topology/runtime verified. ACL/engine sources may be available; see current audit. Times record availability check only.')
                 for s in json.loads((ROOT / 'monitoring/scenarios.json').read_text())
                 for c in ('architecture_baseline', 'static', 'adaptive')]
         source = path / 'availability.json'

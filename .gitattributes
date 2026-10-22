@@ -1,0 +1,8 @@
+# Keep scripts portable between Windows checkouts and the Linux lab.
+*.sh text eol=lf
+*.py text eol=lf
+.gitattributes text eol=lf
+*.pkt -text
+*.png -text
+# Preserve genuine exported device configurations byte for byte.
+/packet_tracer/evidence/*_final_running_config.txt -text

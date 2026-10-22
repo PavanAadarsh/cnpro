@@ -1,0 +1,11 @@
+{
+  "counts": {
+    "tls_handshake_records": 132,
+    "ftp_login_230": 24,
+    "ftp_login_denied_530": 24,
+    "ftp_transfer_complete_226": 24,
+    "ftp_data_payload_frames": 24,
+    "dns_udp_frames": 1041
+  },
+  "note": "Frame counts include repeated observations on the any interface; not unique transactions. No payloads or credentials exported."
+}

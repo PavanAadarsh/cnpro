@@ -17,28 +17,34 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE / 'upstream/member3'))
 from policy_engine.policy_engine import PolicyEngine
 from policy_engine.threshold_tracker import VALID_EVENT_TYPES
+from runtime import IntegratedPolicyEngine
 
 
 class CommandRecorder:
     def __init__(self):
         self.calls = []
         self.accept = True
+        self.vlans = {}
 
     def push_vlan(self, switch_ip, port, vlan_id):
         self.calls.append(dict(switch_ip=switch_ip, port=port, vlan_id=vlan_id,
                                stub_accept=self.accept, network_applied=False))
+        if self.accept:
+            self.vlans[(switch_ip, port)] = vlan_id
         return self.accept
 
-    def verify_vlan(self, *args):
-        return None
+    def verify_vlan(self, switch_ip, port):
+        # Explicit software fixture readback, never an actual switch observation.
+        return self.vlans.get((switch_ip, port))
 
 
 class EngineSession:
-    def __init__(self, directory):
+    def __init__(self, directory, raw_upstream=False):
         self.directory = Path(directory)
         self.directory.mkdir(parents=True, exist_ok=False)
         self.recorder = CommandRecorder()
-        self.engine = PolicyEngine(state_db_path=str(self.directory / 'state_db.json'),
+        engine_class = PolicyEngine if raw_upstream else IntegratedPolicyEngine
+        self.engine = engine_class(state_db_path=str(self.directory / 'state_db.json'),
                                    events_db_path=str(self.directory / 'events_db.json'),
                                    ssh_enforcer=self.recorder)
         self.records = []
@@ -103,8 +109,8 @@ PLANS = {
     'manual_recovery': [('event', 'port_scan', 'RESTRICTED'), ('clear', None, 'NORMAL')],
     'remediation_does_not_bypass_hold': [('event', 'port_scan', 'RESTRICTED'),
                                        ('remediated', None, 'RESTRICTED'), ('sweep', None, 'RESTRICTED')],
-    'enforcement_failure_flag': [('event', 'port_scan', 'RESTRICTED')],
-    'recovery_failure_flag': [('event', 'port_scan', 'RESTRICTED'), ('clear', None, 'NORMAL')],
+    'enforcement_failure_flag': [('event', 'port_scan', 'NORMAL')],
+    'recovery_failure_flag': [('event', 'port_scan', 'RESTRICTED'), ('clear', None, 'RESTRICTED')],
 }
 
 

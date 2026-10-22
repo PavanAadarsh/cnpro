@@ -65,7 +65,7 @@ class AdapterTests(unittest.TestCase):
     def test_failed_enforcement_is_not_network_success(self):
         self.session.recorder.accept = False
         row = self.session.invoke('PC-STU2', 'event', 'port_scan')
-        self.assertEqual(row['after']['state'], 'RESTRICTED')
+        self.assertEqual(row['after']['state'], 'NORMAL')
         self.assertTrue(row['after']['enforcement_failed'])
         self.assertIsNone(row['effective_network_state'])
 
@@ -115,6 +115,11 @@ class NetworkImportTests(unittest.TestCase):
     def test_replay_cannot_be_network_evidence(self):
         self.row['evidence_level'] = 'real_engine_injected_events_stub_enforcement'; self.save()
         with self.assertRaises(ValueError): validate(self.source)
+
+    def test_kernel_lab_evidence_is_distinct_from_physical_hardware(self):
+        self.row['evidence_level'] = 'linux_kernel_vlan_network'
+        self.save()
+        self.assertEqual(validate(self.source)[0]['evidence_level'], 'linux_kernel_vlan_network')
 
     def test_missing_or_escaping_evidence_rejected(self):
         for path in ('missing.txt', '../outside.txt'):

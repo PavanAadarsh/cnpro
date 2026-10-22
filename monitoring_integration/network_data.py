@@ -30,7 +30,7 @@ def validate(source):
     for row in rows:
         if not isinstance(row, dict):
             raise ValueError('each row must be an object')
-        if row.get('evidence_level') not in ('physical_network', 'packet_tracer_simulation'):
+        if row.get('evidence_level') not in ('physical_network', 'packet_tracer_simulation', 'linux_kernel_vlan_network'):
             raise ValueError('engine replay/configuration audit cannot be imported as network measurements')
         if row.get('status') not in ('measured', 'failed'):
             raise ValueError('readiness records are not network observations')
@@ -45,7 +45,7 @@ def validate(source):
             raise ValueError('declare the common clock domain')
         if row['evidence_level'] == 'packet_tracer_simulation' and row['clock_domain'] != 'packet_tracer_simulation':
             raise ValueError('simulation evidence requires a simulation clock domain')
-        if row['evidence_level'] == 'physical_network' and row['clock_domain'] != 'wall_utc':
+        if row['evidence_level'] in ('physical_network', 'linux_kernel_vlan_network') and row['clock_domain'] != 'wall_utc':
             raise ValueError('physical evidence requires a wall-clock domain')
         start, end = legacy.stamp(row['start_at']), legacy.stamp(row['end_at'])
         if end < start:

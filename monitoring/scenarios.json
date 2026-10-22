@@ -1,8 +1,50 @@
 [
-  {"id":"authorized", "source":"PC-RES1", "destination":"192.168.50.10", "service":"HTTP TCP/80", "action":"Desktop Web Browser: http://192.168.50.10; repeat 5 times per trial", "expected":"Architecture baseline permits; static/adaptive authorization must be confirmed by Member 2."},
-  {"id":"protected_access", "source":"PC-STU2", "destination":"192.168.50.12", "service":"HTTP TCP/80", "action":"Desktop Web Browser: http://192.168.50.12; 5 requests, one per second", "expected":"Architecture baseline permits. Intended unauthorized case pending Member 2 access matrix; static/adaptive should deny only if matrix specifies this."},
-  {"id":"violations", "source":"PC-STU2 at ACCESS-SW-A Fa0/2", "destination":"192.168.50.12", "service":"HTTP TCP/80", "action":"After Member 3 provides threshold and event source, send threshold+1 requests at its specified interval; save engine log and probe evidence", "expected":"Pending real thresholds: NORMAL to RESTRICTED to QUARANTINED; verify denied HTTP after each transition, not merely VLAN membership."},
-  {"id":"legitimate_transition", "source":"PC-RES1 and affected PC-STU2", "destination":"192.168.50.10 and 192.168.50.13", "service":"HTTP TCP/80", "action":"Make one request per second for 10 seconds before, throughout, and 10 seconds after the violation test; record separate counters per source/destination", "expected":"Unaffected authorized research traffic continues; affected remediation permissions depend on Member 2 matrix."},
-  {"id":"recovery", "source":"PC-STU2", "destination":"192.168.50.13", "service":"HTTP TCP/80 and DHCP UDP/67-68", "action":"Apply Member 3 recovery condition, renew DHCP with ipconfig /renew after VLAN restoration; probe a matrix-approved normal service once per second", "expected":"Recovery condition, NORMAL state, restored VLAN 10 lease, and successful permitted request all evidenced."},
-  {"id":"performance", "source":"PC-RES1", "destination":"192.168.50.10", "service":"ICMP", "action":"Command Prompt: ping 192.168.50.10; repeat until 20 probes per trial; retain complete transcript", "expected":"Record replies, losses, and displayed RTT precision. Use identical sample count and warm-up in each configuration."}
+  {
+    "id": "authorized",
+    "source": "PC-RES1",
+    "destination": "192.168.50.10",
+    "service": "HTTP TCP/80",
+    "action": "Desktop Web Browser: http://192.168.50.10; repeat 5 times per trial",
+    "expected": "PERMIT from research VLAN30 under supplied Member 2 ACL, both static and adaptive while this host remains NORMAL."
+  },
+  {
+    "id": "protected_access",
+    "source": "PC-STU2",
+    "destination": "192.168.50.12",
+    "service": "HTTP TCP/80",
+    "action": "Desktop Web Browser: http://192.168.50.12; 5 requests, one per second; verify server health from PC-ADM1",
+    "expected": "DENY under supplied static/adaptive VLAN10 ACL. Already denied before containment; use STU2 research HTTP to demonstrate an additional adaptive access change."
+  },
+  {
+    "id": "violations",
+    "source": "PC-STU2 at ACCESS-SW-A Fa0/2",
+    "destination": "192.168.50.12",
+    "service": "HTTP TCP/80",
+    "action": "Observe controlled prohibited attempts, then explicitly inject 2 cross_vlan_attempt events within 600 seconds via the actual Member 3 interface; one further policy_violation while RESTRICTED escalates. Preserve actual traffic and separate injected-event evidence.",
+    "expected": "NORMAL -> RESTRICTED -> QUARANTINE. Packet Tracer uses explicit operator injection; the corrected Linux lab automatically normalizes actual per-endpoint kernel denial counts into the real engine threshold interface and verifies port/lease changes."
+  },
+  {
+    "id": "legitimate_transition",
+    "source": "PC-RES1 and affected PC-STU2",
+    "destination": "192.168.50.10 and 192.168.50.13",
+    "service": "HTTP TCP/80",
+    "action": "Make one request per second for 10 seconds before, throughout, and 10 seconds after the violation test; record separate counters per source/destination",
+    "expected": "PC-RES1 research HTTP remains permitted. Actual ACL permits STU2 remediation HTTP in VLAN60 but denies it in VLAN70, despite the newer runtime document claiming quarantine access."
+  },
+  {
+    "id": "recovery",
+    "source": "PC-STU2",
+    "destination": "192.168.50.13 then 203.0.113.2",
+    "service": "HTTP TCP/80 and DHCP UDP/67-68",
+    "action": "Use manual_clear, or an elapsed 1800-second RESTRICTED/7200-second QUARANTINE hold with quiet/remediated condition. listen mode provides periodic recovery; CLI recover is on-demand. Further quarantine violations restart the hold. Renew DHCP and verify switch VLAN and restored service.",
+    "expected": "Corrected runtime requires successful push, exact integer VLAN readback and supported endpoint verification. Unknown/mismatched readback fails closed. Remediation never bypasses the original 30/120-minute hold. Live short experiments measure separately labeled admin recovery."
+  },
+  {
+    "id": "performance",
+    "source": "PC-RES1",
+    "destination": "192.168.50.10",
+    "service": "ICMP",
+    "action": "Command Prompt: ping 192.168.50.10; repeat until 20 probes per trial; retain complete transcript",
+    "expected": "Record replies, losses, and displayed RTT precision. Use identical sample count and warm-up in each configuration."
+  }
 ]

@@ -6,9 +6,11 @@ import csv
 import hashlib
 import importlib.util
 import json
+import os
 from pathlib import Path
 import shutil
 import statistics
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -17,10 +19,20 @@ import uuid
 from acl_audit import audit, load
 from engine_adapter import run_trials
 from network_data import analyze
+from branch_audit import inventory
+from contract_audit import check as check_contract
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 ACL = HERE / 'upstream/member2/cnpro/configs/CORE-SW_security_acls.cfg'
+
+
+def latest_live():
+    for directory in sorted((HERE/'results').glob('live-*'), reverse=True):
+        if (directory/'verified_summary.json').is_file() and (directory/'status.json').is_file():
+            if json.loads((directory/'status.json').read_text())['status'] == 'completed':
+                return directory.relative_to(HERE).as_posix()
+    return None
 
 
 def new_run(kind, base=None):
@@ -46,14 +58,17 @@ def environment():
                 acl_count=len(acls), svi_bindings=bindings,
                 member2_snippet_matches_export=(normalized(acls) == normalized(exported) and bindings == exported_bindings),
                 engine_states=['NORMAL', 'RESTRICTED', 'QUARANTINE'],
-                engine_detection_interface='handle_event(device_name, event_type); injected events, no packet detector supplied',
+                engine_detection_interface='manual injection or delivered UDP syslog/NetFlow listener with periodic recovery; live switch/exporter integration unverified',
+                runtime_document_present=(HERE / 'upstream/member3/docs/ENGINE_RUNTIME_AND_RECONCILIATION.md').is_file(),
                 source_hashes={str(p.relative_to(HERE)): hashlib.sha256(p.read_bytes()).hexdigest()
                                for p in (HERE / 'upstream').rglob('*') if p.is_file()},
-                network_status='not_executed_no_pkt_or_matching_lab_runtime')
+                latest_verified_linux_lab=latest_live(),
+                network_status='separate_linux_lab_evidence_available' if latest_live() else 'no_completed_verified_linux_lab',
+                cisco_hardware_verified=False)
 
 
 def resolve_scenarios():
-    return [
+    scenarios = [
         dict(id='authorized', source='PC-RES1', destination='192.168.50.10', protocol='tcp', port=80,
              normal='permit', restricted='deny', quarantine='deny',
              action='HTTP GET from actual PC-RES1 lease; unaffected research control remains VLAN30.'),
@@ -63,30 +78,58 @@ def resolve_scenarios():
         dict(id='violations', source='PC-STU2', destination='192.168.50.12', protocol='tcp', port=80,
              action='Two observed cross-VLAN violations may be manually normalized to cross_vlan_attempt; '
                     '2 in 600 s restrict. Next policy_violation while restricted escalates. '
-                    'Engine injection is explicit; HTTP drops are not automatically detected.'),
+                    'Packet Tracer injection is explicit; delivered syslog listener maps denies to policy_violation, which alone does not restrict NORMAL.'),
         dict(id='legitimate_transition', source='PC-RES1 and PC-STU2', destination='192.168.50.10 / 192.168.50.13',
              protocol='tcp', port=80, action='Concurrent separate host traces; PC-RES1 HTTP stays permitted. '
              'STU2 research permitted NORMAL, denied RESTRICTED/QUARANTINE; remediation permitted NORMAL/RESTRICTED, denied QUARANTINE.'),
         dict(id='recovery', source='PC-STU2', destination='192.168.50.13 then 203.0.113.2', protocol='tcp', port=80,
              action='manual_clear is immediate admin recovery; auto recovery requires 1800 s restricted or '
-                    '7200 s quarantine hold plus no recent events or remediated. Remediation flag does not bypass hold. '
+                    '7200 s quarantine hold plus no recent events or remediated. Further quarantine violations restart hold; remediation does not bypass it. listen mode runs periodic recovery. '
                     'Renew lease, inspect port and verify restored HTTP.'),
         dict(id='performance', source='PC-RES1', destination='192.168.50.10', protocol='icmp', port=None,
              action='20 ICMP probes from simulated PC; 3 trials each static/adaptive. Actual RTT/loss required; no predefined success numbers.')]
+    points = json.loads((HERE / 'capture_points.json').read_text(encoding='utf-8'))
+    for scenario in scenarios:
+        scenario['capture_points'] = [point['id'] for point in points if scenario['id'] in point['scenarios']]
+    return scenarios
 
 
 def scenario_audit(path):
     env = environment()
     write_json(path / 'environment.json', env)
+    branches = inventory()
+    write_json(path / 'branch_inventory.json', branches)
+    contracts = check_contract(path / 'contract_checks')
+    write_json(path / 'contract_checks.json', contracts)
+    source_commit = env['branches']['origin/member3']
+    member3 = next(b for b in branches['branches'] if b['branch'] == 'member3')
+    if 'state_db.json' in member3['files']:
+        received = subprocess.check_output(['git', '-C', str(ROOT), 'show', f'{source_commit}:state_db.json'])
+        (path / 'received_member3_state_db.json').write_bytes(received)
+        state = json.loads(received)
+        write_json(path / 'received_state_summary.json', dict(source_commit=source_commit, devices=len(state),
+            state_counts={name: sum(r.get('state') == name for r in state.values()) for name in ('NORMAL', 'RESTRICTED', 'QUARANTINE')},
+            failed_enforcement_records=sum(r.get('enforcement_failed') is True for r in state.values()),
+            evidence_level='teammate_uploaded_snapshot_not_live_network_evidence',
+            imported_into_active_engine=False))
     rows = audit(ACL)
     write_json(path / 'acl_checks.json', rows)
+    effective = HERE/'effective/CORE-SW_security_acls.cfg'
+    if effective.is_file():
+        write_json(path/'effective_acl_checks.json', audit(effective))
     write_json(path / 'resolved_scenarios.json', resolve_scenarios())
+    write_json(path / 'capture_points.json', json.loads((HERE / 'capture_points.json').read_text(encoding='utf-8')))
     write_json(path / 'network_readiness.json', [dict(scenario=s['id'], configuration=c, executed=False,
-                status='blocked', detection_ms=None, response_ms=None, recovery_ms=None,
+                status='separate_linux_lab_evidence_available' if latest_live() else 'blocked',
+                separate_linux_lab_evidence=latest_live(), detection_ms=None, response_ms=None, recovery_ms=None,
                 latency_ms=None, packet_loss_pct=None, throughput_mbps=None,
-                notes='ACL and engine sources now supplied; .pkt/live project runtime and drop detector absent.')
+                notes='This command audits sources without running experiments. See separate Linux lab evidence when available. '
+                      'Upstream contracts below describe teammate originals; runtime.py and effective policy implement local fixes. '
+                      'Cisco hardware is not verified by Linux lab results.')
                 for s in resolve_scenarios() for c in ('static', 'adaptive')])
-    lines = ['# Member 4 integration audit', '',
+    lines = ['# Member 4 source audit (upstream originals versus local fixes)', '',
+             'Current corrected runtime is runtime.py; effective_acl_checks.json checks the local policy. '
+             'Actual completed kernel experiments, if available: ' + str(latest_live()), '',
              'Configuration checks are offline semantics, not network tests. Expected values come from Member 2 documentation.', '',
              '| Case | Expected | ACL decision | Match | Source ACL line |', '|---|---|---|---|---:|']
     for row in rows:
@@ -98,11 +141,18 @@ def scenario_audit(path):
               '- Policy host and access-switch management IPs share VLAN40; direct same-VLAN traffic normally bypasses core routed SVI ACL evaluation.',
               '- Engine uses QUARANTINE (not QUARANTINED), and stores requested state even when SSH fails; inspect enforcement_failed and independent port/probe evidence.',
               '- Generic policy_violation events alone do not restrict a NORMAL device; cross_vlan_attempt needs 2/600 s, auth_failure needs 3/300 s, port_scan or spoofing needs 1.',
-              '- Supplied engine has no ACL-drop/packet detector. CLI injection must be labeled as such.',
+              '- Delivered UDP syslog/NetFlow parser and recovery worker exist. ACL denies map to policy_violation and do not restrict NORMAL on their own; no live exporter verified.',
               '- Remediation flag does not bypass 30/120-minute hold in the actual recovery implementation.',
-              '- No .pkt file supplied; no actual network or tshark capture was run.',
+              '- No .pkt file exists in any fetched branch; see branch_inventory.json for every path and commit.',
+              '- Timer restart, hold-required remediation and periodic recovery source are now delivered. Structured persistence, dynamic identity mapping, ACL permissions and fail-closed readback still need reconciliation.',
+              '- Uploaded state_db.json is archived as a teammate snapshot and never loaded as active engine state.',
               '', 'No teammate configuration/source has been changed. See environment.json for pinned source hashes and snippet/export consistency.']
     (path / 'audit_report.md').write_text('\n'.join(lines), encoding='utf-8')
+    contract_lines = ['# Upstream runtime contract verification (before local fixes)', '',
+        'Actual source/ACL semantics and real engine software probes with stub enforcement. No network measurements.', '',
+        '| Claim | Status | Observed |', '|---|---|---|']
+    contract_lines += [f"| {r['id']} | {r['status']} | {json.dumps(r['observed'], ensure_ascii=False)} |" for r in contracts]
+    (path / 'contract_report.md').write_text('\n'.join(contract_lines), encoding='utf-8')
     return rows
 
 
@@ -135,7 +185,7 @@ def replay(path, trials):
         '# Engine integration software results\n\n'
         f'{len(rows)} real API calls in {trials} trials per plan; '
         f'{sum(r["assertion_passed"] for r in rows)} expected-state/flag assertions passed.\n\n'
-        'Uses Member 3 engine unchanged with explicit non-network CommandRecorder injection. '
+        'Uses Member 3 engine with the integrated verified-enforcement wrapper and explicit non-network CommandRecorder injection. '
         'API timings include JSON persistence and local log handling. These are software measurements, '
         'not network detection, isolation, recovery, RTT, loss or throughput. '
         'The chart shows per-trial mean API runtime; state/command evidence lives under trials/.\n', encoding='utf-8')
@@ -145,6 +195,8 @@ def replay(path, trials):
 def validate_tests(path):
     (path / 'temp').mkdir()
     previous = tempfile.tempdir
+    previous_cwd = Path.cwd()
+    os.chdir(path / 'temp')
     tempfile.tempdir = str((path / 'temp').resolve())
     sys.path.insert(0, str(HERE / 'upstream/member3'))
     groups = [('member3', HERE / 'upstream/member3/tests'), ('member4_original', ROOT / 'monitoring/tests'),
@@ -159,6 +211,7 @@ def validate_tests(path):
                                      errors=len(result.errors), passed=result.wasSuccessful())
     finally:
         tempfile.tempdir = previous
+        os.chdir(previous_cwd)
     write_json(path / 'test_summary.json', summary)
     return summary
 
@@ -166,7 +219,7 @@ def validate_tests(path):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest='command', required=True)
-    for name in ('audit', 'test'):
+    for name in ('audit', 'test', 'live'):
         sub.add_parser(name)
     p = sub.add_parser('replay'); p.add_argument('--trials', type=int, default=3)
     p = sub.add_parser('import-network'); p.add_argument('--input', required=True)
@@ -179,6 +232,10 @@ def main():
     p.add_argument('--count', type=int, default=5); p.add_argument('--interval', type=float, default=1)
     p.add_argument('--timeout', type=float, default=2); p.add_argument('--trial', type=int, default=1)
     args = parser.parse_args()
+    if args.command == 'live':
+        from prepare_lab import run
+        run()
+        return
     if args.command == 'import-network':
         path = analyze(args.input, HERE / 'network_results')
     elif args.command == 'collect-http':

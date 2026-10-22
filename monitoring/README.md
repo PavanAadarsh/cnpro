@@ -1,9 +1,22 @@
 # Member 4: Monitoring and evaluation
 
-Run all commands from the repository root. Python 3.10+; no pip packages required.
+Updated locally on 21 October 2026. The corrected live Linux lab is available
+through `monitoring_integration/run.py live`; this original module remains the
+offline/simulator evaluation interface. Member 2 ACLs and Member 3 source/runtime
+documentation are now available via the prepared dependencies. Use
+[the current integration guide](../monitoring_integration/README.md) and
+[latest status](../monitoring_integration/COMPLETION_REPORT.md). The inventory
+below records the original Member 1 handoff; it is not a claim that ACL/engine
+source is still missing. The audit now chooses the prepared Member 2 core export
+when available. Its legacy `core_security_acl_applied` key means configuration
+text contains an attachment, not live verification (`live_security_acl_verified`
+remains null). Generated folders are excluded from source hashing.
+
+Run all commands from the repository root. Python 3.11+; no pip packages required.
 Optional real-interface captures require Wireshark/tshark and a working capture driver
 (Npcap on Windows), with permission to capture. Packet Tracer requires a separately
-installed Cisco Packet Tracer application and the missing topology file.
+installed Cisco Packet Tracer application and a working topology, rebuilt from
+the prepared Member 1 specifications or loaded from a supplied .pkt file.
 
 ```
 python -m unittest discover -s monitoring/tests -v
@@ -29,22 +42,22 @@ Member 1's historical PASS labels and timing estimates are not independently
 measured evidence for this evaluation. Original files are preserved except the
 README link added for navigation.
 
-Member 2 must supply the access matrix and inbound CORE-SW SVI ACLs, including
-VLANs 60/70, DHCP preservation, and POLICY-HOST SSH access. EDGE-R ACL 1 is NAT
-classification and must remain unchanged. Member 3 must supply the executable
-engine, trigger thresholds, event/log format, polling interval, recovery condition,
-and enforcement acknowledgments. NORMAL/RESTRICTED/QUARANTINED are requested
-states; this branch only documents VLAN 10/60/70 moves, not implemented states.
-There is no real event API to integrate with yet. The observation schema is an
-offline evidence adapter, not a replacement policy engine. Preserve original logs
-alongside the normalized observations once those components exist.
+Member 2's access matrix and inbound CORE-SW SVI ACLs are supplied, including
+VLAN60/70 rules. Member 3's actual event API is `handle_event(device, event_type)`;
+implemented state names are NORMAL/RESTRICTED/QUARANTINE. The new runtime document
+is present but some claims do not match source/ACL behavior; current audits list
+those conflicts. Actual runtime-to-switch control, matching clocks and network
+evidence remain unverified. The observation schema is an offline evidence adapter,
+not a replacement policy engine. Preserve original logs alongside observations.
 
 ## Reproduce traffic in Packet Tracer
 
-1. Obtain `CN_Baseline_v1.pkt` from Member 1. If unavailable, build the exact device
-   and cable layout in `docs/01_physical_topology.md`, apply `configs` in phase
-   order, configure end devices per `docs/07_end_devices_configuration.md`, then
-   run T1–T15. Keep a new local project copy. Credentials are placeholders and
+1. Build the exact device/cable layout using the latest prepared Member 1
+   specifications under `monitoring_integration/upstream/member1/`, including
+   `docs/01_physical_topology.md`, all four running-config exports and the updated
+   `docs/07_end_devices_configuration.md`. A supplied .pkt is an optional shortcut.
+   Apply the prepared Member 2 security configuration for security trials, then
+   run T1â€“T15. Keep a new local project copy. Credentials are placeholders and
    must be supplied locally; do not include passwords in evidence.
 2. Save three independent configuration copies: `architecture_baseline` (current
    no-ACL branch), `static` (Member 2 ACLs, engine disabled), and `adaptive` (same
@@ -66,7 +79,7 @@ alongside the normalized observations once those components exist.
    service is healthy from an authorized control host to avoid confusing outage
    with successful enforcement. Distinguish ACL denial from timeout/unknown causes.
 6. Save the original and changed switchport output plus DHCP lease. Any manual
-   Fa0/2 VLAN 10→60→70→10 exercise follows Member 3 handoff but must be labeled
+   Fa0/2 VLAN 10â†’60â†’70â†’10 exercise follows Member 3 handoff but must be labeled
    manual, not automatic detection or policy-response measurement.
 
 ## Capture workflow
@@ -156,13 +169,13 @@ second uncertainty; include detection poll interval, clock skew and DHCP renewal
 delay in notes. State-change logging without service evidence cannot establish
 these response/recovery times.
 
-Latency = mean successful RTT with sample count. Loss = (sent−received)/sent×100.
-Throughput = delivered bytes×8/seconds/1e6, Mbps; no throughput measurement is
+Latency = mean successful RTT with sample count. Loss = (sentâˆ’received)/sentÃ—100.
+Throughput = delivered bytesÃ—8/seconds/1e6, Mbps; no throughput measurement is
 available from this Packet Tracer branch. Use a real approved application transfer
 and receiver byte counts if the deployed environment later supports it; no iperf
 service is assumed on Server-PT. Disruption = failed authorized transition-window
-requests/attempts×100. Connection success = successful authorized application
-requests/attempts×100; unauthorized success is reported separately. Zero attempts
+requests/attemptsÃ—100. Connection success = successful authorized application
+requests/attemptsÃ—100; unauthorized success is reported separately. Zero attempts
 produce null, never a zero percent failure. All counters describe one trial/window.
 
 Outputs: input snapshot, evidence manifest/copies, results CSV/JSON, summary JSON,

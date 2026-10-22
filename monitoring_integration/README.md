@@ -1,247 +1,143 @@
-# Member 4 integration add-on — 19 October 2026
+# Member 4 integration: reproducible Linux network lab
 
-This is the new entry point. The older local `cnpro-member4` project is preserved.
-Integration code lives under `monitoring_integration/` in `cnpro-member4-integrated`.
-Publication updates root README navigation and adds ignore rules; it does not
-rewrite any Member 1, 2 or 3 implementation.
+For the confirmed Packet Tracer requirement, open the separate
+[final topology and instructions](../packet_tracer/README.md). The current PT
+implementation uses a controlled manual state demonstration; this Linux engine
+does not automatically control Packet Tracer. Five selected historical Linux
+evidence summaries are included under [evidence/linux-20261021](evidence/linux-20261021/README.md).
 
-## What changed since the original Member 4 version
+This add-on uses Member 1's VLANs, addressing, DHCP ranges and server roles,
+Member 2's delivered ACLs, Member 3's actual policy engine/thresholds/recovery
+logic, and Member 4's monitoring and analysis. Prepared teammate sources under
+`upstream/` are unchanged copies of the Git commits pinned in `sources.json`.
+`runtime.py` subclasses the engine to verify real enforcement and recovery;
+`policy.py` reconciles the documented security requirements and compiles the
+ACLs into installed kernel nftables rules. See `POLICY_RESOLUTION.md`.
 
-The requested repository's `main` branch still contains only its initial README.
-The new inputs actually live on `member-2` and `member3`; the published older
-Member 4 version lives on `Member-4-updated`. `sources.json` pins all three commits.
-Required source dependencies are materialized under `upstream/member2` and
-`upstream/member3` by `prepare_upstream.py` from those exact Git commits.
-Member 2's project is nested inside its `cnpro/` directory. No upstream file has
-been patched or merged into the older configuration paths.
+## Prerequisites and startup
 
-Generated `upstream/` copies are deliberately not committed: they already exist
-on the teammate branches, and Member 3's original code contains a hard-coded lab
-password. This avoids duplicating that credential in the Member 4 commit. The
-setup script reads existing Git objects without fetching, checking out, merging,
-changing branches or overwriting different files. Use a normal clone containing
-the teammate histories; a GitHub ZIP/source archive alone lacks the required Git
-objects. If those objects are missing, fetch the member-2 and member3 histories
-and rerun setup. Do not manually edit generated copies; preserve original branch
-ownership and configure credentials locally before any future real SSH use.
-
-The add-on now:
-
-- Resolves the six original scenarios against real ACL rules and actual engine
-  state/event/recovery contracts, including **QUARANTINE** (the implemented name).
-- Audits first-match ACL decisions, captures matching rule/line and identifies
-  documentation conflicts without altering Member 2's policy.
-- Imports and exercises Member 3's real PolicyEngine, StateManager,
-  ThresholdTracker and RecoveryHandler with isolated per-trial persistence/logs.
-  Switch output is explicitly recorded by a non-network stub; no SSH is sent.
-- Supplies bounded real-lab HTTP traffic generation with explicit local source
-  binding and an allowlist of actual project destinations. It cannot operate a
-  Packet Tracer PC from the laptop.
-- Adds stricter evidence/chronology/source validation before using the unchanged
-  Member 4 CSV/JSON/summary/chart analyzer.
-- Keeps software timings, configuration predictions and actual network
-  measurements separate. No blocked placeholder is relabeled as a successful trial.
-
-## Run the completed software workflow
-
-PowerShell, from the new project root:
+Run from the integrated repository root on this Windows laptop, using Python 3
+and Git. The loopback TLS software tests also need a host OpenSSL executable
+(the installed Git for Windows executable is supported); localhost connections
+must be permitted. The existing `docker-desktop` WSL distribution must run as root and
+support network/mount namespaces, Linux VLAN bridges and inet/netdev nftables.
+The Docker daemon is not used. No physical interface or Windows firewall is
+reconfigured. The launcher uses an isolated network namespace and a private
+384 MiB RAM-backed Alpine root. Allow additional disk space for captures and
+analysis copies. Initial runtime preparation needs access to the official Alpine
+package repository; the root archive is pinned and checksum-verified.
 
 ```powershell
-Set-Location -LiteralPath 'C:\Users\samya\Desktop\CN proj\cnpro-member4-integrated'
+# Materialize pinned dependencies if needed; requires their existing Git objects.
 python -B monitoring_integration/prepare_upstream.py
+# Software regressions (separate from network evidence):
 python -B monitoring_integration/run.py test
-python -B monitoring_integration/run.py audit
+# Software engine replay, with explicitly simulated enforcement:
 python -B monitoring_integration/run.py replay --trials 3
+# Real DHCP, VLANs, firewall, services, capture, regressions and three trial pairs:
+python -B monitoring_integration/run.py live
+# Inspect source contracts/effective policy and available completed live evidence:
+python -B monitoring_integration/run.py audit
 ```
 
-Python 3.14.6 is available and was used. These commands need only the standard
-library and the supplied files. `-B` avoids rewriting inherited bytecode caches.
-The original engine optionally imports Paramiko but the recorder mode does not
-use it. Paramiko is not installed here; actual SSH would require Member 3's
-`upstream/member3/requirements.txt` and a matching reachable lab. The add-on never
-starts Member 3's `simulate_event.py`, which would write state beside its source
-and attempt real SSH. Existing source snapshots remain read-only by convention.
+A ZIP download lacks dependency Git objects. If the pinned commits are unavailable,
+obtain their histories before running dependency preparation. The existing local
+checkout already has the required teammate inputs. No topology `.pkt` or extra
+teammate implementation is needed for this Linux alternative. Do not edit the
+prepared copies or publish them: upstream Member 3 sources include a lab password.
+The preparation tool refuses unknown edits and does not change branches.
 
-Each invocation prints a new `monitoring_integration/results/<kind>-<UTC>-<id>/`
-directory. No older result is overwritten. The test command reports its suites
-in `test_summary.json` and full output in `tests.txt`; it exits 1 on any failing
-suite. Member 3's tests leave isolated synthetic fixtures in that run's `temp/`;
-these are unit-test evidence, not measured network datasets.
+`prepare_lab.py` verifies/downloads Alpine; `lab_bootstrap.sh` prepares packages
+and starts `lab.py` in isolation. Required packages are Python, iproute2, nftables,
+tcpdump, dnsmasq, OpenSSL and pyftpdlib (iperf3 remains available but the measured
+transfer uses the permitted research HTTP path). The application-enabled runtime
+cache is separate from the earlier runtime cache; earlier evidence is preserved.
 
-Audit outputs: `environment.json`, `acl_checks.json`, `resolved_scenarios.json`,
-`network_readiness.json`, `audit_report.md`. The audit checks the **new** Member 2
-configuration, not the stale core export at the base project root. Its ACL parser
-supports only syntax present in these inputs; unsupported rule forms fail instead
-of silently receiving a predicted decision. It is not a switch/network emulator.
-Declared capability state describes this inspected version and must be reassessed
-if source branches or the runtime are changed.
+## Actual services and security behavior
 
-Replay outputs: `engine_results.csv`, `engine_results.json`, `engine_summary.json`,
-`engine_api_runtime.svg`, `replay_report.md` and per-trial state/event JSON,
-`trace.json`, `engine.log`. Nine plans × three trials produce 63 real engine API
-calls. The graph uses actual local API execution durations (monotonic clock),
-including JSON persistence and logging overhead, summarized as means of per-trial
-means. It measures neither packet detection nor effective switch response. State
-and expected-state assertions can pass even when the recorder intentionally fails;
-that failure case is successful only when the engine flags enforcement_failed.
-The software dataset is deliberately rejected by the network importer.
+- DHCP option 6 gives normal VLANs `203.0.113.2`, the supplied INTERNET-SRV DNS
+  address. Restricted and quarantine leases receive `192.168.50.13`, the supplied
+  remediation DNS address. Quarantine rules block routed DNS; no public/host
+  resolver fallback is installed. `lab_dhcp.sh` updates each namespace's dedicated
+  resolver file in place on lease acquisition/renewal.
+- Real dnsmasq DNS serves the supplied `www.example.com -> 203.0.113.2` record.
+  Normal DNS also maps lowercase existing device names `srv-research`, `srv-db`,
+  `srv-admin`, `srv-remediate` to their documented server addresses. These are
+  lab aliases for the supplied devices. Remediation DNS serves only its own name.
+  Tests use the operating system resolver, without a DNS-server argument.
+- Research/admin/internet HTTPS performs TLS 1.2 or later and returns HTTP 200.
+  A per-run self-signed lab certificate includes matching hostname/IP SANs.
+  Clients explicitly trust that certificate and verify hostnames; a negative
+  trust test must reject it. This is local TLS verification, not public PKI.
+- DB FTP uses pyftpdlib, a generated per-run password, no anonymous account,
+  read-only authenticated access and an actual sample-file transfer. Passive
+  data port 20 and control port 21 match the supplied ACL permissions. This
+  deliberate lab port choice avoids opening an unrelated passive-port range.
+  Wrong passwords must receive FTP 530; a timeout cannot pass that check.
+- HTTP health endpoints on all server namespaces support controlled denial and
+  recovery checks; the database's required application service is FTP. The
+  internet port 25 banner and management port 22 listener remain explicitly
+  transport-only instrumentation, not SMTP/Cisco SSH implementations.
+- Administration pings to student/faculty/research endpoints receive replies.
+  The effective ACL permits echo replies to the admin subnet only; the Linux
+  rules additionally require established connection state. New user-to-admin
+  pings and unsolicited echo replies remain blocked. This exception does not
+  apply to restricted/quarantine VLANs.
+- Containment uses real bridge PVID changes, DHCP renewal, current MAC/IP/port
+  bindings, installed firewall rules and connectivity readbacks. Automatic
+  detection reads actual per-endpoint kernel deny counters and passes events
+  to the actual Member 3 engine. Identity does not assume particular DHCP IPs.
 
-## Actual policy and engine contracts
+`live_regressions.py` verifies completed ICMP exchanges and negative access,
+normal resolver use, HTTP/HTTPS by hostname, TLS trust rejection, FTP login and
+file transfer, wrong-password rejection, restriction, quarantine and verified
+manual recovery. `application_services.py` contains the actual application
+servers/clients. The existing access matrix remains a separate transport/ICMP
+check, not a substitute for the application checks.
 
-| Scenario/condition | Verified source behavior / expected network behavior |
-|---|---|
-| PC-RES1 → 192.168.50.10 HTTP/80 | Member 2 ACL permits; use as unaffected legitimate control |
-| PC-STU2 → 192.168.50.12 HTTP/80 | Denied in normal VLAN10 already; this cannot prove a new adaptive restriction |
-| PC-STU2 → research HTTP/80 | Permitted VLAN10, denied VLAN60/70; useful flow to demonstrate an effective change |
-| PC-STU2 → remediation HTTP/80/DNS | Permitted VLAN10/60 as defined by ACL, denied VLAN70 |
-| Recovery demonstration | Remediation HTTP while restricted, then restored internet HTTP after home VLAN/lease restoration |
-| `auth_failure` | 3 events in 300 s → RESTRICTED |
-| `cross_vlan_attempt` | 2 events in 600 s → RESTRICTED |
-| `port_scan` / `spoofing` | 1 scan → RESTRICTED; 1 spoofing event → QUARANTINE |
-| `policy_violation` | Does not restrict NORMAL by itself; while RESTRICTED, a recognized violation can escalate to QUARANTINE |
-| Automatic recovery | 1800 s restricted hold or 7200 s quarantine hold, plus quiet history or remediated flag; actual code still requires hold after remediated |
-| `manual_clear` | Immediate admin recovery API; must verify real home VLAN and permitted service separately |
-| Enforcement failure | Engine still updates requested state/current_vlan and flags enforcement_failed; these stored values do not establish an applied switch VLAN |
+## Evidence and interpretation
 
-No packet capture, ACL-log reader or automatic detector is supplied by Member 3.
-Mapping a witnessed prohibited cross-VLAN attempt into `handle_event(...,
-"cross_vlan_attempt")` is currently an explicit test injection. Do not claim HTTP
-drops automatically trigger the engine. A production detector/Packet Tracer control
-bridge remains a team integration dependency, not silently added here.
+Every run gets a new ignored directory; failures remain marked failed and are
+not treated as completion. `COMPLETION_REPORT.md` identifies the latest verified
+runs and exact counts. Under `results/live-*/`:
 
-Two configuration/documentation conflicts are reproducibly reported:
+- `status.json`, `access_matrix.json`: completion state and existing access checks.
+- `application_checks.json`, `application_summary.json`: actual protocol and
+  administration regression outcomes, timestamps, resolver/readback evidence.
+- `application_transitions.jsonl`: actual engine-driven application containment
+  and manual recovery. `bridge_readbacks.jsonl`, `address_readbacks.jsonl`,
+  `identity.jsonl`, `enforcement.jsonl` and DHCP logs retain raw observations.
+- `pcap/all.pcap`, `capture.log`: genuine traffic and tcpdump capture/drop counts.
+- `effective.nft`, `configurations/`: generated and installed firewall snapshots.
+- `static-*/`, `adaptive-*/`: three comparable paired trials, real 20-probe ping
+  samples, 1 MiB HTTP transfers, legitimate-traffic logs and measured results.
+- `detection.jsonl`, `adaptive-*/transitions.jsonl`: detection/decision/action.
+- `verified_summary.json`, `observations.json`, `analysis/`: capture validation,
+  genuine observations imported through the original Member 4 analyzer and its
+  generated charts/tables. Throughput is virtual-network application goodput;
+  three trials cannot establish a general adaptive speed advantage.
+- `environment.json`: dependency versions, pinned sources, implementation hashes
+  and separate host/experiment network namespace identifiers.
 
-1. **S12:** student-to-admin ICMP echo is permitted by the earlier broad ICMP
-   rule before the later inter-VLAN deny. The verification document says DENY/PASS.
-2. **Admin internet matrix:** "All Internet Ports" is broader than the ACL.
-   For example TCP/25 to INTERNET-SRV is denied while the matrix says permit.
+`results/test-*/tests.txt` and `test_summary.json` are software-only evidence.
+`replay` uses recorded fixture enforcement, never live evidence. `contract_audit`
+intentionally inspects upstream originals, so an upstream discrepancy does not
+by itself describe the corrected runtime. Packet Tracer capture_points.json is
+a separate simulator mapping, not Linux traffic through physical Cisco ports.
 
-Other review points: the VLAN50 ACL's final `permit ip` is broader than its
-response-only description. POLICY-HOST and switch management addresses share
-VLAN40, so direct same-VLAN packets normally bypass routed core SVI filtering.
-These findings are handed back as review items; no security rule was changed.
+All results remain local and Git-ignored. **Do not publish raw PCAPs, private-services/,
+FTP credential JSON, private keys, verbose logs, runtime caches or upstream copies.**
+FTP is intentionally a plaintext lab protocol, so captures can contain its ephemeral
+password. Keep only reviewed, credential-free summary evidence if publishing later.
 
-Member 3's prose also differs from its code and Member 2's ACL: its design note
-describes a 60-second auth window (code: 300 seconds), and some tables allow
-remediation in QUARANTINE (Member 2 VLAN70 ACL denies it). This add-on uses the
-actual Python constants and actual Member 2 rules, records the discrepancy and
-does not reconcile it by changing either member's files. Ask the team to confirm
-which prose should be corrected before the final demonstration.
+## Pending clarification (excluded from current completion decision)
 
-## Real traffic collection: only on a matching project test host
+1. Packet Tracer implementation / actual Cisco device deployment. Linux results
+   do not verify IOS behavior or Cisco timing. The IOS intermediate ACL snippet
+   cannot itself supply Linux connection tracking; Cisco deployment needs a
+   reviewed compatible stateful return-path design and device access.
+2. Full 30/120-minute automatic recovery expiry. Hold rules are preserved and
+   software-tested; short live runs verify administrative recovery, not expiry.
+   A full-duration run with continuing DHCP renewal would be required if mandated.
 
-This environment has no .pkt file, no confirmed real/emulated lab runtime and no
-locally assigned PC-RES1 lab address. Current traffic execution stops at source
-binding (saved WinError 10049), before HTTP is sent. Do not configure your laptop's
-global networking to force the test to run.
-
-If the actual environment is **Packet Tracer**, open Member 1's topology, apply
-Member 2's security configuration there and use the named PC's Desktop browser
-or command prompt. Use Simulation mode for ARP/ICMP/TCP/HTTP/DHCP event/PDU
-evidence. The original `monitoring/README.md` describes those actions. Wireshark
-on Windows cannot capture simulated Packet Tracer packets. No .pkt export/control
-API is assumed by this add-on.
-
-If a **matching physical/emulated lab** becomes available, run the following
-from its actual test host. Replace the source IP with its observed DHCP lease
-and the configuration placeholder with a saved actual active CORE-SW export;
-neither placeholder is evidence of a running configuration:
-
-```powershell
-python -B monitoring_integration/run.py collect-http --project-only --scenario authorized --source-ip 192.168.30.100 --vlan 30 --configuration static --configuration-snapshot ACTUAL_CORE_CONFIG.txt --count 5 --interval 1 --timeout 2 --trial 1
-```
-
-Allowed scenarios/source identities are authorized (PC-RES1), protected_access,
-affected_research, remediation, recovery (PC-STU2) and admin_health_control
-(PC-ADM1). PC-RES1 must use VLAN30; admin control VLAN40; STU2 home/restricted/
-quarantine VLAN10/60/70. A source-IP/subnet check plus actual socket bind prevents
-silent fallback to an unrelated laptop adapter. The operator must still confirm
-the physical host identity and dedicated lab. Destination comes from the built-in
-project target map; requests use HTTP GET `/` TCP/80 only. No DNS or redirects to
-external services occur. `--project-only` is required operator confirmation.
-
-Count is 1–100; interval .2–60 s after each response, timeout .1–10 s. Every
-request uses a fresh TCP connection, reads at most 4096 response body bytes and
-records status/error/duration. HTTP 2xx is counted as request success. These are
-application request durations, not ICMP RTTs, and not a throughput test. A timeout
-or HTTP failure alone cannot establish ACL denial. The saved configuration is
-archived as provenance; its actual application must be verified in the lab.
-This collector generates traffic and observations, but does not inject policy
-events, move switchports, start capture or cause automatic DHCP renewal.
-
-Successful collection saves `evidence/observations.json`, `requests.json` and
-`active-config.txt` inside a new http run. Startup/collection failures are saved
-in `preflight_or_collection_error.json`, CLI exits 1, and no completed observation
-is asserted. Review any partial files rather than treating them as results.
-
-For packet capture on a real **project-only** mirror interface, reuse unchanged
-`monitoring/capture.py` with matching scenario/configuration and bounded duration,
-as described in its README. tshark/driver/interface access is still required and
-unavailable here. Review metadata and both return codes; existing script status
-limitations are documented in the original walkthrough. Never use captured wire
-byte counts as delivered application throughput without appropriate receiver data.
-
-## Import genuine observations
-
-The field reference is `observation_fields.json`; it is a schema guide, not an
-example measurement. Create an array of real observations in the trial evidence
-folder, or use a successful HTTP collector output. Then:
-
-```powershell
-python -B monitoring_integration/run.py import-network --input PATH_TO_REAL_OBSERVATIONS.json
-```
-
-That placeholder must be replaced with a real saved file. No network observations
-exist in this delivery, so no successful network-import result is claimed. Import
-uses the unchanged original analyzer after stronger validation. Output goes to a
-new unique directory under `monitoring_integration/network_results/`, including
-input/evidence copies, SHA256 manifest, CSV/JSON, statistical summaries, report,
-conditional SVG comparisons and validation.txt.
-
-Required metadata includes clock/evidence domain, actual source device/IP/VLAN,
-destination/service, configuration/trial, expected ACL outcome and observations.
-Both `configuration_snapshot` and `probe_evidence` must name existing archived
-files. Detection timing requires original engine evidence; effective denial also
-requires enforcement, healthy control and denial evidence. Restoration requires
-enforcement/restoration evidence. All timing endpoints must be in the trial and
-share a common declared clock domain. For Packet Tracer, consistently map the
-simulation clock to a declared fixed epoch, label it simulated and retain the raw
-simulation times. Never combine wall-clock engine timestamps with uncorrelated
-simulation timestamps. The validator does not prove evidence truth or causality.
-
-Metric definitions remain the original Member 4 definitions: condition→detection,
-detection→first attributable denial, recovery condition→restored service (ms);
-successful ICMP RTT samples; loss=(sent-received)/sent; receiver bytes×8/duration
-for Mbps; authorized-request success and explicit transition-window disruption.
-Missing values stay null/blank. Use rtt_ms=[] or omit it; null is not accepted for
-that list. `<1 ms` is censored, not zero. Failed trials stay in raw results and
-are excluded from summary means. Properly executed probes with no replies can
-still be a measured 100%-loss trial, with no numeric RTT. Distinguish expected
-offender denial from collateral disruption of unrelated legitimate users.
-
-For a fair final comparison, use the same actual network/ACLs/service health,
-workloads/cadence/capture points and at least three trials each with engine
-disabled (static) and enabled (adaptive), resetting offender state/leases/counters.
-Do not use the original open-routing architecture baseline as the secure static
-comparator. Verify protected denials from the offender alongside successful
-authorized health probes, then verify restored permissions after recovery.
-
-## Files to hand over / remaining inputs
-
-Hand over the new `monitoring_integration/` source/docs/schema and useful saved
-audit/replay/test evidence locally. Version control excludes generated runs,
-captures, caches and `upstream/` copies. Runtime imports require the unchanged root
-`monitoring/evaluate.py` and the prepared `upstream/member3/policy_engine/`; keep those paths.
-Do not substitute the test temp files or command-recorder traces for network data.
-
-- Member 1: still supply `CN_Baseline_v1.pkt` (or the actual equivalent runtime),
-  supported version, active device/lease mapping, service-health evidence and
-  supported observation/control access.
-- Member 2: review the two reproducible documentation/configuration mismatches;
-  confirm expected outcomes, applied ACLs and a healthy admin-server control.
-- Member 3: confirm detector-to-event source and runtime-to-switch bridge; review
-  generic violation behavior, remediation hold and independent verification of
-  commands. Provide actual timestamped logs from the integrated environment.
-
-See `COMPLETION_REPORT.md` for executed tests, exact evidence paths and status.
-No commit/push/upload is performed by these tools.
+These items are neither completed nor failed and await faculty/teammate clarification.

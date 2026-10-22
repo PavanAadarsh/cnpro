@@ -1,0 +1,30 @@
+{
+  "software_test_directory": "results/test-20261021T101444Z-89bc3f94",
+  "software_tests": 115,
+  "access_checks": 74,
+  "application_assertions": 67,
+  "static_adaptive_pairs": 3,
+  "raw_artifacts_hashed": 169,
+  "implementation_hashes_verified": 15,
+  "source_hash_mismatches": [],
+  "teammate_files_unchanged": 33,
+  "original_folder_files_unchanged": 39,
+  "credential_leaks_in_source_or_text_evidence": [],
+  "protocol_packet_evidence": {
+    "tls_handshake_records": 132,
+    "ftp_login_230": 24,
+    "ftp_login_denied_530": 24,
+    "ftp_transfer_complete_226": 24,
+    "ftp_data_payload_frames": 24,
+    "dns_udp_frames": 1041
+  },
+  "excluded_sensitive_evidence": [
+    "private-services/",
+    "pcap/all.pcap",
+    "analysis raw PCAP copies"
+  ],
+  "pending_clarification": [
+    "Cisco/Packet Tracer deployment",
+    "Full 30/120-minute automatic recovery expiry"
+  ]
+}

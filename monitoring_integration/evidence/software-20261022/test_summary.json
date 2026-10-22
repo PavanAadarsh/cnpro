@@ -1,0 +1,20 @@
+{
+  "member3": {
+    "tests": 62,
+    "failures": 0,
+    "errors": 0,
+    "passed": true
+  },
+  "member4_original": {
+    "tests": 8,
+    "failures": 0,
+    "errors": 0,
+    "passed": true
+  },
+  "member4_integration": {
+    "tests": 45,
+    "failures": 0,
+    "errors": 0,
+    "passed": true
+  }
+}

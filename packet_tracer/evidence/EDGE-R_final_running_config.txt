@@ -1,0 +1,191 @@
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname EDGE-R
+!
+!
+!
+!
+ip dhcp excluded-address 192.168.10.1 192.168.10.99
+ip dhcp excluded-address 192.168.20.1 192.168.20.99
+ip dhcp excluded-address 192.168.30.1 192.168.30.99
+ip dhcp excluded-address 192.168.40.1 192.168.40.99
+ip dhcp excluded-address 192.168.60.1 192.168.60.99
+ip dhcp excluded-address 192.168.70.1 192.168.70.99
+!
+ip dhcp pool PT-VLAN70
+ network 192.168.70.0 255.255.255.0
+ default-router 192.168.70.1
+ dns-server 192.168.50.13
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+!
+!
+!
+license udi pid CISCO2911/K9 sn FTX1524227D-
+license boot module c2900 technology-package securityk9
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain-lookup
+!
+!
+spanning-tree mode pvst
+!
+class-map type inspect match-all V10-SERV
+ match access-group name V10-SERV-MATCH
+class-map type inspect match-all INTERNET-OUT
+ match access-group name INTERNET-OUT-MATCH
+!
+policy-map type inspect POL-V10-V50
+ class type inspect V10-SERV
+  inspect
+ class type inspect class-default
+  drop
+!
+policy-map type inspect POL-INTERNET-OUT
+ class type inspect INTERNET-OUT
+  inspect
+ class type inspect class-default
+  drop
+!
+!
+!
+zone security STUDENTS
+zone security FACULTY
+zone security RESEARCH
+zone security ADMIN
+zone security SERVERS
+zone security RESTRICTED
+zone security QUARANTINE
+zone security INTERNET
+zone security TRANSIT
+zone-pair security ZP-V10-V50 source STUDENTS destination SERVERS
+ service-policy type inspect POL-V10-V50
+zone-pair security ZP-TRANSIT-INTERNET source TRANSIT destination INTERNET
+ service-policy type inspect POL-INTERNET-OUT
+!
+!
+interface GigabitEthernet0/0
+ description FIREWALL-TRANSIT
+ ip address 10.255.0.1 255.255.255.248
+ ip nat inside
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1
+ description INTERNET-SERVER
+ ip address 203.0.113.1 255.255.255.252
+ ip nat outside
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/2
+ description QUARANTINE-GATEWAY
+ ip address 192.168.70.1 255.255.255.0
+ zone-member security QUARANTINE
+ ip access-group QUARANTINE-IN in
+ duplex auto
+ speed auto
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip nat inside source list PT-NAT interface GigabitEthernet0/1 overload
+ip classless
+ip route 192.168.10.0 255.255.255.0 10.255.0.2 
+ip route 192.168.20.0 255.255.255.0 10.255.0.2 
+ip route 192.168.30.0 255.255.255.0 10.255.0.3 
+ip route 192.168.40.0 255.255.255.0 10.255.0.3 
+ip route 192.168.50.0 255.255.255.0 10.255.0.4 
+ip route 192.168.60.0 255.255.255.0 10.255.0.4 
+!
+ip flow-export version 9
+!
+!
+ip access-list extended V10-SERV-MATCH
+ permit tcp 192.168.10.0 0.0.0.255 host 192.168.50.13 eq www
+ permit tcp 192.168.10.0 0.0.0.255 host 192.168.50.13 eq domain
+ permit udp 192.168.10.0 0.0.0.255 host 192.168.50.13 eq domain
+ permit tcp 192.168.10.0 0.0.0.255 host 192.168.50.10 eq www
+ip access-list extended ACL-VLAN10-STUDENTS-IN
+ permit udp any eq bootpc any eq bootps
+ permit udp any eq bootps any eq bootpc
+ permit icmp 192.168.10.0 0.0.0.255 host 192.168.10.1 echo
+ permit icmp 192.168.10.0 0.0.0.255 192.168.40.0 0.0.0.255 echo-reply
+ permit udp 192.168.10.0 0.0.0.255 host 203.0.113.2 eq domain
+ permit tcp 192.168.10.0 0.0.0.255 host 203.0.113.2 eq domain
+ permit udp 192.168.10.0 0.0.0.255 host 192.168.50.13 eq domain
+ permit tcp 192.168.10.0 0.0.0.255 host 192.168.50.13 eq domain
+ permit tcp 192.168.10.0 0.0.0.255 host 203.0.113.2 eq www
+ permit tcp 192.168.10.0 0.0.0.255 host 203.0.113.2 eq 443
+ permit tcp 192.168.10.0 0.0.0.255 host 192.168.50.13 eq www
+ permit tcp 192.168.10.0 0.0.0.255 host 192.168.50.10 eq www
+ permit ip 192.168.10.0 0.0.0.255 10.0.0.0 0.0.0.3
+ deny ip 192.168.10.0 0.0.0.255 host 192.168.50.12
+ deny ip 192.168.10.0 0.0.0.255 host 192.168.50.11
+ deny tcp 192.168.10.0 0.0.0.255 192.168.40.0 0.0.0.255 eq 22
+ deny ip 192.168.10.0 0.0.0.255 192.168.40.0 0.0.0.255
+ deny ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+ deny ip 192.168.10.0 0.0.0.255 192.168.30.0 0.0.0.255
+ deny ip any any
+ip access-list extended PT-SERVER-SOURCE
+ permit ip 192.168.50.0 0.0.0.255 any
+ deny ip any any
+ip access-list extended QUARANTINE-IN
+ permit udp any eq bootpc any eq bootps
+ deny ip any any
+ip access-list extended INTERNET-OUT-MATCH
+ permit tcp 192.168.10.0 0.0.0.255 host 203.0.113.2 eq www
+ permit tcp 192.168.10.0 0.0.0.255 host 203.0.113.2 eq 443
+ permit tcp 192.168.10.0 0.0.0.255 host 203.0.113.2 eq domain
+ permit udp 192.168.10.0 0.0.0.255 host 203.0.113.2 eq domain
+ permit tcp 192.168.20.0 0.0.0.255 host 203.0.113.2 eq www
+ permit tcp 192.168.20.0 0.0.0.255 host 203.0.113.2 eq 443
+ permit tcp 192.168.20.0 0.0.0.255 host 203.0.113.2 eq domain
+ permit udp 192.168.20.0 0.0.0.255 host 203.0.113.2 eq domain
+ permit tcp 192.168.30.0 0.0.0.255 host 203.0.113.2 eq www
+ permit tcp 192.168.30.0 0.0.0.255 host 203.0.113.2 eq 443
+ permit tcp 192.168.30.0 0.0.0.255 host 203.0.113.2 eq domain
+ permit udp 192.168.30.0 0.0.0.255 host 203.0.113.2 eq domain
+ permit tcp 192.168.40.0 0.0.0.255 host 203.0.113.2
+ permit udp 192.168.40.0 0.0.0.255 host 203.0.113.2
+ permit icmp 192.168.40.0 0.0.0.255 host 203.0.113.2
+ip access-list standard PT-NAT
+ permit 192.168.10.0 0.0.0.255
+ permit 192.168.20.0 0.0.0.255
+ permit 192.168.30.0 0.0.0.255
+ permit 192.168.40.0 0.0.0.255
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+ transport input none
+!
+!
+!
+end
+

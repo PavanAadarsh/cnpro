@@ -1,0 +1,235 @@
+!
+version 12.2(37)SE1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname CORE-SW
+!
+!
+no profinet
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain-lookup
+!
+!
+vtp mode transparent
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+vlan 10
+ name STUDENTS
+!
+vlan 20
+ name FACULTY
+!
+vlan 30
+ name RESEARCH
+!
+vlan 40
+ name ADMIN
+!
+vlan 50
+ name SERVERS
+!
+vlan 60
+ name RESTRICTED
+!
+vlan 70
+ name QUARANTINE
+!
+vlan 900
+ name FW-TRANSIT
+!
+vlan 999
+ name BLACKHOLE
+!
+interface FastEthernet0/1
+ description FW-STU-FAC-STUDENTS
+ switchport access vlan 10
+ switchport mode access
+!
+interface FastEthernet0/2
+ description FW-STU-FAC-FACULTY
+ switchport access vlan 20
+ switchport mode access
+!
+interface FastEthernet0/3
+ description FW-STU-FAC-TRANSIT
+ switchport access vlan 900
+ switchport mode access
+!
+interface FastEthernet0/4
+ description FW-RES-ADM-RESEARCH
+ switchport access vlan 30
+ switchport mode access
+!
+interface FastEthernet0/5
+ description FW-RES-ADM-ADMIN
+ switchport access vlan 40
+ switchport mode access
+!
+interface FastEthernet0/6
+ description FW-RES-ADM-TRANSIT
+ switchport access vlan 900
+ switchport mode access
+!
+interface FastEthernet0/7
+ description FW-SRV-REST-SERVERS
+ switchport access vlan 50
+ switchport mode access
+!
+interface FastEthernet0/8
+ description FW-SRV-REST-RESTRICTED
+ switchport access vlan 60
+ switchport mode access
+!
+interface FastEthernet0/9
+ description FW-SRV-REST-TRANSIT
+ switchport access vlan 900
+ switchport mode access
+!
+interface FastEthernet0/10
+ description EDGE-R-QUARANTINE
+ switchport access vlan 70
+ switchport mode access
+!
+interface FastEthernet0/11
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/12
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/13
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/14
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/15
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/16
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/17
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/18
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/19
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/20
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/21
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/22
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/23
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+!
+interface FastEthernet0/24
+ description EDGE-R-TRANSIT
+ switchport access vlan 900
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 10,20,30,40,50,60,70
+ switchport trunk encapsulation dot1q
+ switchport mode access
+!
+interface GigabitEthernet0/1
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 10,20,30,40,50,60,70
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface GigabitEthernet0/2
+ description TRUNK-TO-ACCESS-SW-B
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 10,20,30,40,50,60,70
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan40
+ mac-address 0001.97d6.4b02
+ ip address 192.168.40.2 255.255.255.0
+!
+ip default-gateway 192.168.40.1
+ip classless
+!
+ip flow-export version 9
+!
+!
+!
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+ transport input none
+!
+!
+!
+!
+end
+

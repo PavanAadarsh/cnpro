@@ -1,5 +1,11 @@
 # Member 4 — Monitoring and Evaluation: Local Status Report
 
+> Historical report from 18 October. Current local status (20 October), latest
+> teammate inputs, executed tests and pending work are in
+> [monitoring_integration/COMPLETION_REPORT.md](monitoring_integration/COMPLETION_REPORT.md).
+> ACL/engine source is now supplied; the original missing-source statements below
+> describe the earlier handoff, not the current integrated checkout.
+
 Date: 18 October 2026 (Asia/Calcutta).
 
 Local project: `C:\Users\samya\Desktop\CN proj\cnpro-member4`

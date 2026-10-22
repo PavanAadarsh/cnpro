@@ -1,0 +1,49 @@
+id,check,expected,actual,status,evidence
+PT01,Student DHCP,normal Student lease with gateway and DNS,192.168.10.100 /24 gateway .10.1 DNS 203.0.113.2,PASS,screenshots/student_dhcp.png
+PT02,Student own gateway ping,replies,4 of 4 replies,PASS,conversation screenshot cdc90f0f
+PT03,Faculty DHCP,normal Faculty lease with gateway and DNS,192.168.20.100 /24 gateway .20.1 DNS 203.0.113.2,PASS,conversation screenshot fb7131e2
+PT04,Faculty own gateway ping,replies,4 of 4 replies,PASS,conversation screenshot 2a66aeac
+PT05,Faculty to Student ping,deny,0 of 4 replies,PASS,conversation screenshot 2a66aeac
+PT06,Student to Faculty ping,deny,0 of 4 replies,PASS,conversation screenshot cfbc0cba
+PT07,Research DHCP,normal Research lease,192.168.30.100 with expected gateway DNS,PASS,conversation screenshot 88c44e5c
+PT08,Admin DHCP,normal Admin lease,192.168.40.100 with expected gateway DNS,PASS,conversation screenshot fe046276
+PT09,Admin own gateway ping,replies,4 of 4 replies,PASS,conversation screenshot e05af199
+PT10,Admin to Research ping,replies,initial 3 of 4 then 4 of 4 replies,PASS,conversation screenshot 1360df28
+PT11,Research to Admin ping,deny,0 of 4 replies,PASS,conversation screenshot 0fc667ca
+PT12,Restricted DHCP,Restricted subnet and remediation DNS,192.168.60.100 gateway .60.1 DNS .50.13,PASS,conversation screenshot 6e091880
+PT13,Restricted remediation hostname HTTP,allow,page loaded,PASS,screenshots/restricted_remediation_allowed.png
+PT14,Restricted remediation ping,deny,0 of 4 replies,PASS,conversation screenshot a88b48d8
+PT15,Research HTTP local positive control,allow,portal loaded from remediation server,PASS,conversation screenshot caa639e1
+PT16,Restricted Research HTTP,deny,request timeout,PASS,screenshots/restricted_research_denied.png
+PT17,FTP correct local login and list,allow,230 login and directory listing,PASS,conversation screenshot 72bf82ba
+PT18,FTP wrong local password,deny,no successful login; error and 332 response,PASS,conversation screenshot 61836ef1
+PT19,Restricted FTP control connection,deny,connection timeout before login,PASS,conversation screenshot b8dd18af
+PT20,External HTTP service local positive control,allow,external page loaded,PASS,conversation screenshot bf68c3fd
+PT21,Student external HTTP with EDGE NAT and ZBF combined,allow,timeout with zone-pair lookup failure,FAILED_SUPERSEDED,conversation screenshot 104ad14c
+PT22,Student external HTTP with PAT on separate enforcement path,allow,page loaded and PAT entry observed,PASS,screenshots/student_pat_translation.png
+PT23,Student external ICMP,deny,0 of 4 replies,PASS,conversation screenshot 7e6bcbcf
+PT24,Restricted external HTTP,deny,request timeout,PASS,conversation screenshot fb4f0c95
+PT25,Student external hostname HTTP,allow,page loaded by www.example.com,PASS,screenshots/student_external_hostname.png
+PT26,Student Research hostname HTTP,allow,research portal loaded,PASS,screenshots/student_research_http.png
+PT27,Student Research HTTPS,deny,request timeout,PASS,conversation screenshot 078fc281
+PT28,Faculty Research HTTPS,allow,research portal loaded via https URL,PASS,screenshots/faculty_research_https.png
+PT29,Faculty Admin HTTP,deny,request timeout,PASS,conversation screenshot 52b8bda0
+PT30,Admin Admin hostname HTTP,allow,administration portal loaded,PASS,screenshots/admin_portal.png
+PT31,Admin to Student ping,replies,initial 3 of 4 then 4 of 4,PASS,screenshots/admin_diagnostics.png
+PT32,Admin to Faculty ping,replies,4 of 4 replies,PASS,screenshots/admin_diagnostics.png
+PT33,Student to Admin ping,deny,0 of 4 replies,PASS,conversation screenshot 0e670ee5
+PT34,Research passive FTP data listing,allow,login worked but listing timed out,UNRESOLVED,conversation screenshot ab3113f9 and 4d5598b3
+PT35,Research active FTP listing after explicit data rule,allow,directory listing returned to ftp prompt,PASS,screenshots/research_active_ftp.png
+PT36,Quarantine DHCP,Quarantine subnet,192.168.70.100 gateway .70.1,PASS,screenshots/quarantine_dhcp.png
+PT37,Quarantine remediation HTTP,deny,user reported timeout,PASS_USER_REPORTED,user message yes it timed out
+PT38,Recovery normal DHCP,Student subnet with normal gateway DNS,192.168.10.101 gateway .10.1 DNS 203.0.113.2,PASS,screenshots/recovery_dhcp.png
+PT39,Recovery permitted Research hostname HTTP,allow,research portal loaded,PASS,screenshots/recovery_research_http.png
+PT40,Faculty second PC DHCP,Faculty subnet,192.168.20.101 with expected gateway DNS,PASS,conversation screenshot 2d7d488d
+PT41,Admin second PC DHCP,Admin subnet,192.168.40.101 with expected gateway DNS,PASS,conversation screenshot 1281e649
+PT42,POLICY-HOST static configuration,192.168.40.50 with normal gateway DNS,settings shown; connectivity not tested,CONFIG_VERIFIED,screenshots/policy_host_static.png
+PT43,Research second PC DHCP,Research subnet,192.168.30.101 with expected gateway DNS,PASS,conversation screenshot 335cf715
+PT44,Admin active FTP hostname login and listing,allow,directory listing returned to ftp prompt,PASS,screenshots/admin_active_ftp.png
+PT45,Full original 136-case matrix,complete coverage,only observed subset run,NOT_RUN_FULL,original test_matrix.csv remains a prior candidate plan
+PT46,Automatic Python control and detection in PT,only claim if demonstrated,not demonstrated,NOT_VERIFIED,manual transitions only
+PT47,FTP file get and permission enforcement,read succeeds write delete rename denied,not exercised,NOT_RUN,RL account settings are not behavioural proof
+PT48,30 and 120 minute expiry,requirement pending clarification,not exercised,PENDING_CLARIFICATION,no simulated success substituted

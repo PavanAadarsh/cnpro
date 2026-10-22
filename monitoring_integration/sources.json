@@ -1,5 +1,10 @@
 {
   "origin/member-2": "0522e84ec93a84c162a298b137d1a9cb2ae21827",
-  "origin/member3": "de998f7882eac4a2ac312ee4af17a45a6848a691",
-  "member4_base": "7a7512bf7e89ac9f701f9aa8528c01f78d6f1d96"
+  "origin/member3": "c8f08ba049ebd440384a46b76b885b6e2d4a5da4",
+  "member4_base": "7a7512bf7e89ac9f701f9aa8528c01f78d6f1d96",
+  "origin/member1-network-architecture": "14dbf7e864358b893dba353bfb7234661531d01c",
+  "previous_sources": {
+    "origin/member3": "31960fe3899c83f01267d93e0650aa4fef6ab475",
+    "origin/member1-network-architecture": "e866597362d03cb4eda2e2dbb80a7c7f759cdb6f"
+  }
 }
