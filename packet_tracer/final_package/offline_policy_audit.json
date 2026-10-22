@@ -1,0 +1,2952 @@
+{
+  "scope": "Initial-flow ACL, routing and zone-policy configuration inference only",
+  "excludes": [
+    "Live network tests",
+    "L2 forwarding",
+    "NAT/session return paths",
+    "FTP helper pinholes",
+    "DHCP service operation",
+    "Server availability",
+    "SSH/TLS",
+    "Automatic detection or recovery"
+  ],
+  "cases": 136,
+  "matching": 135,
+  "results": [
+    {
+      "id": "vlan10_research_http",
+      "vlan": 10,
+      "expected": true,
+      "packet": {
+        "source": "192.168.10.101",
+        "destination": "192.168.50.10",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.10.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-STUDENT-OUT/STUDENT-OUT/inspect",
+        "FW-SRV-REST: GigabitEthernet0/2 -> GigabitEthernet0/0: POL-TRANSIT-SERVERS/NORMAL-SERVER/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan10_research_https",
+      "vlan": 10,
+      "expected": false,
+      "packet": {
+        "source": "192.168.10.101",
+        "destination": "192.168.50.10",
+        "protocol": "tcp",
+        "dport": 443,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.10.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-STUDENT-OUT/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan10_research_ping",
+      "vlan": 10,
+      "expected": false,
+      "packet": {
+        "source": "192.168.10.101",
+        "destination": "192.168.50.10",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.10.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-STUDENT-OUT/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan10_database_ftp_control",
+      "vlan": 10,
+      "expected": false,
+      "packet": {
+        "source": "192.168.10.101",
+        "destination": "192.168.50.11",
+        "protocol": "tcp",
+        "dport": 21,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.10.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-STUDENT-OUT/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan10_administration_http",
+      "vlan": 10,
+      "expected": false,
+      "packet": {
+        "source": "192.168.10.101",
+        "destination": "192.168.50.12",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.10.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-STUDENT-OUT/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan10_administration_https",
+      "vlan": 10,
+      "expected": false,
+      "packet": {
+        "source": "192.168.10.101",
+        "destination": "192.168.50.12",
+        "protocol": "tcp",
+        "dport": 443,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.10.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-STUDENT-OUT/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan10_remediation_http",
+      "vlan": 10,
+      "expected": true,
+      "packet": {
+        "source": "192.168.10.101",
+        "destination": "192.168.50.13",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.10.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-STUDENT-OUT/STUDENT-OUT/inspect",
+        "FW-SRV-REST: GigabitEthernet0/2 -> GigabitEthernet0/0: POL-TRANSIT-SERVERS/NORMAL-SERVER/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan10_remediation_dns_udp",
+      "vlan": 10,
+      "expected": true,
+      "packet": {
+        "source": "192.168.10.101",
+        "destination": "192.168.50.13",
+        "protocol": "udp",
+        "dport": 53,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.10.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-STUDENT-OUT/STUDENT-OUT/inspect",
+        "FW-SRV-REST: GigabitEthernet0/2 -> GigabitEthernet0/0: POL-TRANSIT-SERVERS/NORMAL-SERVER/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan10_remediation_dns_tcp",
+      "vlan": 10,
+      "expected": true,
+      "packet": {
+        "source": "192.168.10.101",
+        "destination": "192.168.50.13",
+        "protocol": "tcp",
+        "dport": 53,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.10.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-STUDENT-OUT/STUDENT-OUT/inspect",
+        "FW-SRV-REST: GigabitEthernet0/2 -> GigabitEthernet0/0: POL-TRANSIT-SERVERS/NORMAL-SERVER/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan10_remediation_ping",
+      "vlan": 10,
+      "expected": false,
+      "packet": {
+        "source": "192.168.10.101",
+        "destination": "192.168.50.13",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.10.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-STUDENT-OUT/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan10_external_http",
+      "vlan": 10,
+      "expected": true,
+      "packet": {
+        "source": "192.168.10.101",
+        "destination": "203.0.113.2",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.10.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-STUDENT-OUT/STUDENT-OUT/inspect",
+        "EDGE-R: GigabitEthernet0/0 -> GigabitEthernet0/1: same-zone or both unzoned",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan10_external_https",
+      "vlan": 10,
+      "expected": true,
+      "packet": {
+        "source": "192.168.10.101",
+        "destination": "203.0.113.2",
+        "protocol": "tcp",
+        "dport": 443,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.10.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-STUDENT-OUT/STUDENT-OUT/inspect",
+        "EDGE-R: GigabitEthernet0/0 -> GigabitEthernet0/1: same-zone or both unzoned",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan10_external_dns_udp",
+      "vlan": 10,
+      "expected": true,
+      "packet": {
+        "source": "192.168.10.101",
+        "destination": "203.0.113.2",
+        "protocol": "udp",
+        "dport": 53,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.10.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-STUDENT-OUT/STUDENT-OUT/inspect",
+        "EDGE-R: GigabitEthernet0/0 -> GigabitEthernet0/1: same-zone or both unzoned",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan10_external_dns_tcp",
+      "vlan": 10,
+      "expected": true,
+      "packet": {
+        "source": "192.168.10.101",
+        "destination": "203.0.113.2",
+        "protocol": "tcp",
+        "dport": 53,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.10.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-STUDENT-OUT/STUDENT-OUT/inspect",
+        "EDGE-R: GigabitEthernet0/0 -> GigabitEthernet0/1: same-zone or both unzoned",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan10_external_ping",
+      "vlan": 10,
+      "expected": false,
+      "packet": {
+        "source": "192.168.10.101",
+        "destination": "203.0.113.2",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.10.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-STUDENT-OUT/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan10_external_tcp25_policy",
+      "vlan": 10,
+      "expected": false,
+      "packet": {
+        "source": "192.168.10.101",
+        "destination": "203.0.113.2",
+        "protocol": "tcp",
+        "dport": 25,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.10.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-STUDENT-OUT/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan10_own_gateway",
+      "vlan": 10,
+      "expected": true,
+      "packet": {
+        "source": "192.168.10.101",
+        "destination": "192.168.10.1",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.10.0 0.0.0.255 any",
+        "FW-STU-FAC: router-local ICMP; availability untested"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan20_research_http",
+      "vlan": 20,
+      "expected": true,
+      "packet": {
+        "source": "192.168.20.101",
+        "destination": "192.168.50.10",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.20.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-FACULTY-OUT/FACULTY-OUT/inspect",
+        "FW-SRV-REST: GigabitEthernet0/2 -> GigabitEthernet0/0: POL-TRANSIT-SERVERS/NORMAL-SERVER/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan20_research_https",
+      "vlan": 20,
+      "expected": true,
+      "packet": {
+        "source": "192.168.20.101",
+        "destination": "192.168.50.10",
+        "protocol": "tcp",
+        "dport": 443,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.20.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-FACULTY-OUT/FACULTY-OUT/inspect",
+        "FW-SRV-REST: GigabitEthernet0/2 -> GigabitEthernet0/0: POL-TRANSIT-SERVERS/NORMAL-SERVER/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan20_research_ping",
+      "vlan": 20,
+      "expected": false,
+      "packet": {
+        "source": "192.168.20.101",
+        "destination": "192.168.50.10",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.20.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-FACULTY-OUT/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan20_database_ftp_control",
+      "vlan": 20,
+      "expected": false,
+      "packet": {
+        "source": "192.168.20.101",
+        "destination": "192.168.50.11",
+        "protocol": "tcp",
+        "dport": 21,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.20.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-FACULTY-OUT/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan20_administration_http",
+      "vlan": 20,
+      "expected": false,
+      "packet": {
+        "source": "192.168.20.101",
+        "destination": "192.168.50.12",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.20.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-FACULTY-OUT/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan20_administration_https",
+      "vlan": 20,
+      "expected": false,
+      "packet": {
+        "source": "192.168.20.101",
+        "destination": "192.168.50.12",
+        "protocol": "tcp",
+        "dport": 443,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.20.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-FACULTY-OUT/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan20_remediation_http",
+      "vlan": 20,
+      "expected": true,
+      "packet": {
+        "source": "192.168.20.101",
+        "destination": "192.168.50.13",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.20.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-FACULTY-OUT/FACULTY-OUT/inspect",
+        "FW-SRV-REST: GigabitEthernet0/2 -> GigabitEthernet0/0: POL-TRANSIT-SERVERS/NORMAL-SERVER/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan20_remediation_dns_udp",
+      "vlan": 20,
+      "expected": true,
+      "packet": {
+        "source": "192.168.20.101",
+        "destination": "192.168.50.13",
+        "protocol": "udp",
+        "dport": 53,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.20.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-FACULTY-OUT/FACULTY-OUT/inspect",
+        "FW-SRV-REST: GigabitEthernet0/2 -> GigabitEthernet0/0: POL-TRANSIT-SERVERS/NORMAL-SERVER/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan20_remediation_dns_tcp",
+      "vlan": 20,
+      "expected": true,
+      "packet": {
+        "source": "192.168.20.101",
+        "destination": "192.168.50.13",
+        "protocol": "tcp",
+        "dport": 53,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.20.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-FACULTY-OUT/FACULTY-OUT/inspect",
+        "FW-SRV-REST: GigabitEthernet0/2 -> GigabitEthernet0/0: POL-TRANSIT-SERVERS/NORMAL-SERVER/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan20_remediation_ping",
+      "vlan": 20,
+      "expected": false,
+      "packet": {
+        "source": "192.168.20.101",
+        "destination": "192.168.50.13",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.20.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-FACULTY-OUT/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan20_external_http",
+      "vlan": 20,
+      "expected": true,
+      "packet": {
+        "source": "192.168.20.101",
+        "destination": "203.0.113.2",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.20.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-FACULTY-OUT/FACULTY-OUT/inspect",
+        "EDGE-R: GigabitEthernet0/0 -> GigabitEthernet0/1: same-zone or both unzoned",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan20_external_https",
+      "vlan": 20,
+      "expected": true,
+      "packet": {
+        "source": "192.168.20.101",
+        "destination": "203.0.113.2",
+        "protocol": "tcp",
+        "dport": 443,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.20.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-FACULTY-OUT/FACULTY-OUT/inspect",
+        "EDGE-R: GigabitEthernet0/0 -> GigabitEthernet0/1: same-zone or both unzoned",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan20_external_dns_udp",
+      "vlan": 20,
+      "expected": true,
+      "packet": {
+        "source": "192.168.20.101",
+        "destination": "203.0.113.2",
+        "protocol": "udp",
+        "dport": 53,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.20.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-FACULTY-OUT/FACULTY-OUT/inspect",
+        "EDGE-R: GigabitEthernet0/0 -> GigabitEthernet0/1: same-zone or both unzoned",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan20_external_dns_tcp",
+      "vlan": 20,
+      "expected": true,
+      "packet": {
+        "source": "192.168.20.101",
+        "destination": "203.0.113.2",
+        "protocol": "tcp",
+        "dport": 53,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.20.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-FACULTY-OUT/FACULTY-OUT/inspect",
+        "EDGE-R: GigabitEthernet0/0 -> GigabitEthernet0/1: same-zone or both unzoned",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan20_external_ping",
+      "vlan": 20,
+      "expected": false,
+      "packet": {
+        "source": "192.168.20.101",
+        "destination": "203.0.113.2",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.20.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-FACULTY-OUT/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan20_external_tcp25_policy",
+      "vlan": 20,
+      "expected": false,
+      "packet": {
+        "source": "192.168.20.101",
+        "destination": "203.0.113.2",
+        "protocol": "tcp",
+        "dport": 25,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.20.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-FACULTY-OUT/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan20_own_gateway",
+      "vlan": 20,
+      "expected": true,
+      "packet": {
+        "source": "192.168.20.101",
+        "destination": "192.168.20.1",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.20.0 0.0.0.255 any",
+        "FW-STU-FAC: router-local ICMP; availability untested"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan30_research_http",
+      "vlan": 30,
+      "expected": true,
+      "packet": {
+        "source": "192.168.30.101",
+        "destination": "192.168.50.10",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.30.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-RESEARCH-OUT/RESEARCH-OUT/inspect",
+        "FW-SRV-REST: GigabitEthernet0/2 -> GigabitEthernet0/0: POL-TRANSIT-SERVERS/NORMAL-SERVER/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan30_research_https",
+      "vlan": 30,
+      "expected": true,
+      "packet": {
+        "source": "192.168.30.101",
+        "destination": "192.168.50.10",
+        "protocol": "tcp",
+        "dport": 443,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.30.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-RESEARCH-OUT/RESEARCH-OUT/inspect",
+        "FW-SRV-REST: GigabitEthernet0/2 -> GigabitEthernet0/0: POL-TRANSIT-SERVERS/NORMAL-SERVER/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan30_research_ping",
+      "vlan": 30,
+      "expected": true,
+      "packet": {
+        "source": "192.168.30.101",
+        "destination": "192.168.50.10",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.30.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-RESEARCH-OUT/RESEARCH-OUT/inspect",
+        "FW-SRV-REST: GigabitEthernet0/2 -> GigabitEthernet0/0: POL-TRANSIT-SERVERS/NORMAL-SERVER/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan30_database_ftp_control",
+      "vlan": 30,
+      "expected": true,
+      "packet": {
+        "source": "192.168.30.101",
+        "destination": "192.168.50.11",
+        "protocol": "tcp",
+        "dport": 21,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.30.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-RESEARCH-OUT/RESEARCH-FTP/inspect",
+        "FW-SRV-REST: GigabitEthernet0/2 -> GigabitEthernet0/0: POL-TRANSIT-SERVERS/SERVER-FTP/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan30_administration_http",
+      "vlan": 30,
+      "expected": false,
+      "packet": {
+        "source": "192.168.30.101",
+        "destination": "192.168.50.12",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.30.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-RESEARCH-OUT/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan30_administration_https",
+      "vlan": 30,
+      "expected": false,
+      "packet": {
+        "source": "192.168.30.101",
+        "destination": "192.168.50.12",
+        "protocol": "tcp",
+        "dport": 443,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.30.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-RESEARCH-OUT/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan30_remediation_http",
+      "vlan": 30,
+      "expected": true,
+      "packet": {
+        "source": "192.168.30.101",
+        "destination": "192.168.50.13",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.30.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-RESEARCH-OUT/RESEARCH-OUT/inspect",
+        "FW-SRV-REST: GigabitEthernet0/2 -> GigabitEthernet0/0: POL-TRANSIT-SERVERS/NORMAL-SERVER/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan30_remediation_dns_udp",
+      "vlan": 30,
+      "expected": true,
+      "packet": {
+        "source": "192.168.30.101",
+        "destination": "192.168.50.13",
+        "protocol": "udp",
+        "dport": 53,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.30.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-RESEARCH-OUT/RESEARCH-OUT/inspect",
+        "FW-SRV-REST: GigabitEthernet0/2 -> GigabitEthernet0/0: POL-TRANSIT-SERVERS/NORMAL-SERVER/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan30_remediation_dns_tcp",
+      "vlan": 30,
+      "expected": true,
+      "packet": {
+        "source": "192.168.30.101",
+        "destination": "192.168.50.13",
+        "protocol": "tcp",
+        "dport": 53,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.30.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-RESEARCH-OUT/RESEARCH-OUT/inspect",
+        "FW-SRV-REST: GigabitEthernet0/2 -> GigabitEthernet0/0: POL-TRANSIT-SERVERS/NORMAL-SERVER/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan30_remediation_ping",
+      "vlan": 30,
+      "expected": false,
+      "packet": {
+        "source": "192.168.30.101",
+        "destination": "192.168.50.13",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.30.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-RESEARCH-OUT/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan30_external_http",
+      "vlan": 30,
+      "expected": true,
+      "packet": {
+        "source": "192.168.30.101",
+        "destination": "203.0.113.2",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.30.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-RESEARCH-OUT/RESEARCH-OUT/inspect",
+        "EDGE-R: GigabitEthernet0/0 -> GigabitEthernet0/1: same-zone or both unzoned",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan30_external_https",
+      "vlan": 30,
+      "expected": true,
+      "packet": {
+        "source": "192.168.30.101",
+        "destination": "203.0.113.2",
+        "protocol": "tcp",
+        "dport": 443,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.30.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-RESEARCH-OUT/RESEARCH-OUT/inspect",
+        "EDGE-R: GigabitEthernet0/0 -> GigabitEthernet0/1: same-zone or both unzoned",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan30_external_dns_udp",
+      "vlan": 30,
+      "expected": true,
+      "packet": {
+        "source": "192.168.30.101",
+        "destination": "203.0.113.2",
+        "protocol": "udp",
+        "dport": 53,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.30.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-RESEARCH-OUT/RESEARCH-OUT/inspect",
+        "EDGE-R: GigabitEthernet0/0 -> GigabitEthernet0/1: same-zone or both unzoned",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan30_external_dns_tcp",
+      "vlan": 30,
+      "expected": true,
+      "packet": {
+        "source": "192.168.30.101",
+        "destination": "203.0.113.2",
+        "protocol": "tcp",
+        "dport": 53,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.30.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-RESEARCH-OUT/RESEARCH-OUT/inspect",
+        "EDGE-R: GigabitEthernet0/0 -> GigabitEthernet0/1: same-zone or both unzoned",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan30_external_ping",
+      "vlan": 30,
+      "expected": false,
+      "packet": {
+        "source": "192.168.30.101",
+        "destination": "203.0.113.2",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.30.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-RESEARCH-OUT/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan30_external_tcp25_policy",
+      "vlan": 30,
+      "expected": false,
+      "packet": {
+        "source": "192.168.30.101",
+        "destination": "203.0.113.2",
+        "protocol": "tcp",
+        "dport": 25,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.30.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-RESEARCH-OUT/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan30_own_gateway",
+      "vlan": 30,
+      "expected": true,
+      "packet": {
+        "source": "192.168.30.101",
+        "destination": "192.168.30.1",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.30.0 0.0.0.255 any",
+        "FW-RES-ADM: router-local ICMP; availability untested"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan40_research_http",
+      "vlan": 40,
+      "expected": true,
+      "packet": {
+        "source": "192.168.40.101",
+        "destination": "192.168.50.10",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.40.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-ADMIN-OUT/ADMIN-OUT/inspect",
+        "FW-SRV-REST: GigabitEthernet0/2 -> GigabitEthernet0/0: POL-TRANSIT-SERVERS/NORMAL-SERVER/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan40_research_https",
+      "vlan": 40,
+      "expected": true,
+      "packet": {
+        "source": "192.168.40.101",
+        "destination": "192.168.50.10",
+        "protocol": "tcp",
+        "dport": 443,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.40.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-ADMIN-OUT/ADMIN-OUT/inspect",
+        "FW-SRV-REST: GigabitEthernet0/2 -> GigabitEthernet0/0: POL-TRANSIT-SERVERS/NORMAL-SERVER/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan40_research_ping",
+      "vlan": 40,
+      "expected": true,
+      "packet": {
+        "source": "192.168.40.101",
+        "destination": "192.168.50.10",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.40.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-ADMIN-OUT/ADMIN-OUT/inspect",
+        "FW-SRV-REST: GigabitEthernet0/2 -> GigabitEthernet0/0: POL-TRANSIT-SERVERS/NORMAL-SERVER/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan40_database_ftp_control",
+      "vlan": 40,
+      "expected": true,
+      "packet": {
+        "source": "192.168.40.101",
+        "destination": "192.168.50.11",
+        "protocol": "tcp",
+        "dport": 21,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.40.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-ADMIN-OUT/ADMIN-FTP/inspect",
+        "FW-SRV-REST: GigabitEthernet0/2 -> GigabitEthernet0/0: POL-TRANSIT-SERVERS/SERVER-FTP/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan40_administration_http",
+      "vlan": 40,
+      "expected": true,
+      "packet": {
+        "source": "192.168.40.101",
+        "destination": "192.168.50.12",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.40.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-ADMIN-OUT/ADMIN-OUT/inspect",
+        "FW-SRV-REST: GigabitEthernet0/2 -> GigabitEthernet0/0: POL-TRANSIT-SERVERS/NORMAL-SERVER/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan40_administration_https",
+      "vlan": 40,
+      "expected": true,
+      "packet": {
+        "source": "192.168.40.101",
+        "destination": "192.168.50.12",
+        "protocol": "tcp",
+        "dport": 443,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.40.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-ADMIN-OUT/ADMIN-OUT/inspect",
+        "FW-SRV-REST: GigabitEthernet0/2 -> GigabitEthernet0/0: POL-TRANSIT-SERVERS/NORMAL-SERVER/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan40_remediation_http",
+      "vlan": 40,
+      "expected": true,
+      "packet": {
+        "source": "192.168.40.101",
+        "destination": "192.168.50.13",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.40.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-ADMIN-OUT/ADMIN-OUT/inspect",
+        "FW-SRV-REST: GigabitEthernet0/2 -> GigabitEthernet0/0: POL-TRANSIT-SERVERS/NORMAL-SERVER/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan40_remediation_dns_udp",
+      "vlan": 40,
+      "expected": true,
+      "packet": {
+        "source": "192.168.40.101",
+        "destination": "192.168.50.13",
+        "protocol": "udp",
+        "dport": 53,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.40.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-ADMIN-OUT/ADMIN-OUT/inspect",
+        "FW-SRV-REST: GigabitEthernet0/2 -> GigabitEthernet0/0: POL-TRANSIT-SERVERS/NORMAL-SERVER/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan40_remediation_dns_tcp",
+      "vlan": 40,
+      "expected": true,
+      "packet": {
+        "source": "192.168.40.101",
+        "destination": "192.168.50.13",
+        "protocol": "tcp",
+        "dport": 53,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.40.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-ADMIN-OUT/ADMIN-OUT/inspect",
+        "FW-SRV-REST: GigabitEthernet0/2 -> GigabitEthernet0/0: POL-TRANSIT-SERVERS/NORMAL-SERVER/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan40_remediation_ping",
+      "vlan": 40,
+      "expected": true,
+      "packet": {
+        "source": "192.168.40.101",
+        "destination": "192.168.50.13",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.40.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-ADMIN-OUT/ADMIN-OUT/inspect",
+        "FW-SRV-REST: GigabitEthernet0/2 -> GigabitEthernet0/0: POL-TRANSIT-SERVERS/NORMAL-SERVER/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan40_external_http",
+      "vlan": 40,
+      "expected": true,
+      "packet": {
+        "source": "192.168.40.101",
+        "destination": "203.0.113.2",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.40.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-ADMIN-OUT/ADMIN-OUT/inspect",
+        "EDGE-R: GigabitEthernet0/0 -> GigabitEthernet0/1: same-zone or both unzoned",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan40_external_https",
+      "vlan": 40,
+      "expected": true,
+      "packet": {
+        "source": "192.168.40.101",
+        "destination": "203.0.113.2",
+        "protocol": "tcp",
+        "dport": 443,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.40.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-ADMIN-OUT/ADMIN-OUT/inspect",
+        "EDGE-R: GigabitEthernet0/0 -> GigabitEthernet0/1: same-zone or both unzoned",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan40_external_dns_udp",
+      "vlan": 40,
+      "expected": true,
+      "packet": {
+        "source": "192.168.40.101",
+        "destination": "203.0.113.2",
+        "protocol": "udp",
+        "dport": 53,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.40.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-ADMIN-OUT/ADMIN-OUT/inspect",
+        "EDGE-R: GigabitEthernet0/0 -> GigabitEthernet0/1: same-zone or both unzoned",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan40_external_dns_tcp",
+      "vlan": 40,
+      "expected": true,
+      "packet": {
+        "source": "192.168.40.101",
+        "destination": "203.0.113.2",
+        "protocol": "tcp",
+        "dport": 53,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.40.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-ADMIN-OUT/ADMIN-OUT/inspect",
+        "EDGE-R: GigabitEthernet0/0 -> GigabitEthernet0/1: same-zone or both unzoned",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan40_external_ping",
+      "vlan": 40,
+      "expected": true,
+      "packet": {
+        "source": "192.168.40.101",
+        "destination": "203.0.113.2",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.40.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-ADMIN-OUT/ADMIN-OUT/inspect",
+        "EDGE-R: GigabitEthernet0/0 -> GigabitEthernet0/1: same-zone or both unzoned",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan40_external_tcp25_policy",
+      "vlan": 40,
+      "expected": true,
+      "packet": {
+        "source": "192.168.40.101",
+        "destination": "203.0.113.2",
+        "protocol": "tcp",
+        "dport": 25,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.40.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-ADMIN-OUT/ADMIN-OUT/inspect",
+        "EDGE-R: GigabitEthernet0/0 -> GigabitEthernet0/1: same-zone or both unzoned",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan40_own_gateway",
+      "vlan": 40,
+      "expected": true,
+      "packet": {
+        "source": "192.168.40.101",
+        "destination": "192.168.40.1",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.40.0 0.0.0.255 any",
+        "FW-RES-ADM: router-local ICMP; availability untested"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan60_research_http",
+      "vlan": 60,
+      "expected": false,
+      "packet": {
+        "source": "192.168.60.101",
+        "destination": "192.168.50.10",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.60.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/1 -> GigabitEthernet0/0: POL-RESTRICTED-REMEDIATE/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan60_research_https",
+      "vlan": 60,
+      "expected": false,
+      "packet": {
+        "source": "192.168.60.101",
+        "destination": "192.168.50.10",
+        "protocol": "tcp",
+        "dport": 443,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.60.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/1 -> GigabitEthernet0/0: POL-RESTRICTED-REMEDIATE/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan60_research_ping",
+      "vlan": 60,
+      "expected": false,
+      "packet": {
+        "source": "192.168.60.101",
+        "destination": "192.168.50.10",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.60.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/1 -> GigabitEthernet0/0: POL-RESTRICTED-REMEDIATE/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan60_database_ftp_control",
+      "vlan": 60,
+      "expected": false,
+      "packet": {
+        "source": "192.168.60.101",
+        "destination": "192.168.50.11",
+        "protocol": "tcp",
+        "dport": 21,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.60.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/1 -> GigabitEthernet0/0: POL-RESTRICTED-REMEDIATE/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan60_administration_http",
+      "vlan": 60,
+      "expected": false,
+      "packet": {
+        "source": "192.168.60.101",
+        "destination": "192.168.50.12",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.60.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/1 -> GigabitEthernet0/0: POL-RESTRICTED-REMEDIATE/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan60_administration_https",
+      "vlan": 60,
+      "expected": false,
+      "packet": {
+        "source": "192.168.60.101",
+        "destination": "192.168.50.12",
+        "protocol": "tcp",
+        "dport": 443,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.60.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/1 -> GigabitEthernet0/0: POL-RESTRICTED-REMEDIATE/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan60_remediation_http",
+      "vlan": 60,
+      "expected": true,
+      "packet": {
+        "source": "192.168.60.101",
+        "destination": "192.168.50.13",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.60.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/1 -> GigabitEthernet0/0: POL-RESTRICTED-REMEDIATE/RESTRICTED-REMEDIATE/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan60_remediation_dns_udp",
+      "vlan": 60,
+      "expected": true,
+      "packet": {
+        "source": "192.168.60.101",
+        "destination": "192.168.50.13",
+        "protocol": "udp",
+        "dport": 53,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.60.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/1 -> GigabitEthernet0/0: POL-RESTRICTED-REMEDIATE/RESTRICTED-REMEDIATE/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan60_remediation_dns_tcp",
+      "vlan": 60,
+      "expected": true,
+      "packet": {
+        "source": "192.168.60.101",
+        "destination": "192.168.50.13",
+        "protocol": "tcp",
+        "dport": 53,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.60.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/1 -> GigabitEthernet0/0: POL-RESTRICTED-REMEDIATE/RESTRICTED-REMEDIATE/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan60_remediation_ping",
+      "vlan": 60,
+      "expected": false,
+      "packet": {
+        "source": "192.168.60.101",
+        "destination": "192.168.50.13",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.60.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/1 -> GigabitEthernet0/0: POL-RESTRICTED-REMEDIATE/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan60_external_http",
+      "vlan": 60,
+      "expected": false,
+      "packet": {
+        "source": "192.168.60.101",
+        "destination": "203.0.113.2",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.60.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/1 -> GigabitEthernet0/2: no zone pair"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan60_external_https",
+      "vlan": 60,
+      "expected": false,
+      "packet": {
+        "source": "192.168.60.101",
+        "destination": "203.0.113.2",
+        "protocol": "tcp",
+        "dport": 443,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.60.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/1 -> GigabitEthernet0/2: no zone pair"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan60_external_dns_udp",
+      "vlan": 60,
+      "expected": false,
+      "packet": {
+        "source": "192.168.60.101",
+        "destination": "203.0.113.2",
+        "protocol": "udp",
+        "dport": 53,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.60.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/1 -> GigabitEthernet0/2: no zone pair"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan60_external_dns_tcp",
+      "vlan": 60,
+      "expected": false,
+      "packet": {
+        "source": "192.168.60.101",
+        "destination": "203.0.113.2",
+        "protocol": "tcp",
+        "dport": 53,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.60.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/1 -> GigabitEthernet0/2: no zone pair"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan60_external_ping",
+      "vlan": 60,
+      "expected": false,
+      "packet": {
+        "source": "192.168.60.101",
+        "destination": "203.0.113.2",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.60.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/1 -> GigabitEthernet0/2: no zone pair"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan60_external_tcp25_policy",
+      "vlan": 60,
+      "expected": false,
+      "packet": {
+        "source": "192.168.60.101",
+        "destination": "203.0.113.2",
+        "protocol": "tcp",
+        "dport": 25,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.60.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/1 -> GigabitEthernet0/2: no zone pair"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan60_own_gateway",
+      "vlan": 60,
+      "expected": true,
+      "packet": {
+        "source": "192.168.60.101",
+        "destination": "192.168.60.1",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.60.0 0.0.0.255 any",
+        "FW-SRV-REST: router-local ICMP; availability untested"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan70_research_http",
+      "vlan": 70,
+      "expected": false,
+      "packet": {
+        "source": "192.168.70.101",
+        "destination": "192.168.50.10",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "EDGE-R: ingress deny ip any any"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan70_research_https",
+      "vlan": 70,
+      "expected": false,
+      "packet": {
+        "source": "192.168.70.101",
+        "destination": "192.168.50.10",
+        "protocol": "tcp",
+        "dport": 443,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "EDGE-R: ingress deny ip any any"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan70_research_ping",
+      "vlan": 70,
+      "expected": false,
+      "packet": {
+        "source": "192.168.70.101",
+        "destination": "192.168.50.10",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "EDGE-R: ingress deny ip any any"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan70_database_ftp_control",
+      "vlan": 70,
+      "expected": false,
+      "packet": {
+        "source": "192.168.70.101",
+        "destination": "192.168.50.11",
+        "protocol": "tcp",
+        "dport": 21,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "EDGE-R: ingress deny ip any any"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan70_administration_http",
+      "vlan": 70,
+      "expected": false,
+      "packet": {
+        "source": "192.168.70.101",
+        "destination": "192.168.50.12",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "EDGE-R: ingress deny ip any any"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan70_administration_https",
+      "vlan": 70,
+      "expected": false,
+      "packet": {
+        "source": "192.168.70.101",
+        "destination": "192.168.50.12",
+        "protocol": "tcp",
+        "dport": 443,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "EDGE-R: ingress deny ip any any"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan70_remediation_http",
+      "vlan": 70,
+      "expected": false,
+      "packet": {
+        "source": "192.168.70.101",
+        "destination": "192.168.50.13",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "EDGE-R: ingress deny ip any any"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan70_remediation_dns_udp",
+      "vlan": 70,
+      "expected": false,
+      "packet": {
+        "source": "192.168.70.101",
+        "destination": "192.168.50.13",
+        "protocol": "udp",
+        "dport": 53,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "EDGE-R: ingress deny ip any any"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan70_remediation_dns_tcp",
+      "vlan": 70,
+      "expected": false,
+      "packet": {
+        "source": "192.168.70.101",
+        "destination": "192.168.50.13",
+        "protocol": "tcp",
+        "dport": 53,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "EDGE-R: ingress deny ip any any"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan70_remediation_ping",
+      "vlan": 70,
+      "expected": false,
+      "packet": {
+        "source": "192.168.70.101",
+        "destination": "192.168.50.13",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "EDGE-R: ingress deny ip any any"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan70_external_http",
+      "vlan": 70,
+      "expected": false,
+      "packet": {
+        "source": "192.168.70.101",
+        "destination": "203.0.113.2",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "EDGE-R: ingress deny ip any any"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan70_external_https",
+      "vlan": 70,
+      "expected": false,
+      "packet": {
+        "source": "192.168.70.101",
+        "destination": "203.0.113.2",
+        "protocol": "tcp",
+        "dport": 443,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "EDGE-R: ingress deny ip any any"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan70_external_dns_udp",
+      "vlan": 70,
+      "expected": false,
+      "packet": {
+        "source": "192.168.70.101",
+        "destination": "203.0.113.2",
+        "protocol": "udp",
+        "dport": 53,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "EDGE-R: ingress deny ip any any"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan70_external_dns_tcp",
+      "vlan": 70,
+      "expected": false,
+      "packet": {
+        "source": "192.168.70.101",
+        "destination": "203.0.113.2",
+        "protocol": "tcp",
+        "dport": 53,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "EDGE-R: ingress deny ip any any"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan70_external_ping",
+      "vlan": 70,
+      "expected": false,
+      "packet": {
+        "source": "192.168.70.101",
+        "destination": "203.0.113.2",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "EDGE-R: ingress deny ip any any"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan70_external_tcp25_policy",
+      "vlan": 70,
+      "expected": false,
+      "packet": {
+        "source": "192.168.70.101",
+        "destination": "203.0.113.2",
+        "protocol": "tcp",
+        "dport": 25,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "EDGE-R: ingress deny ip any any"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan70_own_gateway",
+      "vlan": 70,
+      "expected": true,
+      "packet": {
+        "source": "192.168.70.101",
+        "destination": "192.168.70.1",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": false,
+      "trace": [
+        "EDGE-R: ingress deny ip any any"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan10_to_vlan20_ping",
+      "vlan": 10,
+      "expected": false,
+      "packet": {
+        "source": "192.168.10.101",
+        "destination": "192.168.20.100",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.10.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/0 -> GigabitEthernet0/1: no zone pair"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan10_to_vlan30_ping",
+      "vlan": 10,
+      "expected": false,
+      "packet": {
+        "source": "192.168.10.101",
+        "destination": "192.168.30.100",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.10.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-STUDENT-OUT/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan10_to_vlan40_ping",
+      "vlan": 10,
+      "expected": false,
+      "packet": {
+        "source": "192.168.10.101",
+        "destination": "192.168.40.100",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.10.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-STUDENT-OUT/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan20_to_vlan10_ping",
+      "vlan": 20,
+      "expected": false,
+      "packet": {
+        "source": "192.168.20.101",
+        "destination": "192.168.10.100",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.20.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/1 -> GigabitEthernet0/0: no zone pair"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan20_to_vlan30_ping",
+      "vlan": 20,
+      "expected": false,
+      "packet": {
+        "source": "192.168.20.101",
+        "destination": "192.168.30.100",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.20.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-FACULTY-OUT/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan20_to_vlan40_ping",
+      "vlan": 20,
+      "expected": false,
+      "packet": {
+        "source": "192.168.20.101",
+        "destination": "192.168.40.100",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-STU-FAC: ingress permit ip 192.168.20.0 0.0.0.255 any",
+        "FW-STU-FAC: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-FACULTY-OUT/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan30_to_vlan10_ping",
+      "vlan": 30,
+      "expected": false,
+      "packet": {
+        "source": "192.168.30.101",
+        "destination": "192.168.10.100",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.30.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-RESEARCH-OUT/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan30_to_vlan20_ping",
+      "vlan": 30,
+      "expected": false,
+      "packet": {
+        "source": "192.168.30.101",
+        "destination": "192.168.20.100",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.30.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-RESEARCH-OUT/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan30_to_vlan40_ping",
+      "vlan": 30,
+      "expected": false,
+      "packet": {
+        "source": "192.168.30.101",
+        "destination": "192.168.40.100",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.30.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/0 -> GigabitEthernet0/1: no zone pair"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan40_to_vlan10_ping",
+      "vlan": 40,
+      "expected": true,
+      "packet": {
+        "source": "192.168.40.101",
+        "destination": "192.168.10.100",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.40.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-ADMIN-OUT/ADMIN-OUT/inspect",
+        "FW-STU-FAC: GigabitEthernet0/2 -> GigabitEthernet0/0: POL-ADMIN-USERS/ADMIN-USERS/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan40_to_vlan20_ping",
+      "vlan": 40,
+      "expected": true,
+      "packet": {
+        "source": "192.168.40.101",
+        "destination": "192.168.20.100",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.40.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/1 -> GigabitEthernet0/2: POL-ADMIN-OUT/ADMIN-OUT/inspect",
+        "FW-STU-FAC: GigabitEthernet0/2 -> GigabitEthernet0/1: POL-ADMIN-USERS/ADMIN-USERS/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan40_to_vlan30_ping",
+      "vlan": 40,
+      "expected": true,
+      "packet": {
+        "source": "192.168.40.101",
+        "destination": "192.168.30.100",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-RES-ADM: ingress permit ip 192.168.40.0 0.0.0.255 any",
+        "FW-RES-ADM: GigabitEthernet0/1 -> GigabitEthernet0/0: POL-ADMIN-RESEARCH/ADMIN-RESEARCH/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan60_to_vlan10_ping",
+      "vlan": 60,
+      "expected": false,
+      "packet": {
+        "source": "192.168.60.101",
+        "destination": "192.168.10.100",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.60.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/1 -> GigabitEthernet0/2: no zone pair"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan60_to_vlan20_ping",
+      "vlan": 60,
+      "expected": false,
+      "packet": {
+        "source": "192.168.60.101",
+        "destination": "192.168.20.100",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.60.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/1 -> GigabitEthernet0/2: no zone pair"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan60_to_vlan30_ping",
+      "vlan": 60,
+      "expected": false,
+      "packet": {
+        "source": "192.168.60.101",
+        "destination": "192.168.30.100",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.60.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/1 -> GigabitEthernet0/2: no zone pair"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan60_to_vlan40_ping",
+      "vlan": 60,
+      "expected": false,
+      "packet": {
+        "source": "192.168.60.101",
+        "destination": "192.168.40.100",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.60.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/1 -> GigabitEthernet0/2: no zone pair"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan70_to_vlan10_ping",
+      "vlan": 70,
+      "expected": false,
+      "packet": {
+        "source": "192.168.70.101",
+        "destination": "192.168.10.100",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "EDGE-R: ingress deny ip any any"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan70_to_vlan20_ping",
+      "vlan": 70,
+      "expected": false,
+      "packet": {
+        "source": "192.168.70.101",
+        "destination": "192.168.20.100",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "EDGE-R: ingress deny ip any any"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan70_to_vlan30_ping",
+      "vlan": 70,
+      "expected": false,
+      "packet": {
+        "source": "192.168.70.101",
+        "destination": "192.168.30.100",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "EDGE-R: ingress deny ip any any"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "vlan70_to_vlan40_ping",
+      "vlan": 70,
+      "expected": false,
+      "packet": {
+        "source": "192.168.70.101",
+        "destination": "192.168.40.100",
+        "protocol": "icmp",
+        "dport": null,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "EDGE-R: ingress deny ip any any"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "server_new_http_to_vlan10",
+      "vlan": 50,
+      "expected": false,
+      "packet": {
+        "source": "192.168.50.10",
+        "destination": "192.168.10.100",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.50.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-FTP-ACTIVE-DATA/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "db_active_data_to_vlan10",
+      "vlan": 50,
+      "expected": false,
+      "packet": {
+        "source": "192.168.50.11",
+        "destination": "192.168.10.100",
+        "protocol": "tcp",
+        "dport": 45000,
+        "sport": 20,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.50.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-FTP-ACTIVE-DATA/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "server_new_http_to_vlan20",
+      "vlan": 50,
+      "expected": false,
+      "packet": {
+        "source": "192.168.50.10",
+        "destination": "192.168.20.100",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.50.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-FTP-ACTIVE-DATA/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "db_active_data_to_vlan20",
+      "vlan": 50,
+      "expected": false,
+      "packet": {
+        "source": "192.168.50.11",
+        "destination": "192.168.20.100",
+        "protocol": "tcp",
+        "dport": 45000,
+        "sport": 20,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.50.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-FTP-ACTIVE-DATA/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "server_new_http_to_vlan30",
+      "vlan": 50,
+      "expected": false,
+      "packet": {
+        "source": "192.168.50.10",
+        "destination": "192.168.30.100",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.50.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-FTP-ACTIVE-DATA/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "db_active_data_to_vlan30",
+      "vlan": 50,
+      "expected": true,
+      "packet": {
+        "source": "192.168.50.11",
+        "destination": "192.168.30.100",
+        "protocol": "tcp",
+        "dport": 45000,
+        "sport": 20,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.50.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-FTP-ACTIVE-DATA/FTP-ACTIVE-DATA/inspect",
+        "FW-RES-ADM: GigabitEthernet0/2 -> GigabitEthernet0/0: POL-FTP-ACTIVE-DATA/FTP-ACTIVE-DATA/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "server_new_http_to_vlan40",
+      "vlan": 50,
+      "expected": false,
+      "packet": {
+        "source": "192.168.50.10",
+        "destination": "192.168.40.100",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.50.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-FTP-ACTIVE-DATA/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "db_active_data_to_vlan40",
+      "vlan": 50,
+      "expected": true,
+      "packet": {
+        "source": "192.168.50.11",
+        "destination": "192.168.40.100",
+        "protocol": "tcp",
+        "dport": 45000,
+        "sport": 20,
+        "icmp": 8
+      },
+      "configured_allow": true,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.50.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-FTP-ACTIVE-DATA/FTP-ACTIVE-DATA/inspect",
+        "FW-RES-ADM: GigabitEthernet0/2 -> GigabitEthernet0/1: POL-FTP-ACTIVE-DATA/FTP-ACTIVE-DATA/inspect",
+        "destination subnet reached in configuration; service not probed"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "server_new_http_to_vlan60",
+      "vlan": 50,
+      "expected": false,
+      "packet": {
+        "source": "192.168.50.10",
+        "destination": "192.168.60.100",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.50.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/0 -> GigabitEthernet0/1: no zone pair"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "db_active_data_to_vlan60",
+      "vlan": 50,
+      "expected": false,
+      "packet": {
+        "source": "192.168.50.11",
+        "destination": "192.168.60.100",
+        "protocol": "tcp",
+        "dport": 45000,
+        "sport": 20,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.50.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/0 -> GigabitEthernet0/1: no zone pair"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "server_new_http_to_vlan70",
+      "vlan": 50,
+      "expected": false,
+      "packet": {
+        "source": "192.168.50.10",
+        "destination": "192.168.70.100",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.50.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-FTP-ACTIVE-DATA/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "db_active_data_to_vlan70",
+      "vlan": 50,
+      "expected": false,
+      "packet": {
+        "source": "192.168.50.11",
+        "destination": "192.168.70.100",
+        "protocol": "tcp",
+        "dport": 45000,
+        "sport": 20,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "FW-SRV-REST: ingress permit ip 192.168.50.0 0.0.0.255 any",
+        "FW-SRV-REST: GigabitEthernet0/0 -> GigabitEthernet0/2: POL-FTP-ACTIVE-DATA/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "external_unsolicited_student_http",
+      "vlan": 99,
+      "expected": false,
+      "packet": {
+        "source": "203.0.113.2",
+        "destination": "192.168.10.100",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "EDGE-R: GigabitEthernet0/1 -> GigabitEthernet0/0: same-zone or both unzoned",
+        "FW-STU-FAC: GigabitEthernet0/2 -> GigabitEthernet0/0: POL-ADMIN-USERS/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    },
+    {
+      "id": "external_unsolicited_admin_http",
+      "vlan": 99,
+      "expected": false,
+      "packet": {
+        "source": "203.0.113.2",
+        "destination": "192.168.40.100",
+        "protocol": "tcp",
+        "dport": 80,
+        "sport": 45000,
+        "icmp": 8
+      },
+      "configured_allow": false,
+      "matches_requirement": true,
+      "trace": [
+        "EDGE-R: GigabitEthernet0/1 -> GigabitEthernet0/0: same-zone or both unzoned",
+        "FW-RES-ADM: GigabitEthernet0/2 -> GigabitEthernet0/1: POL-FTP-ACTIVE-DATA/class-default/drop"
+      ],
+      "evidence_level": "offline_configuration_inference",
+      "network_status": "NOT_RUN_BY_THIS_AUDIT"
+    }
+  ]
+}

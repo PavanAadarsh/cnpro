@@ -1,0 +1,366 @@
+{
+  "basis": "Final exported switch/router configuration and documented manual cabling",
+  "endpoint_settings_basis": "Recorded user screenshots and packet_tracer/README.md; not a binary decode",
+  "native_project": "../University_Research_Network_Final.pkt",
+  "native_rebuild": "Manual Packet Tracer build; this script does not generate a .pkt",
+  "devices": [
+    {
+      "name": "CORE-SW",
+      "model": "3560-24PS",
+      "configuration": "../evidence/CORE-SW_final_running_config.txt"
+    },
+    {
+      "name": "ACCESS-SW-A",
+      "model": "2960-24TT",
+      "configuration": "../evidence/ACCESS-SW-A_final_running_config.txt"
+    },
+    {
+      "name": "ACCESS-SW-B",
+      "model": "2960-24TT",
+      "configuration": "../evidence/ACCESS-SW-B_final_running_config.txt"
+    },
+    {
+      "name": "EDGE-R",
+      "model": "2911",
+      "configuration": "../evidence/EDGE-R_final_running_config.txt"
+    },
+    {
+      "name": "FW-STU-FAC",
+      "model": "2911",
+      "configuration": "../evidence/FW-STU-FAC_final_running_config.txt"
+    },
+    {
+      "name": "FW-RES-ADM",
+      "model": "2911",
+      "configuration": "../evidence/FW-RES-ADM_final_running_config.txt"
+    },
+    {
+      "name": "FW-SRV-REST",
+      "model": "2911",
+      "configuration": "../evidence/FW-SRV-REST_final_running_config.txt"
+    },
+    {
+      "name": "PC-STU1",
+      "model": "PC-PT",
+      "vlan": 10,
+      "ipv4": "DHCP",
+      "dns": "203.0.113.2"
+    },
+    {
+      "name": "PC-STU2",
+      "model": "PC-PT",
+      "vlan": 10,
+      "ipv4": "DHCP",
+      "dns": "203.0.113.2"
+    },
+    {
+      "name": "PC-FAC1",
+      "model": "PC-PT",
+      "vlan": 20,
+      "ipv4": "DHCP",
+      "dns": "203.0.113.2"
+    },
+    {
+      "name": "PC-FAC2",
+      "model": "PC-PT",
+      "vlan": 20,
+      "ipv4": "DHCP",
+      "dns": "203.0.113.2"
+    },
+    {
+      "name": "PC-ADM1",
+      "model": "PC-PT",
+      "vlan": 40,
+      "ipv4": "DHCP",
+      "dns": "203.0.113.2"
+    },
+    {
+      "name": "PC-ADM2",
+      "model": "PC-PT",
+      "vlan": 40,
+      "ipv4": "DHCP",
+      "dns": "203.0.113.2"
+    },
+    {
+      "name": "POLICY-HOST",
+      "model": "PC-PT",
+      "vlan": 40,
+      "ipv4": "192.168.40.50",
+      "mask": "255.255.255.0",
+      "gateway": "192.168.40.1",
+      "dns": "203.0.113.2"
+    },
+    {
+      "name": "PC-RES1",
+      "model": "PC-PT",
+      "vlan": 30,
+      "ipv4": "DHCP",
+      "dns": "203.0.113.2"
+    },
+    {
+      "name": "PC-RES2",
+      "model": "PC-PT",
+      "vlan": 30,
+      "ipv4": "DHCP",
+      "dns": "203.0.113.2"
+    },
+    {
+      "name": "SRV-RESEARCH",
+      "model": "Server-PT",
+      "vlan": 50,
+      "ipv4": "192.168.50.10",
+      "mask": "255.255.255.0",
+      "gateway": "192.168.50.1"
+    },
+    {
+      "name": "SRV-DB",
+      "model": "Server-PT",
+      "vlan": 50,
+      "ipv4": "192.168.50.11",
+      "mask": "255.255.255.0",
+      "gateway": "192.168.50.1"
+    },
+    {
+      "name": "SRV-ADMIN",
+      "model": "Server-PT",
+      "vlan": 50,
+      "ipv4": "192.168.50.12",
+      "mask": "255.255.255.0",
+      "gateway": "192.168.50.1"
+    },
+    {
+      "name": "SRV-REMEDIATE",
+      "model": "Server-PT",
+      "vlan": 50,
+      "ipv4": "192.168.50.13",
+      "mask": "255.255.255.0",
+      "gateway": "192.168.50.1"
+    },
+    {
+      "name": "INTERNET-SRV",
+      "model": "Server-PT",
+      "ipv4": "203.0.113.2",
+      "mask": "255.255.255.252",
+      "gateway": "203.0.113.1",
+      "dns": "203.0.113.2"
+    }
+  ],
+  "links": [
+    {
+      "device_a": "CORE-SW",
+      "port_a": "GigabitEthernet0/1",
+      "device_b": "ACCESS-SW-A",
+      "port_b": "GigabitEthernet0/1",
+      "vlan": "trunk",
+      "cable": "crossover"
+    },
+    {
+      "device_a": "CORE-SW",
+      "port_a": "GigabitEthernet0/2",
+      "device_b": "ACCESS-SW-B",
+      "port_b": "GigabitEthernet0/1",
+      "vlan": "trunk",
+      "cable": "crossover"
+    },
+    {
+      "device_a": "CORE-SW",
+      "port_a": "FastEthernet0/1",
+      "device_b": "FW-STU-FAC",
+      "port_b": "GigabitEthernet0/0",
+      "vlan": 10,
+      "cable": "straight-through"
+    },
+    {
+      "device_a": "CORE-SW",
+      "port_a": "FastEthernet0/2",
+      "device_b": "FW-STU-FAC",
+      "port_b": "GigabitEthernet0/1",
+      "vlan": 20,
+      "cable": "straight-through"
+    },
+    {
+      "device_a": "CORE-SW",
+      "port_a": "FastEthernet0/3",
+      "device_b": "FW-STU-FAC",
+      "port_b": "GigabitEthernet0/2",
+      "vlan": 900,
+      "cable": "straight-through"
+    },
+    {
+      "device_a": "CORE-SW",
+      "port_a": "FastEthernet0/4",
+      "device_b": "FW-RES-ADM",
+      "port_b": "GigabitEthernet0/0",
+      "vlan": 30,
+      "cable": "straight-through"
+    },
+    {
+      "device_a": "CORE-SW",
+      "port_a": "FastEthernet0/5",
+      "device_b": "FW-RES-ADM",
+      "port_b": "GigabitEthernet0/1",
+      "vlan": 40,
+      "cable": "straight-through"
+    },
+    {
+      "device_a": "CORE-SW",
+      "port_a": "FastEthernet0/6",
+      "device_b": "FW-RES-ADM",
+      "port_b": "GigabitEthernet0/2",
+      "vlan": 900,
+      "cable": "straight-through"
+    },
+    {
+      "device_a": "CORE-SW",
+      "port_a": "FastEthernet0/7",
+      "device_b": "FW-SRV-REST",
+      "port_b": "GigabitEthernet0/0",
+      "vlan": 50,
+      "cable": "straight-through"
+    },
+    {
+      "device_a": "CORE-SW",
+      "port_a": "FastEthernet0/8",
+      "device_b": "FW-SRV-REST",
+      "port_b": "GigabitEthernet0/1",
+      "vlan": 60,
+      "cable": "straight-through"
+    },
+    {
+      "device_a": "CORE-SW",
+      "port_a": "FastEthernet0/9",
+      "device_b": "FW-SRV-REST",
+      "port_b": "GigabitEthernet0/2",
+      "vlan": 900,
+      "cable": "straight-through"
+    },
+    {
+      "device_a": "CORE-SW",
+      "port_a": "FastEthernet0/10",
+      "device_b": "EDGE-R",
+      "port_b": "GigabitEthernet0/2",
+      "vlan": 70,
+      "cable": "straight-through"
+    },
+    {
+      "device_a": "CORE-SW",
+      "port_a": "FastEthernet0/24",
+      "device_b": "EDGE-R",
+      "port_b": "GigabitEthernet0/0",
+      "vlan": 900,
+      "cable": "straight-through"
+    },
+    {
+      "device_a": "ACCESS-SW-A",
+      "port_a": "FastEthernet0/1",
+      "device_b": "PC-STU1",
+      "port_b": "FastEthernet0",
+      "vlan": 10,
+      "cable": "straight-through"
+    },
+    {
+      "device_a": "ACCESS-SW-A",
+      "port_a": "FastEthernet0/2",
+      "device_b": "PC-STU2",
+      "port_b": "FastEthernet0",
+      "vlan": 10,
+      "cable": "straight-through"
+    },
+    {
+      "device_a": "ACCESS-SW-A",
+      "port_a": "FastEthernet0/3",
+      "device_b": "PC-FAC1",
+      "port_b": "FastEthernet0",
+      "vlan": 20,
+      "cable": "straight-through"
+    },
+    {
+      "device_a": "ACCESS-SW-A",
+      "port_a": "FastEthernet0/4",
+      "device_b": "PC-FAC2",
+      "port_b": "FastEthernet0",
+      "vlan": 20,
+      "cable": "straight-through"
+    },
+    {
+      "device_a": "ACCESS-SW-A",
+      "port_a": "FastEthernet0/5",
+      "device_b": "PC-ADM1",
+      "port_b": "FastEthernet0",
+      "vlan": 40,
+      "cable": "straight-through"
+    },
+    {
+      "device_a": "ACCESS-SW-A",
+      "port_a": "FastEthernet0/6",
+      "device_b": "PC-ADM2",
+      "port_b": "FastEthernet0",
+      "vlan": 40,
+      "cable": "straight-through"
+    },
+    {
+      "device_a": "ACCESS-SW-A",
+      "port_a": "FastEthernet0/7",
+      "device_b": "POLICY-HOST",
+      "port_b": "FastEthernet0",
+      "vlan": 40,
+      "cable": "straight-through"
+    },
+    {
+      "device_a": "ACCESS-SW-B",
+      "port_a": "FastEthernet0/1",
+      "device_b": "PC-RES1",
+      "port_b": "FastEthernet0",
+      "vlan": 30,
+      "cable": "straight-through"
+    },
+    {
+      "device_a": "ACCESS-SW-B",
+      "port_a": "FastEthernet0/2",
+      "device_b": "PC-RES2",
+      "port_b": "FastEthernet0",
+      "vlan": 30,
+      "cable": "straight-through"
+    },
+    {
+      "device_a": "ACCESS-SW-B",
+      "port_a": "FastEthernet0/3",
+      "device_b": "SRV-RESEARCH",
+      "port_b": "FastEthernet0",
+      "vlan": 50,
+      "cable": "straight-through"
+    },
+    {
+      "device_a": "ACCESS-SW-B",
+      "port_a": "FastEthernet0/4",
+      "device_b": "SRV-DB",
+      "port_b": "FastEthernet0",
+      "vlan": 50,
+      "cable": "straight-through"
+    },
+    {
+      "device_a": "ACCESS-SW-B",
+      "port_a": "FastEthernet0/5",
+      "device_b": "SRV-ADMIN",
+      "port_b": "FastEthernet0",
+      "vlan": 50,
+      "cable": "straight-through"
+    },
+    {
+      "device_a": "ACCESS-SW-B",
+      "port_a": "FastEthernet0/6",
+      "device_b": "SRV-REMEDIATE",
+      "port_b": "FastEthernet0",
+      "vlan": 50,
+      "cable": "straight-through"
+    },
+    {
+      "device_a": "EDGE-R",
+      "port_a": "GigabitEthernet0/1",
+      "device_b": "INTERNET-SRV",
+      "port_b": "FastEthernet0",
+      "vlan": null,
+      "cable": "crossover"
+    }
+  ]
+}

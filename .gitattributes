@@ -6,3 +6,6 @@
 *.png -text
 # Preserve genuine exported device configurations byte for byte.
 /packet_tracer/evidence/*_final_running_config.txt -text
+# Handoff hashes cover raw bytes, including existing CSV/document line endings.
+# Preserve those bytes across Windows/Linux clones and Git configuration changes.
+/packet_tracer/** -text whitespace=cr-at-eol

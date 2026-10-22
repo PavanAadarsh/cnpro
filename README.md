@@ -11,6 +11,13 @@ screenshots. The broader project is not claimed exhaustively verified: PT
 transitions are manual, passive FTP remains unresolved, and timed recovery and
 remaining access/permission cases are explicitly identified in that report.
 
+Local follow-up: [current final handoff](packet_tracer/final_package/README.md)
+provides the 21-device/27-link topology, cabling and export-driven policy audit.
+Fifteen focused software tests pass. The audit identifies one pending Quarantine
+gateway-ping correction, with an unapplied patch and rollback; it does not add
+live test passes or alter the saved topology. Reproduction instructions are in
+the Packet Tracer README.
+
 The Linux implementation below is a separate reproduction of the adaptive
 engine, real TLS/FTP services, automatic detection and captured experiments.
 Selected small historical Linux results are published in

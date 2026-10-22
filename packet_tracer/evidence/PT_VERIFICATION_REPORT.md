@@ -25,6 +25,19 @@ The CORE finishing update was subsequently applied by the user and verified in t
 
 ## Remaining work and limits
 
+Local follow-up on 2026-10-22, without further screen control: the current design
+now has a reproducible cabling/topology handoff and an export-driven offline
+audit under `final_package/`. Its 136 initial-flow cases find 135 configuration
+matches and one mismatch: `QUARANTINE-IN` blocks the own-gateway echo required by
+the detailed agreed policy. A narrowly scoped ACL replacement and rollback are
+prepared under `final_package/pending_changes/`, but are **not applied**. The
+13 new software regression tests pass; a temporary corrected configuration
+matches all 136 expectations and changes only the gateway case in that matrix.
+These are offline configuration findings, not additional Packet Tracer network
+passes. The saved `.pkt` and all seven genuine exports remain byte-for-byte
+unchanged during this follow-up. Applying/saving/re-exporting that correction
+remains simulator work.
+
 1. The CORE finishing block, re-export and final topology save are complete. No successful live verification of the management SVI is claimed; verify its reachability if it is a required acceptance case.
 2. Only an observed subset of access cases has been run. In particular, missing role/service combinations and server-initiated-denial coverage must not be labelled passed based on configuration alone. FTP file retrieval and denied write/delete/rename commands remain unverified; the account's RL configuration alone is not behavioural proof.
 3. No automatic PT detection/controller integration, timed recovery, or PT static/adaptive benchmark has been demonstrated. Transitions were controlled manual CLI changes with real simulated VLAN/DHCP/connectivity changes. Full 30/120-minute expiry is pending clarification, not failed or completed.

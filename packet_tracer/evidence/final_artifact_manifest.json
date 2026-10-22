@@ -1,23 +1,18 @@
 [
   {
+    "Path": "README.md",
+    "Bytes": 8986,
+    "SHA256": "BBE88D0F973CDDE19D3513A8C4D8EDC9F8245E9D0F2732EE3805549E859A7C55"
+  },
+  {
     "Path": "University_Research_Network_Final.pkt",
     "Bytes": 158923,
     "SHA256": "B4CA4EF954FB98DD773797A40CC7448E6003F3211D52702016F4D727AAD6BCB6"
   },
   {
-    "Path": "README.md",
-    "Bytes": 6607,
-    "SHA256": "1D7276D4636C84AD32507DE335081FBF62FFC473CEFC47808672A31E37729952"
-  },
-  {
-    "Path": "evidence/PT_VERIFICATION_REPORT.md",
-    "Bytes": 5479,
-    "SHA256": "4CC7F6D180CF28D05C9ED1FC63A5D83F1F233D0E48FB0DEA6E4931804A0E4060"
-  },
-  {
-    "Path": "evidence/observed_test_results.csv",
-    "Bytes": 5586,
-    "SHA256": "3DA94C77CEFECB31B4F6ADC18A48F2C4ED56796E044403005B8614560D3E41DF"
+    "Path": "build_final_package.py",
+    "Bytes": 9883,
+    "SHA256": "958DD4C1AFADD4DC77E2861C96AF4EA0CAEB7B1A0FBD155F85F9B91A91F6DFDA"
   },
   {
     "Path": "evidence/ACCESS-SW-A_final_running_config.txt",
@@ -53,6 +48,16 @@
     "Path": "evidence/FW-STU-FAC_final_running_config.txt",
     "Bytes": 4827,
     "SHA256": "9989259600DD3333E037AFFB6CFB8158AD5D6D696C578E28509A84DC93BFB2B3"
+  },
+  {
+    "Path": "evidence/PT_VERIFICATION_REPORT.md",
+    "Bytes": 6369,
+    "SHA256": "76CF4096FAA3D33952F345B0FFCE69114E37858C12AEE9247FF451AAD8D15FE5"
+  },
+  {
+    "Path": "evidence/observed_test_results.csv",
+    "Bytes": 5586,
+    "SHA256": "3DA94C77CEFECB31B4F6ADC18A48F2C4ED56796E044403005B8614560D3E41DF"
   },
   {
     "Path": "evidence/screenshots/admin_active_ftp.png",
@@ -128,5 +133,60 @@
     "Path": "evidence/screenshots/student_research_http.png",
     "Bytes": 25041,
     "SHA256": "01C737B441784FBDD253AB37C1BA54B6CEF6C4108483BF653E4CE1149993524E"
+  },
+  {
+    "Path": "final_audit.py",
+    "Bytes": 16541,
+    "SHA256": "1A6F5E06B68D2CCF6049E4BD0912EF1D84973F27B18EF28F6E9790DF1569004B"
+  },
+  {
+    "Path": "final_package/README.md",
+    "Bytes": 1633,
+    "SHA256": "487A051BC2999D4A7821D8B2F5B367EE960B21ED097EB63A46D53ADFD6D96455"
+  },
+  {
+    "Path": "final_package/acceptance_matrix.csv",
+    "Bytes": 17903,
+    "SHA256": "26C6E8A37E84562761915A30EB6084E4D25D722B1C48E5E524ECC13E9D600122"
+  },
+  {
+    "Path": "final_package/cabling.csv",
+    "Bytes": 2024,
+    "SHA256": "FD04F15E15AD48D3878FD699A789C28716A16FF39BA17221C97197179B1B7287"
+  },
+  {
+    "Path": "final_package/offline_policy_audit.json",
+    "Bytes": 98364,
+    "SHA256": "49203B5F29D2ED6F1E8697D090902373CBB76E18E8912A956EC75472B03066F9"
+  },
+  {
+    "Path": "final_package/pending_changes/EDGE-R_quarantine_gateway.cfg",
+    "Bytes": 502,
+    "SHA256": "9F2A8FA418D7CD3DAD409046F62F83737976929D81C1AFFA73F17483BCF7E94A"
+  },
+  {
+    "Path": "final_package/pending_changes/EDGE-R_rollback.cfg",
+    "Bytes": 169,
+    "SHA256": "9640E1A7C56AC8AFA11861D70DCF3811F154E47C006A8BBF7C866EBA8812C47E"
+  },
+  {
+    "Path": "final_package/source_hashes.json",
+    "Bytes": 1388,
+    "SHA256": "E9F1B4A3B8DE3D81889B86AA4CA9CCAB780F73A7F7E53E58DFBAB622466AAAD7"
+  },
+  {
+    "Path": "final_package/topology.json",
+    "Bytes": 9207,
+    "SHA256": "729501BBFD3D8265A980AF2F13F098FD922127B29D3DA6AD8F40769D2C1B9592"
+  },
+  {
+    "Path": "tests/test_final_package.py",
+    "Bytes": 9340,
+    "SHA256": "CA287872F44E9C5E592F5D0F45C6D5801503DE94670BC2E1E84A2D7B5BEA8410"
+  },
+  {
+    "Path": "verify_handoff.py",
+    "Bytes": 3955,
+    "SHA256": "EB81EAA5C068F81AB4D63B57F9A563EB426F7036E80F25F32527BC66B5EE8D35"
   }
 ]

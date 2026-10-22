@@ -130,14 +130,17 @@ FTP credential JSON, private keys, verbose logs, runtime caches or upstream copi
 FTP is intentionally a plaintext lab protocol, so captures can contain its ephemeral
 password. Keep only reviewed, credential-free summary evidence if publishing later.
 
-## Pending clarification (excluded from current completion decision)
+## Remaining deployment and timing scope
 
-1. Packet Tracer implementation / actual Cisco device deployment. Linux results
-   do not verify IOS behavior or Cisco timing. The IOS intermediate ACL snippet
-   cannot itself supply Linux connection tracking; Cisco deployment needs a
-   reviewed compatible stateful return-path design and device access.
+1. Packet Tracer is a confirmed requirement and its manual topology is built.
+   See `../packet_tracer/evidence/PT_VERIFICATION_REPORT.md` for actual simulator
+   observations and `../packet_tracer/final_package/README.md` for the current
+   handoff and pending correction. Automatic Python-to-PT operation is not
+   implemented. Linux results do not prove simulator behavior or Cisco timing;
+   actual physical Cisco deployment is also unverified.
 2. Full 30/120-minute automatic recovery expiry. Hold rules are preserved and
    software-tested; short live runs verify administrative recovery, not expiry.
    A full-duration run with continuing DHCP renewal would be required if mandated.
 
-These items are neither completed nor failed and await faculty/teammate clarification.
+The manual Packet Tracer implementation is separate from the Linux result.
+Full-duration recovery remains unverified; its acceptance scope needs clarification.

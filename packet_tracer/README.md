@@ -8,6 +8,47 @@ Use the seven `evidence/*_final_running_config.txt` exports for the actual devic
 
 Locally preserved `topology.json`, `cabling.csv`, `configs/`, `candidate-configs/`, `stateful-configs/`, `stateful_design.json`, `prepare_package.py`, `native_helpers.js`, and the original 136-case matrix describe earlier candidates. They do **not** reproduce this final physical-interface design and are intentionally excluded from the published final package, along with older topology checkpoints. Do not import or run them over the working topology. The scripting API was not used to control this implementation.
 
+## Current reproducible handoff and offline checks
+
+`final_package/` describes the actual 21-device, 27-link design, including endpoint
+addresses, final cabling and references to the seven genuine exports. Generate it
+without opening or controlling Packet Tracer:
+
+```powershell
+python -B packet_tracer/build_final_package.py
+python -B -m unittest discover -s packet_tracer/tests -p test_final_package.py -v
+python -B packet_tracer/verify_handoff.py
+```
+
+Run these from the repository root. The builder checks cabled switch-port modes,
+VLANs, trunk membership and shutdown state against the exports. It writes a new
+136-case acceptance matrix and detailed initial-flow ACL/routing/zone-policy
+audit. This matrix is distinct from the earlier candidate matrix. The results
+are configuration inferences, not new network test passes; return paths, NAT,
+services, negotiated FTP data and automatic recovery are outside its model.
+Existing live observations remain in `evidence/observed_test_results.csv`.
+
+The current exports match 135 of those 136 policy expectations. Quarantine's own
+gateway ping is blocked, contrary to the detailed policy in
+`monitoring_integration/POLICY_RESOLUTION.md`. Consequently the builder exits 1
+after writing its reports; this is a reported pending correction, not a build
+crash. Fifteen focused software tests pass, including detection of this gap and
+an offline check of the pending correction in temporary configuration copies.
+
+`final_package/pending_changes/EDGE-R_quarantine_gateway.cfg` prepares a new ACL
+with DHCP, only the agreed gateway-echo exception, and a final deny. The rollback
+file restores the original binding. Neither is applied to the `.pkt` or genuine
+exports. After manual application, verify gateway ping and continued server
+denial, save the router/topology, re-export EDGE-R, and rebuild the package.
+The script never generates a topology binary or sets up endpoint services.
+
+`verify_handoff.py` is read-only: it checks packaged file hashes and compares the
+generated topology, cabling, audit and pending correction with current sources.
+It reports configuration gaps separately. A successful integrity check does not
+mean every policy expectation or live simulator test passed. After intentional
+edits, review and refresh the artifact manifest rather than treating a changed
+hash as evidence of a successful network test.
+
 ## Implemented topology
 
 CORE-SW aggregates VLANs at Layer 2. Its Gi0/1 and Gi0/2 trunks connect ACCESS-SW-A and ACCESS-SW-B; native VLAN 999 is unused for endpoint traffic. All endpoint subnets are /24 with gateway .1.
