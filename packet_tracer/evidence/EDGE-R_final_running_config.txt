@@ -99,7 +99,7 @@ interface GigabitEthernet0/2
  description QUARANTINE-GATEWAY
  ip address 192.168.70.1 255.255.255.0
  zone-member security QUARANTINE
- ip access-group QUARANTINE-IN in
+ ip access-group QUARANTINE-IN-V2 in
  duplex auto
  speed auto
 !
@@ -172,6 +172,10 @@ ip access-list standard PT-NAT
  permit 192.168.20.0 0.0.0.255
  permit 192.168.30.0 0.0.0.255
  permit 192.168.40.0 0.0.0.255
+ip access-list extended QUARANTINE-IN-V2
+ permit udp any eq bootpc any eq bootps
+ permit icmp 192.168.70.0 0.0.0.255 host 192.168.70.1 echo
+ deny ip any any
 !
 !
 !

@@ -47,3 +47,11 @@ PT45,Full original 136-case matrix,complete coverage,only observed subset run,NO
 PT46,Automatic Python control and detection in PT,only claim if demonstrated,not demonstrated,NOT_VERIFIED,manual transitions only
 PT47,FTP file get and permission enforcement,read succeeds write delete rename denied,not exercised,NOT_RUN,RL account settings are not behavioural proof
 PT48,30 and 120 minute expiry,requirement pending clarification,not exercised,PENDING_CLARIFICATION,no simulated success substituted
+PT49,Quarantine DHCP after correction,VLAN70 lease,192.168.70.100 gateway 192.168.70.1,PASS,screenshots/quarantine_dhcp_after_fix.png
+PT50,Quarantine own-gateway echo after correction,allow,4 sent; 4 received; 0 lost,PASS,screenshots/quarantine_gateway_and_server_denial.png
+PT51,Quarantine remediation-server echo denial,deny,4 sent; 0 received; gateway returned destination host unreachable,PASS,screenshots/quarantine_gateway_and_server_denial.png
+PT52,Normal DHCP restored after correction,VLAN10 lease,192.168.10.101 gateway 192.168.10.1 DNS 203.0.113.2,PASS,screenshots/recovery_dhcp_after_fix.png
+PT53,Research active FTP retrieval,allow,1383032 bytes transferred; simulator reports 61.416 seconds; not a network benchmark,PASS,screenshots/research_ftp_retrieval.png
+PT54,Research FTP upload rejection,deny,550 Requested action not taken permission denied,PASS,screenshots/research_ftp_upload_denied.png
+PT55,Default full-permission FTP account removal,remove default account,user reports cisco account removed and topology saved,USER_REPORTED,conversation confirmation; not independently decoded from topology
+PT56,Gateway correction and CORE cleanup export,correct EDGE binding; no accidental CORE ACL,EDGE Gi0/2 uses QUARANTINE-IN-V2; CORE has no such ACL or binding,CONFIG_VERIFIED,EDGE-R_final_running_config.txt and CORE-SW_final_running_config.txt

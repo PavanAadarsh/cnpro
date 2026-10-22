@@ -11,7 +11,7 @@
     "Automatic detection or recovery"
   ],
   "cases": 136,
-  "matching": 135,
+  "matching": 136,
   "results": [
     {
       "id": "vlan10_research_http",
@@ -2221,10 +2221,11 @@
         "sport": 45000,
         "icmp": 8
       },
-      "configured_allow": false,
-      "matches_requirement": false,
+      "configured_allow": true,
+      "matches_requirement": true,
       "trace": [
-        "EDGE-R: ingress deny ip any any"
+        "EDGE-R: ingress permit icmp 192.168.70.0 0.0.0.255 host 192.168.70.1 echo",
+        "EDGE-R: router-local ICMP; availability untested"
       ],
       "evidence_level": "offline_configuration_inference",
       "network_status": "NOT_RUN_BY_THIS_AUDIT"

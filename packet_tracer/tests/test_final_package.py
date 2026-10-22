@@ -1,6 +1,7 @@
 """Offline audit regression tests, not Packet Tracer network tests."""
 import hashlib
 import json
+import re
 from ipaddress import IPv4Address, IPv4Network
 from pathlib import Path
 import shutil
@@ -74,10 +75,10 @@ class FinalPackageTests(unittest.TestCase):
         campus.devices['FW-RES-ADM'].interfaces['GigabitEthernet0/0']['shutdown'] = True
         self.assertFalse(campus.initial_flow(case['vlan'], case['packet'])[0])
 
-    def test_current_exports_flag_quarantine_gateway(self):
+    def test_current_exports_match_policy(self):
         rows = audit()
         self.assertEqual(len(rows), 136)
-        self.assertEqual([r['id'] for r in rows if not r['matches_requirement']], ['vlan70_own_gateway'])
+        self.assertEqual([r['id'] for r in rows if not r['matches_requirement']], [])
         self.assertTrue(all(r['network_status'] == 'NOT_RUN_BY_THIS_AUDIT' for r in rows))
 
     def test_pending_patch_fixes_only_gateway_in_scratch_configuration(self):
@@ -94,13 +95,20 @@ class FinalPackageTests(unittest.TestCase):
                                 Path(directory) / (name + '_final_running_config.txt'))
             edge = Path(directory) / 'EDGE-R_final_running_config.txt'
             text = edge.read_text(encoding='utf-8-sig')
+            # Recreate the old defect only in scratch files, then exercise the
+            # reference correction. Keep regression detection after deployment.
+            text = re.sub(r'(?m)^ip access-list extended QUARANTINE-IN-V2\n(?: .*\n)*', '', text)
+            text = text.replace('ip access-group QUARANTINE-IN-V2 in', 'ip access-group QUARANTINE-IN in')
             self.assertEqual(text.count('ip access-group QUARANTINE-IN in'), 1)
+            edge.write_text(text, encoding='utf-8')
+            baseline = audit(directory)
+            self.assertEqual([r['id'] for r in baseline if not r['matches_requirement']], ['vlan70_own_gateway'])
             text = text.replace('ip access-group QUARANTINE-IN in', binding)
             text = text.replace('\nend', '\nip access-list extended ' + definition + '\n!\nend')
             edge.write_text(text, encoding='utf-8')
             corrected = audit(directory)
             self.assertTrue(all(r['matches_requirement'] for r in corrected))
-            changed = [r['id'] for old, r in zip(audit(), corrected)
+            changed = [r['id'] for old, r in zip(baseline, corrected)
                        if old['configured_allow'] != r['configured_allow']]
             self.assertEqual(changed, ['vlan70_own_gateway'])
             campus = Campus(directory)

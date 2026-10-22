@@ -11,7 +11,7 @@ from pathlib import Path
 from final_audit import Campus, DEVICES, HERE, audit
 
 OUTPUT = HERE / 'final_package'
-PATCH = '''! PENDING: not applied to the saved topology or genuine exports.
+PATCH = '''! Reference correction; consult the current EDGE-R export for application status.
 ! EDGE-R only. Create a new ACL before binding it; keep the original for rollback.
 enable
 configure terminal
@@ -26,7 +26,7 @@ exit
 end
 ! Verify gateway ping and server denial before write memory / topology save.
 '''
-ROLLBACK = '''! EDGE-R: restore the binding seen in the genuine final export.
+ROLLBACK = '''! EDGE-R: historical rollback; restores the old gateway-ping denial.
 enable
 configure terminal
 interface GigabitEthernet0/2
@@ -142,6 +142,15 @@ def build():
     (changes / 'EDGE-R_quarantine_gateway.cfg').write_text(PATCH, encoding='utf-8')
     (changes / 'EDGE-R_rollback.cfg').write_text(ROLLBACK, encoding='utf-8')
     mismatch = [r for r in results if not r['matches_requirement']]
+    correction_applied = (campus.devices['EDGE-R'].interfaces['GigabitEthernet0/2'].get('acl')
+                          == 'QUARANTINE-IN-V2' and
+                          next(r for r in results if r['id'] == 'vlan70_own_gateway')['configured_allow'])
+    correction_status = ('The current EDGE-R export contains the applied QUARANTINE-IN-V2 binding\n'
+                         'and permits the agreed own-gateway echo. The user also supplied successful\n'
+                         'gateway/blocked-server ping screenshots and reported saving the topology.'
+                         if correction_applied else
+                         'The gateway correction is not confirmed in the current export. Review the\n'
+                         'offline audit and reference correction before changing the simulator.')
     report = f'''# Final local handoff
 
 Generated without screen control. {len(design['devices'])} devices, {len(design['links'])} links;
@@ -149,22 +158,22 @@ cabled switch ports checked against the genuine exports.
 
 {len(results) - len(mismatch)}/{len(results)} initial-flow configuration expectations match.
 These are offline inferences, not additional live test passes. Existing observed
-results remain in ../evidence/observed_test_results.csv and were not rewritten.
+results are recorded separately in ../evidence/observed_test_results.csv.
 
-## Pending configuration correction
+## Gateway correction status
 
-Quarantine currently denies its own gateway ping, contrary to the detailed agreed
-policy. pending_changes/EDGE-R_quarantine_gateway.cfg prepares a replacement ACL
-that adds only echo to 192.168.70.1 from 192.168.70.0/24. DHCP and all routed-server
-denials remain. EDGE-R_rollback.cfg restores the original binding. Neither file
-has been applied to Packet Tracer. A new export and saved topology are required
-after any manual application; rebuild this package from the new export then.
+{correction_status}
+
+The retained pending_changes directory contains the reference correction and
+historical rollback, not a request to reapply the completed change. Rollback
+restores the former gateway-ping denial. Review current exports before use.
 
 ## Remaining simulator work
 
-- Apply that correction and check gateway ping plus continued server denial.
-- FTP retrieval and denied write/delete/rename behaviour: use disposable fixtures;
-  active listing already has user evidence. Passive FTP remains unresolved.
+- Active FTP retrieval and denied upload now have user screenshot evidence.
+  Delete/rename denial still requires disposable fixtures. Passive FTP remains unresolved.
+- The user reports removal of the default full-permission FTP account and a saved
+  topology. This server-account state is not independently decoded from the .pkt.
 - Management SVI reachability and unused server-service inventory are unverified.
 - Automatic PT detection/control, full recovery expiry and PT performance comparison
   remain unimplemented or unverified. Existing Linux evidence is separate.

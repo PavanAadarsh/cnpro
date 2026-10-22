@@ -1,18 +1,18 @@
 [
   {
     "Path": "README.md",
-    "Bytes": 8986,
-    "SHA256": "BBE88D0F973CDDE19D3513A8C4D8EDC9F8245E9D0F2732EE3805549E859A7C55"
+    "Bytes": 9087,
+    "SHA256": "61D4BD900D16727ABF123A35FC903592996D9805214A47694FBC83C9449D96AC"
   },
   {
     "Path": "University_Research_Network_Final.pkt",
-    "Bytes": 158923,
-    "SHA256": "B4CA4EF954FB98DD773797A40CC7448E6003F3211D52702016F4D727AAD6BCB6"
+    "Bytes": 164215,
+    "SHA256": "0F1CF12614B384FC95FB1F7EB7449CC873B177EE1A3EECCDD562276B0BBD8975"
   },
   {
     "Path": "build_final_package.py",
-    "Bytes": 9883,
-    "SHA256": "958DD4C1AFADD4DC77E2861C96AF4EA0CAEB7B1A0FBD155F85F9B91A91F6DFDA"
+    "Bytes": 10566,
+    "SHA256": "4FF7F7DAA6DDEF8964220AE8C6BB92F6EC69345AAE749135DC7A2F272AFFFB20"
   },
   {
     "Path": "evidence/ACCESS-SW-A_final_running_config.txt",
@@ -31,8 +31,8 @@
   },
   {
     "Path": "evidence/EDGE-R_final_running_config.txt",
-    "Bytes": 5555,
-    "SHA256": "95B0D13C055A28703305221600BEE7B781F71AEBE994B87FD11C140F421B0A85"
+    "Bytes": 5719,
+    "SHA256": "C4D47531F8B0DAF984E77DC393DEAD1DCE9E938EF76D440B4961DF9E490C5BB6"
   },
   {
     "Path": "evidence/FW-RES-ADM_final_running_config.txt",
@@ -51,13 +51,13 @@
   },
   {
     "Path": "evidence/PT_VERIFICATION_REPORT.md",
-    "Bytes": 6369,
-    "SHA256": "76CF4096FAA3D33952F345B0FFCE69114E37858C12AEE9247FF451AAD8D15FE5"
+    "Bytes": 6934,
+    "SHA256": "B6A349E84BE82D0652E06EDEDDA8A5958993C8ED4DB292203FD8F08255169325"
   },
   {
     "Path": "evidence/observed_test_results.csv",
-    "Bytes": 5586,
-    "SHA256": "3DA94C77CEFECB31B4F6ADC18A48F2C4ED56796E044403005B8614560D3E41DF"
+    "Bytes": 6956,
+    "SHA256": "054AE7D81DFC2583FC48C56512AFF8428F37875482C422839E5D357C06B0C97C"
   },
   {
     "Path": "evidence/screenshots/admin_active_ftp.png",
@@ -90,9 +90,24 @@
     "SHA256": "6384163A706EAEFDF9700A9EBCF75F25A760DBB109C54347AB7DB5B06105C8FD"
   },
   {
+    "Path": "evidence/screenshots/quarantine_dhcp_after_fix.png",
+    "Bytes": 53349,
+    "SHA256": "898ED18CE3FD04A72930052A4EB0FC7412646800125A2F7E5CD34F8D4F34D8E6"
+  },
+  {
+    "Path": "evidence/screenshots/quarantine_gateway_and_server_denial.png",
+    "Bytes": 37391,
+    "SHA256": "D3865DF5856EA87359F498583619631A1A639B42F224DD68AF7EE51027F155CD"
+  },
+  {
     "Path": "evidence/screenshots/recovery_dhcp.png",
     "Bytes": 39142,
     "SHA256": "DB778D022C2D63D7CB356FA01ADDF75C5F91722836C01585ABAFDD85C77D1875"
+  },
+  {
+    "Path": "evidence/screenshots/recovery_dhcp_after_fix.png",
+    "Bytes": 40750,
+    "SHA256": "9D4CB00516C601BB773C4027ECCB0F523A4E8510CE063BEC5660238E23C30156"
   },
   {
     "Path": "evidence/screenshots/recovery_research_http.png",
@@ -103,6 +118,16 @@
     "Path": "evidence/screenshots/research_active_ftp.png",
     "Bytes": 92762,
     "SHA256": "1AF6A2F66E50EF0BEFABB38578C829AA0C14E3CA8ACF2C065684B80C008846EA"
+  },
+  {
+    "Path": "evidence/screenshots/research_ftp_retrieval.png",
+    "Bytes": 11717,
+    "SHA256": "0F92D3A4C0FB32F59742BFAFF623024AF79849EC4D48451788C9A93FAA3F17FE"
+  },
+  {
+    "Path": "evidence/screenshots/research_ftp_upload_denied.png",
+    "Bytes": 92017,
+    "SHA256": "AC99E8B1F62BEA0845615FFE86D033B763556C24B8D84C585C63BE463BBBA3DB"
   },
   {
     "Path": "evidence/screenshots/restricted_remediation_allowed.png",
@@ -141,13 +166,13 @@
   },
   {
     "Path": "final_package/README.md",
-    "Bytes": 1633,
-    "SHA256": "487A051BC2999D4A7821D8B2F5B367EE960B21ED097EB63A46D53ADFD6D96455"
+    "Bytes": 1684,
+    "SHA256": "1FC0752D90C0C649BC835673E4E6DD6D08BA7E0996AB30317921C380FC95A2EE"
   },
   {
     "Path": "final_package/acceptance_matrix.csv",
-    "Bytes": 17903,
-    "SHA256": "26C6E8A37E84562761915A30EB6084E4D25D722B1C48E5E524ECC13E9D600122"
+    "Bytes": 17901,
+    "SHA256": "811409FE31325A540FC20093D128382FCFBA7E166565A3550871DF0914F71A0F"
   },
   {
     "Path": "final_package/cabling.csv",
@@ -156,23 +181,23 @@
   },
   {
     "Path": "final_package/offline_policy_audit.json",
-    "Bytes": 98364,
-    "SHA256": "49203B5F29D2ED6F1E8697D090902373CBB76E18E8912A956EC75472B03066F9"
+    "Bytes": 98465,
+    "SHA256": "5DC63187794A4E144B6179EA6CDA978D67349D7DF02BCBCCC25917AED798C5CC"
   },
   {
     "Path": "final_package/pending_changes/EDGE-R_quarantine_gateway.cfg",
-    "Bytes": 502,
-    "SHA256": "9F2A8FA418D7CD3DAD409046F62F83737976929D81C1AFFA73F17483BCF7E94A"
+    "Bytes": 519,
+    "SHA256": "795768618BA33C5E84BAB7D6E6F8039790E2B34795C645E9A19C0DF696D268CC"
   },
   {
     "Path": "final_package/pending_changes/EDGE-R_rollback.cfg",
-    "Bytes": 169,
-    "SHA256": "9640E1A7C56AC8AFA11861D70DCF3811F154E47C006A8BBF7C866EBA8812C47E"
+    "Bytes": 174,
+    "SHA256": "490F8399DB6E575F4FD1BC3075886AE7C866F804E5F7363C6944B10D2559E204"
   },
   {
     "Path": "final_package/source_hashes.json",
     "Bytes": 1388,
-    "SHA256": "E9F1B4A3B8DE3D81889B86AA4CA9CCAB780F73A7F7E53E58DFBAB622466AAAD7"
+    "SHA256": "94934158BCCA7D9CABA810335127A71BE6B145975F0CA35967CB39ABE21E87A1"
   },
   {
     "Path": "final_package/topology.json",
@@ -181,8 +206,8 @@
   },
   {
     "Path": "tests/test_final_package.py",
-    "Bytes": 9340,
-    "SHA256": "CA287872F44E9C5E592F5D0F45C6D5801503DE94670BC2E1E84A2D7B5BEA8410"
+    "Bytes": 9890,
+    "SHA256": "741349C9731DA7835767924E2793E23B4DCE187D75919B49E8624289234C25EC"
   },
   {
     "Path": "verify_handoff.py",

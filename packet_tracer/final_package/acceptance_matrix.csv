@@ -100,7 +100,7 @@ vlan70_external_dns_udp,192.168.70.101,203.0.113.2,udp,53,False,False,True,offli
 vlan70_external_dns_tcp,192.168.70.101,203.0.113.2,tcp,53,False,False,True,offline_configuration_inference,NOT_RUN_BY_THIS_AUDIT
 vlan70_external_ping,192.168.70.101,203.0.113.2,icmp,,False,False,True,offline_configuration_inference,NOT_RUN_BY_THIS_AUDIT
 vlan70_external_tcp25_policy,192.168.70.101,203.0.113.2,tcp,25,False,False,True,offline_configuration_inference,NOT_RUN_BY_THIS_AUDIT
-vlan70_own_gateway,192.168.70.101,192.168.70.1,icmp,,True,False,False,offline_configuration_inference,NOT_RUN_BY_THIS_AUDIT
+vlan70_own_gateway,192.168.70.101,192.168.70.1,icmp,,True,True,True,offline_configuration_inference,NOT_RUN_BY_THIS_AUDIT
 vlan10_to_vlan20_ping,192.168.10.101,192.168.20.100,icmp,,False,False,True,offline_configuration_inference,NOT_RUN_BY_THIS_AUDIT
 vlan10_to_vlan30_ping,192.168.10.101,192.168.30.100,icmp,,False,False,True,offline_configuration_inference,NOT_RUN_BY_THIS_AUDIT
 vlan10_to_vlan40_ping,192.168.10.101,192.168.40.100,icmp,,False,False,True,offline_configuration_inference,NOT_RUN_BY_THIS_AUDIT

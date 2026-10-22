@@ -28,19 +28,19 @@ are configuration inferences, not new network test passes; return paths, NAT,
 services, negotiated FTP data and automatic recovery are outside its model.
 Existing live observations remain in `evidence/observed_test_results.csv`.
 
-The current exports match 135 of those 136 policy expectations. Quarantine's own
-gateway ping is blocked, contrary to the detailed policy in
-`monitoring_integration/POLICY_RESOLUTION.md`. Consequently the builder exits 1
-after writing its reports; this is a reported pending correction, not a build
-crash. Fifteen focused software tests pass, including detection of this gap and
-an offline check of the pending correction in temporary configuration copies.
+The current exports match all 136 modeled initial-flow policy expectations; the
+builder exits 0. These are configuration matches, not 136 live network passes.
+The Quarantine gateway correction was applied by the user and confirmed in the
+new EDGE-R export. Screenshots show working DHCP, gateway echo, continued
+remediation-server echo denial and restoration of normal DHCP. CORE-SW's clean
+re-export contains no accidental Quarantine ACL.
 
-`final_package/pending_changes/EDGE-R_quarantine_gateway.cfg` prepares a new ACL
-with DHCP, only the agreed gateway-echo exception, and a final deny. The rollback
-file restores the original binding. Neither is applied to the `.pkt` or genuine
-exports. After manual application, verify gateway ping and continued server
-denial, save the router/topology, re-export EDGE-R, and rebuild the package.
-The script never generates a topology binary or sets up endpoint services.
+Fifteen focused software tests cover the current design and a regression that
+recreates the old gateway defect in temporary copies, then checks the correction.
+The retained `final_package/pending_changes/` files are reference correction and
+historical rollback commands; the gateway fix is already applied. Do not apply
+the rollback during normal operation because it restores gateway-ping denial.
+The builder never generates a topology binary or sets up endpoint services.
 
 `verify_handoff.py` is read-only: it checks packaged file hashes and compares the
 generated topology, cabling, audit and pending correction with current sources.
@@ -86,14 +86,14 @@ Internal servers use gateway 192.168.50.1; INTERNET-SRV uses gateway 203.0.113.1
 
 1. Open the final `.pkt`, choose Realtime, and allow links/STP to settle. Do not apply the older candidate scripts. The router securityk9 packages were enabled and verified in the simulator.
 2. Use each PC's Desktop applications. Examples: Student `http://srv-research` allowed and `https://srv-research` denied; Faculty HTTPS allowed; Admin `http://srv-admin` allowed. Admin may initiate diagnostics to normal user roles; the reverse initiation is denied.
-3. Research/Admin FTP: `ftp srv-db`, enter the lab account interactively, then `passive` until Off, followed by `dir`. Active-mode listing was verified. The data rule explicitly allows only SRV-DB source TCP 20 to Research/Admin destination ports >1023. It is a static exception, not a negotiated authenticated-session-only pinhole. Passive-mode listing remains unresolved. File get/put/delete/rename behaviour has not been verified.
-4. Manual adaptive demonstration on ACCESS-SW-A: `enable`, `configure terminal`, `interface FastEthernet0/2`, `switchport access vlan 60` (Restricted), `70` (Quarantine), or `10` (Recovery to NORMAL), then `end`. On PC-STU2 select Static then DHCP to renew. Restricted permits remediation HTTP/DNS; Quarantine permits DHCP requests but blocks ordinary routed IP traffic. Restore VLAN 10 and DHCP before saving the normal submission state.
+3. Research/Admin FTP: `ftp srv-db`, enter the lab account interactively, then `passive` until Off, followed by `dir`. Active-mode listing was verified. The data rule explicitly allows only SRV-DB source TCP 20 to Research/Admin destination ports >1023. It is a static exception, not a negotiated authenticated-session-only pinhole. Active retrieval and denied upload now have user screenshot evidence. Passive-mode listing and delete/rename denial remain unverified or unresolved.
+4. Manual adaptive demonstration on ACCESS-SW-A: `enable`, `configure terminal`, `interface FastEthernet0/2`, `switchport access vlan 60` (Restricted), `70` (Quarantine), or `10` (Recovery to NORMAL), then `end`. On PC-STU2 select Static then DHCP to renew. Restricted permits remediation HTTP/DNS; Quarantine permits DHCP and echo to its own gateway but blocks ordinary routed server/user/Internet traffic. Restore VLAN 10 and DHCP before saving the normal submission state.
 5. Verify VLAN readback with `show vlan brief`, endpoint address through IP Configuration, and actual application connectivity. Do not count an unknown readback as recovery success. Final exported Fa0/2 is VLAN 10; the recovery screenshots show a normal lease and restored research HTTP.
 6. Useful displays: `show ip route`, `show zone security`, `show zone-pair security`, `show policy-map type inspect zone-pair sessions`, `show ip nat translations`. Bare `show policy-map type inspect zone-pair` and `terminal length 0` were not supported in this simulator.
 7. After intentional configuration changes, `write memory` on the affected device and Ctrl+S on the topology. Config > GLOBAL > Settings > Running Config > Export produces the configuration backups.
 
 ## Important boundaries
 
-Zone membership was rejected on EDGE-R subinterfaces, so three additional physical-interface firewall routers were used. NAT and ZBF together on EDGE-R produced a demonstrated zone-pair lookup failure. EDGE-R therefore does routing/PAT; normal role policy enforcement remains on the three firewall routers. EDGE-R Gi0/2 retains Quarantine zone membership and its DHCP-only inbound ACL. Unused old EDGE-R zone pairs/ACLs remain in the export; they are not the active Internet enforcement path.
+Zone membership was rejected on EDGE-R subinterfaces, so three additional physical-interface firewall routers were used. NAT and ZBF together on EDGE-R produced a demonstrated zone-pair lookup failure. EDGE-R therefore does routing/PAT; normal role policy enforcement remains on the three firewall routers. EDGE-R Gi0/2 retains Quarantine zone membership and its inbound ACL allowing DHCP and own-gateway echo only. Unused old EDGE-R zone pairs/ACLs remain in the export; they are not the active Internet enforcement path.
 
 These are Packet Tracer GUI observations, not Linux packet captures or production Cisco deployment. No automatic Python-to-PT control, automatic detection, or timed recovery has been demonstrated. Full 30/120-minute recovery expiry remains pending requirement clarification. PT HTTPS page display does not verify real TLS cryptography. The original 136-case matrix has not been completely run, and no PT timing/throughput comparison or full policy coverage is claimed. Existing Linux implementation and evidence remain separate.

@@ -2,7 +2,7 @@
 
 ## Basis and status
 
-The user built and operated Packet Tracer 9.0.1 while the assistant reviewed screenshots and CLI output. This report records those observations; the assistant did not independently rerun GUI tests. Seven genuine running-config exports were read on disk. `University_Research_Network_Final.pkt` exists (158923 bytes after the CORE finishing update); its binary contents were not independently decoded or reopened by the assistant.
+The user built and operated Packet Tracer 9.0.1 while the assistant reviewed screenshots and CLI output. This report records those observations; the assistant did not independently rerun GUI tests. Seven genuine running-config exports were read on disk. `University_Research_Network_Final.pkt` exists (164215 bytes after the user-saved gateway/account update); its binary contents were not independently decoded or reopened by the assistant.
 
 See `observed_test_results.csv` and `screenshots/`. Quarantine remediation denial was reported by the user in text rather than supplied as a screenshot. No measurements or timestamps have been fabricated. Simulator latency displays are not physical-network benchmarks. There is no claim that all 136 planned cases passed.
 
@@ -25,21 +25,29 @@ The CORE finishing update was subsequently applied by the user and verified in t
 
 ## Remaining work and limits
 
-Local follow-up on 2026-10-22, without further screen control: the current design
-now has a reproducible cabling/topology handoff and an export-driven offline
-audit under `final_package/`. Its 136 initial-flow cases find 135 configuration
-matches and one mismatch: `QUARANTINE-IN` blocks the own-gateway echo required by
-the detailed agreed policy. A narrowly scoped ACL replacement and rollback are
-prepared under `final_package/pending_changes/`, but are **not applied**. The
-13 new software regression tests pass; a temporary corrected configuration
-matches all 136 expectations and changes only the gateway case in that matrix.
-These are offline configuration findings, not additional Packet Tracer network
-passes. The saved `.pkt` and all seven genuine exports remain byte-for-byte
-unchanged during this follow-up. Applying/saving/re-exporting that correction
-remains simulator work.
+Latest guided follow-up on 2026-10-22: the user applied QUARANTINE-IN-V2 on
+EDGE-R and re-exported EDGE-R and CORE-SW. The EDGE export confirms DHCP plus
+own-gateway echo and a final deny, bound inbound on Gi0/2. CORE-SW matches its
+clean prior export, with no accidental Quarantine ACL. The topology binary was
+saved by the user; the assistant did not edit or decode it.
+
+The user screenshots show VLAN70 DHCP, 4/4 gateway echo replies, 0/4 replies from
+the remediation server (gateway destination-unreachable responses), and restored
+normal DHCP. Research active-mode FTP retrieval completed with 1,383,032 bytes;
+a separate upload attempt returned explicit FTP 550 permission denied. The
+recorded 61.416-second simulator transfer is not a benchmark. The user reported
+removing the default full-permission FTP account and saving the topology; that
+account removal is user-reported, not independently decoded from the binary.
+
+The updated offline audit matches all 136 initial-flow policy expectations.
+Fifteen software regression tests pass, including recreation/detection of the old
+gateway defect and its correction in scratch copies. These are separate from
+actual network observations. Historical rows PT47 and earlier failures are
+retained; new rows PT49-PT56 record the follow-up, rather than rewriting history.
+The pending_changes folder now retains reference/historical commands only.
 
 1. The CORE finishing block, re-export and final topology save are complete. No successful live verification of the management SVI is claimed; verify its reachability if it is a required acceptance case.
-2. Only an observed subset of access cases has been run. In particular, missing role/service combinations and server-initiated-denial coverage must not be labelled passed based on configuration alone. FTP file retrieval and denied write/delete/rename commands remain unverified; the account's RL configuration alone is not behavioural proof.
+2. Only an observed subset of access cases has been run. In particular, missing role/service combinations and server-initiated-denial coverage must not be labelled passed based on configuration alone. Research active FTP retrieval and denied upload are now verified by screenshots. Delete/rename rejection remains unverified; the account's RL configuration alone is not behavioural proof.
 3. No automatic PT detection/controller integration, timed recovery, or PT static/adaptive benchmark has been demonstrated. Transitions were controlled manual CLI changes with real simulated VLAN/DHCP/connectivity changes. Full 30/120-minute expiry is pending clarification, not failed or completed.
 4. The active FTP data exception authorizes TCP source port 20 from SRV-DB to Research/Admin high ports, including outside an authenticated FTP session. It is a documented lab policy exception, not equivalent to a dynamically negotiated pinhole. Passive FTP and real TLS properties remain limitations.
 5. Default/unused server services have not been fully inventoried or disabled. VTY/SSH controller management was deliberately disabled rather than claimed operational. Earlier candidate topology/configuration files are preserved but superseded by the actual exports and README; do not replay them over the final topology.

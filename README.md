@@ -6,16 +6,17 @@ Open the completed manual demonstration topology in Cisco Packet Tracer 9.0.1:
 [University_Research_Network_Final.pkt](packet_tracer/University_Research_Network_Final.pkt).
 Follow [Packet Tracer instructions](packet_tracer/README.md) and consult the
 [verified observations and remaining scope](packet_tracer/evidence/PT_VERIFICATION_REPORT.md).
-The package contains seven genuine device configuration exports and 15 selected
+The package contains seven genuine device configuration exports and 20 selected
 screenshots. The broader project is not claimed exhaustively verified: PT
 transitions are manual, passive FTP remains unresolved, and timed recovery and
 remaining access/permission cases are explicitly identified in that report.
 
 Local follow-up: [current final handoff](packet_tracer/final_package/README.md)
 provides the 21-device/27-link topology, cabling and export-driven policy audit.
-Fifteen focused software tests pass. The audit identifies one pending Quarantine
-gateway-ping correction, with an unapplied patch and rollback; it does not add
-live test passes or alter the saved topology. Reproduction instructions are in
+Fifteen focused software tests pass. All 136 modeled policy expectations match
+the updated exports. The user applied and saved the Quarantine gateway fix;
+screenshots also verify active FTP retrieval and upload denial. Configuration
+inferences remain separate from live observations. Reproduction instructions are in
 the Packet Tracer README.
 
 The Linux implementation below is a separate reproduction of the adaptive

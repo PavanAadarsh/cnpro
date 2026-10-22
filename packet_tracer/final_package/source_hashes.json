@@ -1,8 +1,8 @@
 [
   {
     "path": "University_Research_Network_Final.pkt",
-    "bytes": 158923,
-    "sha256": "b4ca4ef954fb98dd773797a40cc7448e6003f3211d52702016f4d727aad6bcb6"
+    "bytes": 164215,
+    "sha256": "0f1cf12614b384fc95fb1f7eb7449cc873b177ee1a3eeccdd562276b0bbd8975"
   },
   {
     "path": "evidence/CORE-SW_final_running_config.txt",
@@ -21,8 +21,8 @@
   },
   {
     "path": "evidence/EDGE-R_final_running_config.txt",
-    "bytes": 5555,
-    "sha256": "95b0d13c055a28703305221600bee7b781f71aebe994b87fd11c140f421b0a85"
+    "bytes": 5719,
+    "sha256": "c4d47531f8b0daf984e77dc393dead1dce9e938ef76d440b4961df9e490c5bb6"
   },
   {
     "path": "evidence/FW-STU-FAC_final_running_config.txt",
